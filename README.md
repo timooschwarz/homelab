@@ -19,7 +19,7 @@
 3. [Teil 2 · Active Directory](#teil-2--active-directory)
 4. [Teil 3 · Client, Dateiserver und Gruppenrichtlinien](#teil-3--client-dateiserver-und-gruppenrichtlinien)
 5. [Teil 4 · Testen](#teil-4--testen)
-6. [Teil 5 · Optional: Linux-Dienste, MECM und Wazuh](#teil-5--optional-linux-dienste-und-mecm)
+6. [Teil 5 · Optional: Linux-Dienste, MECM und Wazuh](#teil-5--optional-linux-dienste-mecm-und-wazuh)
 7. [Nach Thema](#nach-thema)
 8. [Betrieb: Starten und Stoppen](#betrieb-starten-und-stoppen)
 9. [Fehler, aus denen ich am meisten gelernt habe](#fehler-aus-denen-ich-am-meisten-gelernt-habe)
