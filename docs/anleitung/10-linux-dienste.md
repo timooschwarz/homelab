@@ -100,6 +100,10 @@ Nach demselben Muster laufen auf TOOLS01:
 | **Warpgate** | Jump Host für RDP und SSH mit Sitzungsaufzeichnung | 8888 |
 | **Infisical** | Kennwörter und Secrets des Labs | 8080 |
 
+So kommt eine Anfrage über den Namen beim richtigen Container an:
+
+![Reverse Proxy auf TOOLS01](../diagramme/reverse-proxy.png)
+
 <p align="center">
   <img src="../bilder/npm-proxy-hosts.png" width="49%" alt="Nginx Proxy Manager">
   <img src="../bilder/infisical-uebersicht.png" width="49%" alt="Infisical">

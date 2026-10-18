@@ -46,6 +46,12 @@ Nur `169.254.x.x`? Dann läuft DHCP auf DC01 nicht oder ist nicht autorisiert (K
 
 Danach am Sperrbildschirm **Anderer Benutzer** → Anmeldung mit einem Domänenkonto. Unter dem Kennwortfeld steht *Anmelden bei: LAB*, du musst also nicht `LAB\` davorschreiben.
 
+## Was beim Start passiert
+
+Ab jetzt läuft bei jedem Start dieselbe Kette ab. Wer sie kennt, findet Fehler schneller:
+
+![Was beim Start von CLIENT01 passiert](../diagramme/client-start.png)
+
 ## Prüfen
 
 - ADUC auf DC01 → `Lab/Computer` → `CLIENT01` ist da (dank `redircmp` aus [Kapitel 4](04-ad-struktur.md#schritt-4--neue-computer-automatisch-in-die-richtige-ou))
