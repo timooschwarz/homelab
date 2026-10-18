@@ -11,16 +11,7 @@ Microsoft Configuration Manager (früher SCCM, heute auch MECM) verteilt Softwar
 
 ## Ablauf
 
-```mermaid
-flowchart LR
-    A["1 · VM CM01"] --> B["2 · AD vorbereiten"]
-    B --> C["3 · Windows-Features, ADK"]
-    C --> D["4 · SQL Server"]
-    D --> E["5 · MECM-Setup"]
-    E --> F["6 · Enhanced HTTP"]
-    F --> G["7 · Discovery, Boundaries"]
-    G --> H["8 · Client-Push"]
-```
+![MECM-Ablauf von der Einrichtung bis zum Client](../diagramme/mecm-ablauf.png)
 
 ## Schritt 1 · VM CM01 (Host, dann CM01)
 

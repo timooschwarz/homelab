@@ -9,13 +9,7 @@
 
 Der DHCP-Server im Lab (Kapitel 3) würde in deinem Heimnetz echten Geräten Adressen verteilen. Deshalb bekommt das Lab einen **internen** Switch. Der Host spielt den Router und leitet per **NAT** ins Internet weiter.
 
-```mermaid
-flowchart LR
-    VM1["DC01 10.0.0.10"] --- SW(["Switch LAB<br/>10.0.0.0/24"])
-    VM2["FS01 10.0.0.40"] --- SW
-    VM3["CLIENT01 DHCP"] --- SW
-    SW --- HOST["Host 10.0.0.1<br/>NAT"] --- NET(("Heimnetz / Internet"))
-```
+![Lab-Netz mit internem Switch und NAT](../diagramme/lab-netz.png)
 
 ## Schritt 1 · Switch und NAT anlegen
 

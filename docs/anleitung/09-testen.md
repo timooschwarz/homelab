@@ -37,6 +37,10 @@ Für **jede** Abteilung mit einem Benutzer anmelden:
 
 ## Fehlersuche, wenn S: fehlt
 
+Geh die Kette von links nach rechts durch. Das erste Glied, das nicht stimmt, ist die Ursache:
+
+![Wie Laufwerk S: entsteht](../diagramme/laufwerk-s-kette.png)
+
 **1. Kommt die GPO an, und ist der Benutzer in der Gruppe?**
 
 Eingabeaufforderung → `gpresult /r`:

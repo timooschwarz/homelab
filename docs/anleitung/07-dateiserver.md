@@ -64,6 +64,11 @@ E:\Shares\Abteilungen\
 
 ## Schritt 6 · NTFS-Rechte pro Abteilungsordner (FS01)
 
+Erst das Prinzip, dann die Klicks:
+
+![Freigabe und NTFS: das strengere Recht gewinnt](../diagramme/freigabe-ntfs.png)
+
+
 Für **jeden** Abteilungsordner: Rechtsklick → **Properties → Security → Advanced** (Eigenschaften → Sicherheit → Erweitert):
 
 1. **Disable inheritance** (Vererbung deaktivieren) → **Convert inherited permissions into explicit permissions on this object**

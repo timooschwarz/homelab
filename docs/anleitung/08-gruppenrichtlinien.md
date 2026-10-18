@@ -45,6 +45,8 @@ Für jede Abteilung einen Eintrag. Am schnellsten: Eintrag kopieren, einfügen, 
 > [!NOTE]
 > Hat der Benutzer auf das Ziel keine NTFS-Rechte, scheitert die Zuordnung **ohne Fehlermeldung**. S: fehlt dann einfach.
 
+![Wie Laufwerk S: entsteht](../diagramme/laufwerk-s-kette.png)
+
 ## Schritt 2 · RDP einschalten
 
 Die Gruppe *Remote Desktop Users* zu füllen reicht nicht. RDP muss auch eingeschaltet sein, und auf Servern ist es standardmäßig aus.
@@ -66,6 +68,10 @@ GPO `GPO-Computer-RDP` an **Lab/Computer** →
 
 > [!WARNING]
 > Den Gruppennamen **nicht** von Hand eintippen. Wer sich vertippt (im Lab einmal nur `ad`), legt auf jedem Client eine neue lokale Gruppe mit diesem Namen an, statt die richtige zu befüllen. Mit dem Eintrag *(built-in)* funktioniert die GPO auch auf deutschen Clients, wo die Gruppe *Remotedesktopbenutzer* heißt.
+
+RDP klappt nur, wenn Schritt 2 und 3 zusammenpassen:
+
+![Wann RDP klappt](../diagramme/rdp-bedingungen.png)
 
 Wer nicht in diesen Gruppen ist, bekommt beim RDP-Versuch:
 
