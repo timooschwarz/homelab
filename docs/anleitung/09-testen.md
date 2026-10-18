@@ -2,6 +2,8 @@
 
 [← Kapitel 8](08-gruppenrichtlinien.md) · [Übersicht](../../README.md#inhaltsverzeichnis) · weiter: [Kapitel 10 · Linux-Dienste →](10-linux-dienste.md)
 
+[![Testen](https://img.shields.io/badge/-Testen-D4537E?style=flat-square)](../../README.md#thema-test) [![Gruppenrichtlinien](https://img.shields.io/badge/-Gruppenrichtlinien-7F77DD?style=flat-square)](../../README.md#thema-gpo) [![Dateiserver](https://img.shields.io/badge/-Dateiserver-0F766E?style=flat-square)](../../README.md#thema-file)
+
 > **Ziel:** Nachweisen, dass Rechte, Laufwerke und GPOs für **jede** Abteilung stimmen.
 > **Dauer:** ca. 30 Minuten · **Wo:** CLIENT01 (Hyper-V-Konsole), für die RDP-Tests der Host
 

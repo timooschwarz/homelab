@@ -2,6 +2,8 @@
 
 [← Kapitel 0](00-voraussetzungen.md) · [Übersicht](../../README.md#inhaltsverzeichnis) · weiter: [Kapitel 2 · Domain Controller →](02-domain-controller.md)
 
+[![Netzwerk](https://img.shields.io/badge/-Netzwerk-1D9E75?style=flat-square)](../../README.md#thema-netz) [![Hyper-V](https://img.shields.io/badge/-Hyper--V-5F5E5A?style=flat-square)](../../README.md#thema-hyperv) [![PowerShell](https://img.shields.io/badge/-PowerShell-5391FE?style=flat-square)](../../README.md#thema-ps)
+
 > **Ziel:** Ein eigenes Lab-Netz `10.0.0.0/24`, das über den Host ins Internet kommt, ohne dein Heimnetz zu stören.
 > **Dauer:** ca. 10 Minuten · **Wo:** auf dem Host
 

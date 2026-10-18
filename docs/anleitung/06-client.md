@@ -2,6 +2,8 @@
 
 [← Kapitel 5](05-benutzer-per-skript.md) · [Übersicht](../../README.md#inhaltsverzeichnis) · weiter: [Kapitel 7 · Dateiserver →](07-dateiserver.md)
 
+[![Windows 11](https://img.shields.io/badge/-Windows%2011-0078D4?style=flat-square)](../../README.md#thema-client) [![Active Directory](https://img.shields.io/badge/-Active%20Directory-378ADD?style=flat-square)](../../README.md#thema-ad)
+
 > **Ziel:** Ein Windows-11-Rechner in der Domäne, an dem du dich mit den Testbenutzern anmeldest.
 > **Dauer:** ca. 40 Minuten · **Wo:** Host, danach CLIENT01
 

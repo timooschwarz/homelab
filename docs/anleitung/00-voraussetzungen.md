@@ -2,6 +2,8 @@
 
 [Übersicht](../../README.md#inhaltsverzeichnis) · weiter: [Kapitel 1 · Netzwerk →](01-netzwerk.md)
 
+[![Hyper-V](https://img.shields.io/badge/-Hyper--V-5F5E5A?style=flat-square)](../../README.md#thema-hyperv)
+
 > **Ziel:** Hardware prüfen, Software besorgen, Hyper-V einschalten und eine Vorlage für neue VMs kennen.
 > **Dauer:** ca. 30 Minuten (plus Downloads) · **Wo:** auf deinem PC (Host)
 

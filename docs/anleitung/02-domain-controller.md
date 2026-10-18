@@ -2,6 +2,8 @@
 
 [← Kapitel 1](01-netzwerk.md) · [Übersicht](../../README.md#inhaltsverzeichnis) · weiter: [Kapitel 3 · DNS und DHCP →](03-dns-dhcp.md)
 
+[![Active Directory](https://img.shields.io/badge/-Active%20Directory-378ADD?style=flat-square)](../../README.md#thema-ad) [![DNS](https://img.shields.io/badge/-DNS-1D9E75?style=flat-square)](../../README.md#thema-dns)
+
 > **Ziel:** Ein Windows Server 2025 als Domain Controller für die neue Domäne `lab.test`.
 > **Dauer:** ca. 45 Minuten · **Wo:** Host (VM anlegen), danach in DC01
 > **Menüs:** Server auf Englisch, deutscher Name in Klammern ([warum?](00-voraussetzungen.md#sprache-der-menüs))

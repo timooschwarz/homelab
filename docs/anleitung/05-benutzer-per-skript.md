@@ -2,6 +2,8 @@
 
 [← Kapitel 4](04-ad-struktur.md) · [Übersicht](../../README.md#inhaltsverzeichnis) · weiter: [Kapitel 6 · Client →](06-client.md)
 
+[![Active Directory](https://img.shields.io/badge/-Active%20Directory-378ADD?style=flat-square)](../../README.md#thema-ad) [![PowerShell](https://img.shields.io/badge/-PowerShell-5391FE?style=flat-square)](../../README.md#thema-ps)
+
 > **Ziel:** Über 100 realistische Testbenutzer in Abteilungs-OUs, jeweils in der richtigen Gruppe.
 > **Dauer:** ca. 15 Minuten · **Wo:** DC01
 > **Menüs:** Englisch, deutscher Name in Klammern

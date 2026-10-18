@@ -2,6 +2,8 @@
 
 [← Kapitel 7](07-dateiserver.md) · [Übersicht](../../README.md#inhaltsverzeichnis) · weiter: [Kapitel 9 · Testen →](09-testen.md)
 
+[![Gruppenrichtlinien](https://img.shields.io/badge/-Gruppenrichtlinien-7F77DD?style=flat-square)](../../README.md#thema-gpo) [![Dateiserver](https://img.shields.io/badge/-Dateiserver-0F766E?style=flat-square)](../../README.md#thema-file) [![Sicherheit](https://img.shields.io/badge/-Sicherheit-EF9F27?style=flat-square)](../../README.md#thema-sec)
+
 > **Ziel:** Laufwerk S: je nach Abteilung, RDP nur für bestimmte Abteilungen, lokale Admin-Kennwörter per LAPS und eine saubere Zeitquelle.
 > **Dauer:** ca. 60 Minuten · **Wo:** DC01
 > **Menüs:** Englisch, deutscher Name in Klammern

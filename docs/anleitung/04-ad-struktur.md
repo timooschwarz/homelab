@@ -2,6 +2,8 @@
 
 [← Kapitel 3](03-dns-dhcp.md) · [Übersicht](../../README.md#inhaltsverzeichnis) · weiter: [Kapitel 5 · Benutzer per Skript →](05-benutzer-per-skript.md)
 
+[![Active Directory](https://img.shields.io/badge/-Active%20Directory-378ADD?style=flat-square)](../../README.md#thema-ad) [![Sicherheit](https://img.shields.io/badge/-Sicherheit-EF9F27?style=flat-square)](../../README.md#thema-sec)
+
 > **Ziel:** Eine OU-Struktur, an die sich GPOs sauber hängen lassen, Abteilungsgruppen und getrennte Konten.
 > **Dauer:** ca. 30 Minuten · **Wo:** DC01
 > **Menüs:** Englisch, deutscher Name in Klammern

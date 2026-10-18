@@ -2,6 +2,8 @@
 
 [← Kapitel 10](10-linux-dienste.md) · [Übersicht](../../README.md#inhaltsverzeichnis)
 
+[![MECM](https://img.shields.io/badge/-MECM-107C10?style=flat-square)](../../README.md#thema-mecm) [![Active Directory](https://img.shields.io/badge/-Active%20Directory-378ADD?style=flat-square)](../../README.md#thema-ad) [![Gruppenrichtlinien](https://img.shields.io/badge/-Gruppenrichtlinien-7F77DD?style=flat-square)](../../README.md#thema-gpo)
+
 > **Ziel:** Ein primärer Standort `LAB` auf CM01, der CLIENT01 findet und den Configuration-Manager-Client per Push installiert.
 > **Dauer:** ca. 3–4 Stunden, davon viel Warten · **Wo:** Host, DC01, CM01
 > **Menüs:** Englisch, deutscher Name in Klammern

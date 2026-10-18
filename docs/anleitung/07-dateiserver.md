@@ -2,6 +2,8 @@
 
 [← Kapitel 6](06-client.md) · [Übersicht](../../README.md#inhaltsverzeichnis) · weiter: [Kapitel 8 · Gruppenrichtlinien →](08-gruppenrichtlinien.md)
 
+[![Dateiserver](https://img.shields.io/badge/-Dateiserver-0F766E?style=flat-square)](../../README.md#thema-file) [![Sicherheit](https://img.shields.io/badge/-Sicherheit-EF9F27?style=flat-square)](../../README.md#thema-sec)
+
 > **Ziel:** Eine Freigabe `\\fs01\Abteilungen` mit einem Ordner pro Abteilung. Jeder sieht und bearbeitet nur seinen eigenen.
 > **Dauer:** ca. 60 Minuten · **Wo:** Host, danach FS01
 > **Menüs:** FS01 auf Englisch, deutscher Name in Klammern

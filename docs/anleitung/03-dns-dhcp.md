@@ -2,6 +2,8 @@
 
 [← Kapitel 2](02-domain-controller.md) · [Übersicht](../../README.md#inhaltsverzeichnis) · weiter: [Kapitel 4 · AD-Struktur →](04-ad-struktur.md)
 
+[![DNS](https://img.shields.io/badge/-DNS-1D9E75?style=flat-square)](../../README.md#thema-dns) [![DHCP](https://img.shields.io/badge/-DHCP-1D9E75?style=flat-square)](../../README.md#thema-dhcp) [![Active Directory](https://img.shields.io/badge/-Active%20Directory-378ADD?style=flat-square)](../../README.md#thema-ad)
+
 > **Ziel:** Saubere Namensauflösung in beide Richtungen und automatische IP-Adressen für Clients.
 > **Dauer:** ca. 20 Minuten · **Wo:** DC01
 > **Menüs:** Englisch, deutscher Name in Klammern

@@ -2,6 +2,8 @@
 
 [← Kapitel 9](09-testen.md) · [Übersicht](../../README.md#inhaltsverzeichnis) · weiter: [Kapitel 11 · MECM →](11-mecm.md)
 
+[![Linux & Docker](https://img.shields.io/badge/-Linux%20%26%20Docker-E95420?style=flat-square)](../../README.md#thema-linux) [![Netzwerk](https://img.shields.io/badge/-Netzwerk-1D9E75?style=flat-square)](../../README.md#thema-netz) [![DNS](https://img.shields.io/badge/-DNS-1D9E75?style=flat-square)](../../README.md#thema-dns)
+
 > **Ziel:** Eine Ubuntu-VM mit Docker für Überwachung, Reverse Proxy, Jump Host und Kennwortverwaltung.
 > **Dauer:** ca. 90 Minuten · **Wo:** Host, danach TOOLS01 (per SSH)
 
