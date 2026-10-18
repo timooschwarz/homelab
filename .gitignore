@@ -1,0 +1,5 @@
+# Echte Benutzerlisten und Logs nicht einchecken
+benutzer.csv
+*.log
+*.kdbx
+.env
