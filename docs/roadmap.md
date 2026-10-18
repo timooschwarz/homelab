@@ -16,7 +16,7 @@ Jede Stufe baut auf der vorherigen auf: Vorlagen vor neuen Servern, Backup vor r
 | 7 | Patch-Management über MECM | – | geplant |
 | 8 | Eigene CA und HTTPS (auch für MECM) | CA01 | geplant |
 | 9 | Gitea und Mailpit | – | geplant |
-| 10 | Logging / SIEM (Wazuh) | LOG01 | geplant |
+| 10 | Logging / SIEM (Wazuh) | LOG01 | ✅ |
 | 11 | Firewall (OPNsense) und getrenntes Clientnetz | FW01 | geplant |
 | 12 | Drucken (virtuelle Drucker, Point and Print) | – | geplant |
 | 13 | Ticketsystem und Inventar (GLPI) | – | geplant |

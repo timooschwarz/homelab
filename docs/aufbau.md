@@ -28,6 +28,7 @@
 | NETBOX01 | 10.0.0.30 | Ubuntu Server | NetBox per Docker | bei Bedarf |
 | FS01 | 10.0.0.40 | Windows Server 2025 | Dateiserver, Datenplatte E: | immer an |
 | TOOLS01 | 10.0.0.50 | Ubuntu Server | Docker-Dienste | immer an |
+| LOG01 | 10.0.0.70 | Ubuntu Server | Wazuh 4.14 (SIEM), 8 GB fest | bei Bedarf |
 | CLIENT01 | DHCP | Windows 11 Pro | Testclient | bei Bedarf |
 
 **Startreihenfolge:** DC01 → CM01, FS01, NETBOX01, TOOLS01 → CLIENT01. Herunterfahren umgekehrt, DC01 zuletzt. Ohne DC01 gibt es kein DNS, und die anderen VMs laufen in Fehler.

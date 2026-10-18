@@ -1,6 +1,6 @@
 # Kapitel 12 · Software verteilen mit MECM
 
-[← Kapitel 11](11-mecm.md) · [Übersicht](../../README.md#inhaltsverzeichnis)
+[← Kapitel 11](11-mecm.md) · [Übersicht](../../README.md#inhaltsverzeichnis) · weiter: [Kapitel 13 · Wazuh →](13-wazuh.md)
 
 [![MECM](https://img.shields.io/badge/-MECM-107C10?style=flat-square)](../../README.md#thema-mecm) [![Windows 11](https://img.shields.io/badge/-Windows%2011-0078D4?style=flat-square)](../../README.md#thema-client) [![Testen](https://img.shields.io/badge/-Testen-D4537E?style=flat-square)](../../README.md#thema-test)
 
