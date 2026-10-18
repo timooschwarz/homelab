@@ -64,6 +64,9 @@ Test in der Eingabeaufforderung: `ping 10.0.0.1` und `ping 8.8.8.8`.
 5. **DSRM password** vergeben und sicher aufheben. Das brauchst du für Wiederherstellungen.
 6. NetBIOS-Name `LAB` übernehmen → durchklicken → **Install**. Der Server startet neu.
 
+> [!NOTE]
+> Die Warnung *„A delegation for this DNS server cannot be created …“* und gelbe Warnungen im **Prerequisites Check** sind bei einer neuen Gesamtstruktur normal. Einfach weiter, nur rote Fehler stoppen die Installation.
+
 Ab jetzt meldest du dich mit `LAB\Administrator` an.
 
 ## Schritt 5 · DNS-Weiterleitung (DC01)

@@ -20,7 +20,7 @@ Ein paar Benutzer legt man per Hand an. Für realistische Tests von Rechten, GPO
 
 ## Schritt 1 · CSV vorbereiten
 
-Trennzeichen Semikolon, Datei als `benutzer.csv` neben das Skript legen. Vorlage: [`benutzer.example.csv`](../../scripts/benutzer.example.csv)
+Trennzeichen Semikolon. Vorlage: [`benutzer.example.csv`](../../scripts/benutzer.example.csv) mit 15 Benutzern, **drei pro Abteilung**. Mehrere pro Abteilung brauchst du für den Test in Kapitel 9. Die Datei in **`benutzer.csv`** umbenennen und nach Bedarf erweitern, im Lab waren es 114 Benutzer.
 
 ```
 Vorname;Nachname;Benutzername;Abteilung
@@ -30,9 +30,12 @@ Ben;Muster;bmuster;Vertrieb
 
 Der Benutzername darf höchstens 20 Zeichen lang sein.
 
+> [!TIP]
+> In Excel als **CSV UTF-8 (durch Trennzeichen getrennt)** speichern. Mit dem normalen CSV-Format werden Umlaute wie in *Müller* kaputt.
+
 ## Schritt 2 · Dateien auf DC01 bringen und entsperren
 
-1. Skript und CSV nach DC01 kopieren, z. B. nach `C:\Skripte`
+1. Auf dem Host das Repo herunterladen (GitHub → **Code → Download ZIP**) und entpacken. Skript und CSV nach DC01 kopieren, z. B. nach `C:\Skripte`. Am einfachsten über die **erweiterte Sitzung**: im Hyper-V-Verbindungsfenster **Ansicht → Erweiterte Sitzung**, dann auf dem Host kopieren und in der VM im Explorer einfügen.
 2. Heruntergeladene Dateien sind von Windows markiert. Rechtsklick auf die `.ps1` → **Properties** (Eigenschaften) → Registerkarte **General** (Allgemein) → ganz unten Haken bei **Unblock** (Zulassen) → OK. Dasselbe für die CSV.
 
 > [!NOTE]
@@ -57,10 +60,10 @@ Das Skript listet jeden Benutzer mit Ziel-OU und Gruppe auf, ändert aber nichts
 .\New-LabBulkUsers.ps1
 ```
 
-Startkennwort eingeben. Am Ende steht z. B. *„114 angelegt, 0 übersprungen, 0 Fehler“*.
+Startkennwort eingeben. Am Ende steht z. B. *„15 angelegt, 0 übersprungen, 0 Fehler“*.
 
 > [!IMPORTANT]
-> Das Startkennwort muss zur Kennwortrichtlinie der Domäne passen. Standard sind 7 Zeichen mit Komplexität, in diesem Lab sind es 12 Zeichen. Sonst scheitert jeder einzelne Benutzer.
+> Das Startkennwort muss zur Kennwortrichtlinie der Domäne passen. Standard sind 7 Zeichen mit Komplexität. In diesem Lab sind es 12 Zeichen: Group Policy Management → **Default Domain Policy** → Edit → **Computer Configuration → Policies → Windows Settings → Security Settings → Account Policies → Password Policy** → *Minimum password length* `12`. Passt das Kennwort nicht, scheitert jeder einzelne Benutzer.
 
 Optional: `-PasswortBeiAnmeldungAendern`, dann müssen die Benutzer das Kennwort bei der ersten Anmeldung ändern.
 

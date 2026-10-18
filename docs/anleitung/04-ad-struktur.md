@@ -59,6 +59,8 @@ Neuer Benutzer: Rechtsklick auf die OU → **New → User** (Neu → Benutzer). 
 
 So übst du gleich die Praxis aus echten Firmen: Mit dem Admin-Konto wird nur verwaltet, nicht gesurft.
 
+**Ab jetzt** meldest du dich an den Servern mit `LAB\adm.vorname` an, nicht mehr mit `LAB\Administrator`. Den eingebauten Administrator hebst du für Notfälle auf.
+
 ## Schritt 4 · Neue Computer automatisch in die richtige OU
 
 Ohne Umstellung landen neue Computer im Container *Computers*:

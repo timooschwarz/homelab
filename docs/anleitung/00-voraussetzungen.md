@@ -62,6 +62,9 @@ Alle VMs entstehen über denselben Assistenten: Hyper-V-Manager → rechts **Neu
   <img src="../bilder/hyperv-neue-vm-festplatte.png" width="49%" alt="Virtuelle Festplatte anlegen">
 </p>
 
+> [!IMPORTANT]
+> Der Assistent fragt nicht nach Prozessoren und gibt jeder VM nur **einen**. Vor dem ersten Start: Rechtsklick auf die VM → **Einstellungen → Prozessor** → *Anzahl virtueller Prozessoren* **2**. Windows 11 startet mit einem Prozessor gar nicht erst.
+
 > [!WARNING]
 > Mit **dynamischem Arbeitsspeicher** und 2 GB Startwert bricht das Windows-Setup gern mit *„Windows Server installation has failed“* ab. Während der Installation immer 4 GB fest geben. Danach kann man wieder auf dynamisch stellen.
 
@@ -93,3 +96,20 @@ Vor jedem größeren Schritt einen **Prüfpunkt** setzen: Rechtsklick auf die VM
 | DHCP-Bereich | `10.0.0.100` – `10.0.0.200` |
 
 `.test` ist eine reservierte Endung, die es im Internet nie geben wird. Für ein Lab ist das sicherer als eine echte Domain oder `.local`.
+
+## Begriffe, die oft vorkommen
+
+| Begriff | Bedeutung |
+|---|---|
+| **AD** (Active Directory) | Verzeichnis aller Benutzer, Gruppen und Computer der Domäne |
+| **DC** (Domain Controller) | Server, der das AD bereitstellt und Anmeldungen prüft, hier DC01 |
+| **OU** (Organizational Unit) | Ordner im AD, an den man GPOs hängt |
+| **GPO** (Group Policy Object) | Gruppenrichtlinie, verteilt Einstellungen an Computer oder Benutzer |
+| **NetBIOS-Name** | Kurzer Domänenname `LAB`, wie in `LAB\abeispiel` |
+| **A- und PTR-Eintrag** | DNS: Name → IP (A) und IP → Name (PTR) |
+| **NAT** | Übersetzt die Lab-Adressen auf die des Hosts, damit VMs ins Internet kommen |
+| **NRPT** | Regel auf dem Host: nur Namen auf `.lab.test` gehen an DC01 |
+| **DSRM** | Wiederherstellungsmodus des DC mit eigenem Kennwort |
+| **NTFS-Rechte** | Rechte auf Ordner und Dateien (Registerkarte *Security*) |
+| **ABE** (Access-based Enumeration) | Zugriffsbasierte Aufzählung: blendet Ordner ohne Recht aus |
+| **LAPS** | Eigenes, zufälliges Kennwort für den lokalen Administrator jedes Rechners |

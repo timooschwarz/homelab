@@ -56,3 +56,5 @@ Add-DnsClientNrptRule -Namespace ".lab.test" -NameServers "10.0.0.10"
 | VM hat nur `169.254.x.x` | Kein DHCP (DC01 aus) oder falscher Switch | DC01 starten, Switch der VM prüfen |
 | Ping auf `10.0.0.1` geht, Internet nicht | NAT fehlt oder falsches Präfix | `Get-NetNat` prüfen, ggf. neu anlegen |
 | `New-NetIPAddress` meldet Fehler | Adapter heißt anders | `Get-NetAdapter` zeigt den genauen Namen |
+| `New-NetNat` scheitert | Windows erlaubt nur **ein** NAT, Docker Desktop oder WSL haben schon eins angelegt | `Get-NetNat` prüfen, anderes Netz nehmen oder das alte NAT entfernen |
+| Seltsame Verbindungsprobleme | Das Heimnetz nutzt selbst `10.0.0.x` | Im Router nachsehen, sonst für das Lab z. B. `10.10.0.0/24` nehmen |

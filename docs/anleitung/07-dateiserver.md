@@ -8,7 +8,7 @@
 
 ## Schritt 1 · VM mit zweiter Platte (Host)
 
-1. VM `FS01` anlegen wie DC01 ([Kapitel 2](02-domain-controller.md)), Systemplatte 60 GB
+1. VM `FS01` anlegen und Windows Server installieren wie DC01 in [Kapitel 2](02-domain-controller.md), Schritt 1–2. Systemplatte 60 GB, 2 Prozessoren. Die Hyper-V-Zeitsynchronisierung bleibt hier **an**, und unter *Automatische Startaktion* ebenfalls *Immer automatisch starten* wählen, mit 60 Sekunden Verzögerung.
 2. Rechtsklick → **Einstellungen → SCSI-Controller → Festplatte → Hinzufügen → Neu** → VHDX, dynamisch erweiterbar, Name `FS01-Daten.vhdx`, **50 GB**
 
 <img src="../bilder/hyperv-fs01-datenplatte.png" width="520" alt="Zweite Platte am SCSI-Controller">
@@ -22,7 +22,9 @@
 2. Feste IP: `10.0.0.40`, Mask `255.255.255.0`, Gateway `10.0.0.1`, DNS `10.0.0.10`
 3. Test: `ping dc01.lab.test`
 4. `sysdm.cpl` → Registerkarte **Computer Name → Change** → **Domain** `lab.test` → Neustart
-5. Auf DC01 in ADUC das Computerkonto von *Computers* nach **`Lab/Server`** verschieben
+5. Ab jetzt an FS01 mit `LAB\adm.vorname` anmelden. Nur so findet *Check Names* in Schritt 6 die Gruppen aus dem AD.
+6. Auf DC01 in ADUC das Computerkonto von **`Lab/Computer`** nach **`Lab/Server`** verschieben (wegen `redircmp` aus Kapitel 4 landet es zuerst in `Lab/Computer`)
+7. Test auf DC01: `nslookup 10.0.0.40` liefert `fs01.lab.test`
 
 ## Schritt 3 · Datenplatte einrichten (FS01)
 
@@ -64,7 +66,9 @@ E:\Shares\Abteilungen\
 
 ## Schritt 6 · NTFS-Rechte pro Abteilungsordner (FS01)
 
-Erst das Prinzip, dann die Klicks:
+**Zuerst der Stammordner** `E:\Shares\Abteilungen`: Von `E:\` erbt *Users* das Recht, Ordner und Dateien anzulegen. Sonst könnte jeder direkt in der Freigabe eigene Ordner ablegen. Rechtsklick → **Properties → Security → Advanced** → **Disable inheritance** → *Convert …* → bei *Users* **Edit** → nur **Read & execute**, Applies to **This folder only**.
+
+Dann jeder Abteilungsordner. Erst das Prinzip, dann die Klicks:
 
 ![Freigabe und NTFS: das strengere Recht gewinnt](../diagramme/freigabe-ntfs.png)
 

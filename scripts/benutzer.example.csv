@@ -1,6 +1,16 @@
 Vorname;Nachname;Benutzername;Abteilung
 Anna;Beispiel;abeispiel;Buchhaltung
+Bernd;Kassen;bkassen;Buchhaltung
+Carla;Bilanz;cbilanz;Buchhaltung
 Ben;Muster;bmuster;Vertrieb
+Vera;Verkauf;vverkauf;Vertrieb
+Kai;Kunde;kkunde;Vertrieb
 Clara;Test;ctest;IT
+Dennis;Server;dserver;IT
+Nina;Netz;nnetz;IT
 David;Probe;dprobe;Personal
+Petra;Lohn;plohn;Personal
+Hanna;Urlaub;hurlaub;Personal
 Eva;Demo;edemo;Leitung
+Lars;Chef;lchef;Leitung
+Greta;Plan;gplan;Leitung

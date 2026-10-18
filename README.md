@@ -22,8 +22,9 @@
 6. [Teil 5 · Optional: Linux-Dienste und MECM](#teil-5--optional-linux-dienste-und-mecm)
 7. [Betrieb: Starten und Stoppen](#betrieb-starten-und-stoppen)
 8. [Fehler, aus denen ich am meisten gelernt habe](#fehler-aus-denen-ich-am-meisten-gelernt-habe)
-9. [Wie es weitergeht](#wie-es-weitergeht)
-10. [Aufbau des Repos](#aufbau-des-repos)
+9. [Was ich dabei gelernt habe](#was-ich-dabei-gelernt-habe)
+10. [Wie es weitergeht](#wie-es-weitergeht)
+11. [Aufbau des Repos](#aufbau-des-repos)
 
 ---
 
@@ -49,6 +50,18 @@ Ich habe dieses Lab als Junior Admin aufgebaut, um Alltagsaufgaben aus der Firma
 > Die Server laufen auf Englisch. Klickwege stehen deshalb so da: **English name** (deutscher Name).
 
 **Zeitbedarf:** Teil 1–4 etwa ein Tag. Teil 5 ist optional, MECM allein braucht einen halben Tag.
+
+**Getestet mit** (Stand Oktober 2026):
+
+| Komponente | Version |
+|---|---|
+| Hyper-V-Host | Windows 11 mit Hyper-V (ab Pro), 64 GB RAM |
+| Server | Windows Server 2025 Evaluation, englische Oberfläche |
+| Client | Windows 11, deutsche Oberfläche |
+| MECM | Configuration Manager Current Branch, Build 9141 |
+| Datenbank | SQL Server 2022 Evaluation |
+| Linux | Ubuntu Server 26.04 LTS mit Docker |
+| NetBox · Infisical | v4.7.2 · v0.166.8 |
 
 ---
 
@@ -82,6 +95,8 @@ Das Herz des Labs: DC01 wird Domain Controller für `lab.test`, bekommt DNS und 
 | [5 · Benutzer per Skript](docs/anleitung/05-benutzer-per-skript.md) | Über 100 Testbenutzer aus einer CSV, mit Probelauf |
 
 ![AD-Struktur mit OUs, GPOs und Gruppen](docs/diagramme/ad-struktur.png)
+
+<sub>Stand des fertigen Labs. Einige GPOs (Systemsteuerung sperren, Ping, Design, Firewall für MECM) gehen über die Anleitung hinaus und sind in der [Aufbau-Referenz](docs/aufbau.md#gruppenrichtlinien) beschrieben.</sub>
 
 **[→ Weiter mit Kapitel 2](docs/anleitung/02-domain-controller.md)**
 
@@ -160,6 +175,19 @@ Alle 25 Fälle: [Fehlerbehebung](docs/fehlerbehebung.md)
 
 ---
 
+## Was ich dabei gelernt habe
+
+- **Mit einem Benutzer jeder Abteilung testen.** Ein Testkonto pro Abteilung hat zwei vertauschte Ordnerrechte und ein falsches NTFS-Recht lange versteckt. Erst der Test mit Kollegen aus derselben Abteilung hat sie gezeigt.
+- **Fehler ohne Meldung systematisch eingrenzen.** Wenn S: einfach fehlt, die Kette Benutzer → Gruppe → GPO → Freigabe → NTFS von vorne prüfen, mit `gpresult /r` und `whoami /groups`, statt zu raten.
+- **Rechte über Gruppen, Freigabe großzügig, NTFS streng.** So gibt es nur eine Stelle, an der Zugriffe gesteuert werden.
+- **DNS zuerst.** Domänenbeitritt, Anmeldung, MECM und Reverse Proxy hängen davon ab. Ein falscher PTR-Eintrag ist lange nicht aufgefallen.
+- **Getrennte Konten und LAPS.** Verwaltet wird mit dem Admin-Konto, gearbeitet mit dem normalen Konto, und jeder Rechner hat ein eigenes lokales Admin-Kennwort.
+- **Vor jedem Umbau sichern.** Prüfpunkt der VM und GPO-Sicherung kosten eine Minute und haben mehrmals eine Neuinstallation erspart.
+- **Abhängigkeiten früh klären.** MECM braucht die richtige SQL-Sortierung und ohne eigene PKI Enhanced HTTP. Beides fällt erst spät auf, wenn man es nicht vorher weiß.
+- **Dokumentieren, während man baut.** Jede Änderung steht im [Changelog](docs/changelog.md), IP-Adressen und VMs stehen in NetBox.
+
+---
+
 ## Wie es weitergeht
 
 ![Roadmap: Ausbaustufen](docs/diagramme/roadmap.png)
@@ -188,3 +216,5 @@ scripts/
 ---
 
 Alle Namen, Benutzer und Adressen sind Testdaten. Kennwörter stehen nicht in diesem Repo. Nutzung auf eigene Gefahr, bitte nur in einer eigenen Testumgebung.
+
+Lizenz: Anleitung, Screenshots und Grafiken unter [CC BY 4.0](LICENSE-docs.md), Skripte unter [MIT](LICENSE).

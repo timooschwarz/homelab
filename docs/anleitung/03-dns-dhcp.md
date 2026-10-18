@@ -19,14 +19,14 @@ Damit `nslookup 10.0.0.10` einen Namen liefert und nicht *„Non-existent domain
 
 ## Schritt 2 · Einträge für feste Server
 
-Feste Server (FS01, TOOLS01 …) bekommen von Hand einen Eintrag: **Forward Lookup Zones** → `lab.test` → Rechtsklick → **New Host (A or AAAA)** (Neuer Host) → Name und IP → Haken bei **Create associated pointer (PTR) record** (Verknüpften PTR-Eintrag erstellen).
+Windows-Server, die der Domäne beitreten (FS01, CM01), tragen sich selbst ein. Von Hand brauchst du Einträge nur für Rechner **ohne** Domänenbeitritt, etwa die Linux-VMs TOOLS01 und NETBOX01 aus Kapitel 10: **Forward Lookup Zones** → `lab.test` → Rechtsklick → **New Host (A or AAAA)** (Neuer Host) → Name und IP → Haken bei **Create associated pointer (PTR) record** (Verknüpften PTR-Eintrag erstellen).
 
 <p align="center">
   <img src="../bilder/dns-a-eintrag-ptr.png" width="36%" alt="A-Eintrag mit PTR">
   <img src="../bilder/dns-forward-zone.png" width="62%" alt="Forward-Zone lab.test">
 </p>
 
-Windows-Rechner in der Domäne tragen sich selbst ein. Notfalls auf dem Rechner `ipconfig /registerdns`.
+Fehlt bei einem Windows-Rechner der Eintrag, auf dem Rechner `ipconfig /registerdns` ausführen.
 
 > [!WARNING]
 > Ein falscher PTR-Eintrag fällt lange nicht auf. Im Lab zeigte `10.0.0.10` einmal auf `tools01` statt auf `dc01`. Deshalb nach jedem neuen Server einmal `nslookup <IP>` testen.

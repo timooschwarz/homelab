@@ -11,11 +11,13 @@
 |---|---|
 | Name | `CLIENT01` |
 | Generation | 2 |
-| Arbeitsspeicher | 4096 MB |
+| Prozessoren | **2** (nach dem Assistenten in den Einstellungen) |
+| Arbeitsspeicher | 4096 MB, dynamisch aus |
 | Netzwerk | `LAB` |
 | Festplatte | 64 GB |
+| Installation | Windows-11-ISO |
 
-Vor dem ersten Start: Rechtsklick → **Einstellungen → Sicherheit** → Haken bei **Trusted Platform Module aktivieren**. Ohne TPM verweigert Windows 11 die Installation.
+Vor dem ersten Start: Rechtsklick → **Einstellungen → Sicherheit** → Haken bei **Trusted Platform Module aktivieren**. Ohne TPM und mit nur einem Prozessor verweigert Windows 11 die Installation.
 
 ## Schritt 2 · Windows installieren (CLIENT01)
 
@@ -24,7 +26,7 @@ Vor dem ersten Start: Rechtsklick → **Einstellungen → Sicherheit** → Haken
 
    <img src="../bilder/client-oobe-name.png" width="480" alt="Gerätename bei der Einrichtung">
 
-3. Ein **lokales** Konto anlegen (*Für Arbeit oder Schule einrichten* → *Anmeldeoptionen* → *Stattdessen einer Domäne beitreten*)
+3. Ein **lokales** Konto anlegen (*Für Arbeit oder Schule einrichten* → *Anmeldeoptionen* → *Stattdessen einer Domäne beitreten*). Die Option heißt so, legt aber nur ein lokales Konto an. Der echte Domänenbeitritt kommt in Schritt 4.
 
 ## Schritt 3 · Netzwerk prüfen (CLIENT01)
 

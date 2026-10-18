@@ -19,6 +19,7 @@ Namensschema: `GPO-<Computer|Benutzer>-<Zweck>`. So sieht man in der Liste sofor
 | `GPO-Computer-RDP` | Lab/Computer | [Schritt 3](#schritt-3--rdp-nur-für-bestimmte-abteilungen) |
 | `GPO-Computer-LAPS` | Lab/Computer, Lab/Server | [Schritt 4](#schritt-4--windows-laps) |
 | `GPO-DC-Zeitserver` | Domain Controllers | [Schritt 5](#schritt-5--zeitquelle-für-die-domäne) |
+| `GPO-Computer-LokaleAdmins` | Lab/Computer | [Schritt 3](#schritt-3--rdp-nur-für-bestimmte-abteilungen), erst für MECM in Kapitel 11 nötig |
 
 Vor dem ersten Umbau alle GPOs sichern: **Group Policy Objects** → Rechtsklick → **Back Up All…** (Alle sichern) → Ordner mit Datum.
 
@@ -55,7 +56,7 @@ GPO `GPO-RDP-Freigabe` an **Lab/Computer** und **Lab/Server**:
 
 1. **Computer Configuration → Policies → Administrative Templates → Windows Components → Remote Desktop Services → Remote Desktop Session Host → Connections** → *Allow users to connect remotely by using Remote Desktop Services* → **Enabled**
 2. **Computer Configuration → Policies → Windows Settings → Security Settings → Windows Defender Firewall with Advanced Security → Inbound Rules** → **New Rule** → **Predefined: Remote Desktop** → **Allow the connection**
-3. Die neue Regel öffnen → Registerkarte **Scope** → *Remote IP address* → **These IP addresses** → `10.0.0.0/24`
+3. Die vordefinierte Gruppe legt **mehrere** Regeln an (TCP, UDP, Shadow). **Jede** öffnen → Registerkarte **Scope** → *Remote IP address* → **These IP addresses** → **Add** → *This IP address or subnet* `10.0.0.0/24`
 
 ## Schritt 3 · RDP nur für bestimmte Abteilungen
 
@@ -79,7 +80,7 @@ Wer nicht in diesen Gruppen ist, bekommt beim RDP-Versuch:
 
 Das ist gewollt. An der Hyper-V-Konsole kann sich trotzdem jeder anmelden.
 
-Nach demselben Muster wird ein Dienstkonto zum lokalen Admin: neue GPO `GPO-Computer-LokaleAdmins`, Group name **`Administrators (built-in)`**, Member `LAB\svc_cm_push`.
+Nach demselben Muster wird ein Dienstkonto zum lokalen Admin: neue GPO `GPO-Computer-LokaleAdmins` an **Lab/Computer**, Group name **`Administrators (built-in)`**, Member `LAB\svc_cm_push`. Die brauchst du erst für MECM in Kapitel 11, du kannst sie aber gleich mit anlegen.
 
 ## Schritt 4 · Windows LAPS
 
@@ -112,7 +113,7 @@ GPO `GPO-DC-Zeitserver` an der OU **Domain Controllers** →
 - *Configure Windows NTP Client* → **Enabled**, NtpServer `de.pool.ntp.org,0x8`, Type `NTP`
 - *Enable Windows NTP Client* → **Enabled**
 
-Alle anderen Rechner holen sich die Zeit automatisch vom DC. Prüfen auf DC01 mit `w32tm /query /status`. Als *Source* muss `de.pool.ntp.org` stehen, nicht *VM IC Time Synchronization Provider*.
+Alle anderen Rechner der Domäne holen sich die Zeit vom DC. Bei FS01 und CLIENT01 darf die Hyper-V-Zeitsynchronisierung an bleiben, nur bei DC01 ist sie aus (Kapitel 2). Auf DC01 `gpupdate /force` und `w32tm /resync`, dann prüfen mit `w32tm /query /status`. Als *Source* muss `de.pool.ntp.org` stehen, nicht *VM IC Time Synchronization Provider*.
 
 ## Prüfen
 

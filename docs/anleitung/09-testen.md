@@ -3,7 +3,7 @@
 [← Kapitel 8](08-gruppenrichtlinien.md) · [Übersicht](../../README.md#inhaltsverzeichnis) · weiter: [Kapitel 10 · Linux-Dienste →](10-linux-dienste.md)
 
 > **Ziel:** Nachweisen, dass Rechte, Laufwerke und GPOs für **jede** Abteilung stimmen.
-> **Dauer:** ca. 30 Minuten · **Wo:** CLIENT01 (Hyper-V-Konsole)
+> **Dauer:** ca. 30 Minuten · **Wo:** CLIENT01 (Hyper-V-Konsole), für die RDP-Tests der Host
 
 Die meisten Fehler in diesem Lab sind erst beim Testen mit mehreren Konten aufgefallen. Ein Test mit nur einem Benutzer pro Abteilung reicht nicht.
 
@@ -21,7 +21,7 @@ Die meisten Fehler in diesem Lab sind erst beim Testen mit mehreren Konten aufge
 
 ## Testplan
 
-Für **jede** Abteilung mit einem Benutzer anmelden:
+Für **jede** Abteilung mit einem Benutzer anmelden, für Test 4 mit einem zweiten aus derselben Abteilung (die Vorlage aus Kapitel 5 hat drei pro Abteilung):
 
 | # | Test | Erwartet |
 |---|---|---|
@@ -32,6 +32,8 @@ Für **jede** Abteilung mit einem Benutzer anmelden:
 | 5 | RDP auf CLIENT01 als Buchhaltung oder Vertrieb | klappt |
 | 6 | RDP auf CLIENT01 als andere Abteilung | wird verweigert |
 | 7 | `.\Administrator` mit dem LAPS-Kennwort | klappt |
+
+**So testest du RDP (Test 5 und 6):** Auf dem **Host** `mstsc` starten → als Computer die IP von CLIENT01 (`ipconfig` auf CLIENT01, z. B. `10.0.0.100`) oder `client01.lab.test`, wenn die NRPT-Regel aus Kapitel 1 gesetzt ist. Eine RDP-Anmeldung meldet die Sitzung an der Hyper-V-Konsole ab.
 
 ![Laufwerk S: beim Benutzer](../bilder/laufwerk-s-client.png)
 
