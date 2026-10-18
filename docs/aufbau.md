@@ -1,6 +1,6 @@
 # Aufbau
 
-![Netzwerk des Labs](diagramme/netzwerk.png)
+![Netzwerk des Labs](diagramme/netzwerk-2026-10-18.png)
 
 ## Netz
 
