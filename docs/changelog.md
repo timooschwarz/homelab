@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-10-18
+- MECM: erste Anwendung (7-Zip) verteilt, als Available im Softwarecenter und als Required ohne Klick, daraus Kapitel 12
 - 114 zusätzliche Testbenutzer per [`New-LabBulkUsers.ps1`](../scripts/New-LabBulkUsers.ps1) in fünf Abteilungs-OUs, neue Gruppen GG-Personal und GG-Leitung
 - FS01: Ordner Personal und Leitung, NTFS-Fehler bei einem bestehenden Abteilungsordner (*This folder only*) korrigiert
 - Laufwerk S: für die neuen Abteilungen ergänzt und getestet

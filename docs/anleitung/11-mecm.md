@@ -1,6 +1,6 @@
 # Kapitel 11 · MECM (Configuration Manager)
 
-[← Kapitel 10](10-linux-dienste.md) · [Übersicht](../../README.md#inhaltsverzeichnis)
+[← Kapitel 10](10-linux-dienste.md) · [Übersicht](../../README.md#inhaltsverzeichnis) · weiter: [Kapitel 12 · Software verteilen →](12-softwareverteilung.md)
 
 [![MECM](https://img.shields.io/badge/-MECM-107C10?style=flat-square)](../../README.md#thema-mecm) [![Active Directory](https://img.shields.io/badge/-Active%20Directory-378ADD?style=flat-square)](../../README.md#thema-ad) [![Gruppenrichtlinien](https://img.shields.io/badge/-Gruppenrichtlinien-7F77DD?style=flat-square)](../../README.md#thema-gpo)
 
@@ -194,4 +194,4 @@ Fortschritt auf CLIENT01 in `C:\Windows\ccmsetup\Logs\ccmsetup.log`. Ganz unten 
 | CLIENT01 erscheint nicht unter Devices | Discovery sucht nicht in `Lab` oder lief noch nicht | Schritt 7, *Run Full Discovery Now* |
 | Client installiert, aber *Client Activity* leer | Keine Boundary Group mit Standortzuweisung | Schritt 7 |
 
-Wie es danach weitergeht, etwa Anwendungen verteilen und Updates ausrollen: [Roadmap](../roadmap.md)
+Weiter geht es mit [Kapitel 12](12-softwareverteilung.md): die erste Anwendung verteilen.

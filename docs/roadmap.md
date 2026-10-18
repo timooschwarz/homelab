@@ -35,7 +35,7 @@ Das Lab zieht auf einen eigenen Mini-PC in einem 10-Zoll-Rack um. So wird verkab
 
 - Helpdesk-Delegation: eigene Gruppe darf nur Kennwörter zurücksetzen und Konten entsperren
 - Joiner / Mover / Leaver als Prozess und Skript
-- MECM: Anwendungen verteilen, Betriebssystem per Tasksequenz ausrollen
+- MECM: Betriebssystem per Tasksequenz ausrollen (Anwendungen verteilen ✅, Kapitel 12)
 - NTLM-Nutzung im Lab auswerten (Vorbereitung auf NTLM-Abschaltung)
 - AD-Sicherheitscheck mit PingCastle, Angriffspfade mit BloodHound CE
 - Monatlicher Notfall-Tag: etwas absichtlich kaputt machen und wiederherstellen
