@@ -45,11 +45,12 @@ flowchart LR
 | 7 | [Dateiserver](docs/anleitung/07-dateiserver.md) | Freigabe, NTFS-Rechte, zugriffsbasierte Aufzählung |
 | 8 | [Gruppenrichtlinien](docs/anleitung/08-gruppenrichtlinien.md) | Laufwerk S:, RDP, LAPS, Zeit |
 | 9 | [Testen](docs/anleitung/09-testen.md) | Testplan, `gpresult`, wenn S: fehlt |
-| 10 | [Linux-Dienste](docs/anleitung/10-linux-dienste.md) | Ubuntu, Docker, Uptime Kuma, Ausblick MECM |
+| 10 | [Linux-Dienste](docs/anleitung/10-linux-dienste.md) | Ubuntu, Docker, Uptime Kuma, NetBox |
+| 11 | [MECM](docs/anleitung/11-mecm.md) | SQL Server, Configuration Manager, Client-Push |
 
-**So sind die Kapitel aufgebaut:** Ziel und Dauer · Voraussetzungen · nummerierte Schritte mit Angabe, auf welchem Rechner du gerade bist · Prüfen · häufige Fehler. Über 30 Screenshots stammen direkt aus dem Lab.
+**So sind die Kapitel aufgebaut:** Ziel und Dauer · Voraussetzungen · nummerierte Schritte mit Angabe, auf welchem Rechner du gerade bist · Prüfen · häufige Fehler. Rund 40 Screenshots stammen direkt aus dem Lab.
 
-Gearbeitet wird überwiegend mit der Oberfläche. PowerShell nur dort, wo es nicht anders geht oder deutlich schneller ist. Für Kapitel 0–9 solltest du etwa einen Tag einplanen.
+Gearbeitet wird überwiegend mit der Oberfläche. PowerShell nur dort, wo es nicht anders geht oder deutlich schneller ist. Für Kapitel 0–9 solltest du etwa einen Tag einplanen, Kapitel 10 und 11 sind optional.
 
 <p align="center">
   <img src="docs/bilder/gpo-laufwerk-s.png" width="49%" alt="GPO mit Laufwerkszuordnungen">
@@ -79,7 +80,7 @@ Alle 25 Fälle: [Fehlerbehebung](docs/fehlerbehebung.md)
 
 ```
 docs/
-  anleitung/          Schritt-für-Schritt-Anleitung (Kapitel 0–10)
+  anleitung/          Schritt-für-Schritt-Anleitung (Kapitel 0–11)
   bilder/             Screenshots
   aufbau.md           Referenz des fertigen Labs
   fehlerbehebung.md   Gelöste Fehler mit Ursache und Lösung

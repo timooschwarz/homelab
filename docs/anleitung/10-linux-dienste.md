@@ -1,6 +1,6 @@
 # Kapitel 10 · Linux-Dienste (optional)
 
-[← Kapitel 9](09-testen.md) · [Übersicht](../../README.md#anleitung)
+[← Kapitel 9](09-testen.md) · [Übersicht](../../README.md#anleitung) · weiter: [Kapitel 11 · MECM →](11-mecm.md)
 
 > **Ziel:** Eine Ubuntu-VM mit Docker für Überwachung, Reverse Proxy, Jump Host und Kennwortverwaltung.
 > **Dauer:** ca. 90 Minuten · **Wo:** Host, danach TOOLS01 (per SSH)
@@ -109,18 +109,8 @@ Auf einer eigenen VM `NETBOX01` (`10.0.0.30`, 4 GB fest) läuft **NetBox** per `
 
 ![NetBox: alle VMs des Labs](../bilder/netbox-vms.png)
 
-## Ausblick · MECM
+## Weiter mit MECM
 
-Auf `CM01` (`10.0.0.20`) läuft Microsoft Configuration Manager. Das ist ein eigenes großes Thema: SQL Server, Windows ADK, Schema-Erweiterung, Site-Installation. Die wichtigsten Stolpersteine aus diesem Lab:
-
-<p align="center">
-  <img src="../bilder/mecm-setup-standort.png" width="40%" alt="MECM-Setup: Standortcode">
-  <img src="../bilder/mecm-konsole-geraete.png" width="58%" alt="MECM-Konsole mit Geräten">
-</p>
-
-- SQL Server braucht **festen** Arbeitsspeicher, 8 GB für die ganze VM
-- Ohne eigene PKI scheitert der Client mit `CCM_E_NO_CLIENT_PKI_CERT`, wenn die Site auf *HTTPS only* steht. Lösung: Communication Security auf **Enhanced HTTP**
-- Für Client-Push ein eigenes Dienstkonto, das per GPO lokaler Admin auf den Clients ist ([Kapitel 8](08-gruppenrichtlinien.md#schritt-3--rdp-nur-für-bestimmte-abteilungen))
-- Configuration Manager bekommt ab Version 2609 nur noch ein Release pro Jahr, Microsoft entwickelt vor allem Intune weiter
+Auf `CM01` (`10.0.0.20`) läuft Microsoft Configuration Manager. Die komplette Einrichtung mit SQL Server, ADK und Client-Push steht in [Kapitel 11](11-mecm.md).
 
 Wie es danach weitergeht: [Roadmap](../roadmap.md)
