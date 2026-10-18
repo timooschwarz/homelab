@@ -15,6 +15,8 @@ Wazuh ist ein kostenloses **SIEM** (Security Information and Event Management). 
 | **Wazuh-Server** (LOG01) | Nimmt Ereignisse an (Manager), speichert sie (Indexer), zeigt sie an (Dashboard) |
 | **Wazuh-Agent** (jeder Windows-Rechner) | Liest die Windows-Ereignisprotokolle und schickt sie an LOG01 |
 
+![Weg einer Fehlanmeldung bis ins Dashboard](../diagramme/wazuh-ablauf.png)
+
 | Port | Wofür |
 |---|---|
 | 443 | Dashboard im Browser |
