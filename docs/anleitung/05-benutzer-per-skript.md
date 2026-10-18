@@ -1,22 +1,25 @@
-# 5 · Testbenutzer per Skript
+# Kapitel 5 · Testbenutzer per Skript
 
-[← 4 · AD-Struktur](04-ad-struktur.md) · [Übersicht](../../README.md#anleitung) · weiter: [6 · Client →](06-client.md)
+[← Kapitel 4](04-ad-struktur.md) · [Übersicht](../../README.md#anleitung) · weiter: [Kapitel 6 · Client →](06-client.md)
 
-Ein paar Benutzer legt man per Hand an. Für realistische Tests (Rechte, GPOs, Laufwerke) braucht man aber mehr. Das Skript [`New-LabBulkUsers.ps1`](../../scripts/New-LabBulkUsers.ps1) legt sie aus einer CSV an.
+> **Ziel:** Über 100 realistische Testbenutzer in Abteilungs-OUs, jeweils in der richtigen Gruppe.
+> **Dauer:** ca. 15 Minuten · **Wo:** DC01
+
+Ein paar Benutzer legt man per Hand an. Für realistische Tests von Rechten, GPOs und Laufwerken braucht man aber mehr, und 100 Benutzer klickt niemand. Dafür gibt es [`New-LabBulkUsers.ps1`](../../scripts/New-LabBulkUsers.ps1).
 
 ## Was das Skript macht
 
-- Benutzer landen in `Lab/Benutzer/<Abteilung>`
-- Fehlende Abteilungs-OUs und Gruppen `GG-<Abteilung>` werden angelegt
-- Jeder Benutzer kommt in seine Abteilungsgruppe
-- Das Startkennwort wird beim Start **abgefragt**, es steht nicht in der CSV
-- Alle bekommen die Beschreibung *Bulk-Import Testbenutzer*, so findet man sie später wieder
-- Vorhandene Benutzer werden übersprungen, das Skript darf also mehrfach laufen
-- `-WhatIf` zeigt nur an, was passieren würde
+- Legt Benutzer in `Lab/Benutzer/<Abteilung>` an
+- Legt fehlende Abteilungs-OUs und Gruppen `GG-<Abteilung>` selbst an
+- Nimmt jeden Benutzer in seine Abteilungsgruppe auf
+- Fragt das Startkennwort beim Start ab, es steht **nicht** in der CSV
+- Gibt allen die Beschreibung *Bulk-Import Testbenutzer*, damit man sie später wiederfindet
+- Überspringt vorhandene Benutzer, kann also mehrfach laufen
+- Mit `-WhatIf` zeigt es nur an, was passieren würde
 
-## CSV vorbereiten
+## Schritt 1 · CSV vorbereiten
 
-Trennzeichen Semikolon (passt zu Excel mit deutschen Einstellungen), Datei als `benutzer.csv` neben das Skript legen. Vorlage: [`benutzer.example.csv`](../../scripts/benutzer.example.csv)
+Trennzeichen Semikolon, Datei als `benutzer.csv` neben das Skript legen. Vorlage: [`benutzer.example.csv`](../../scripts/benutzer.example.csv)
 
 ```
 Vorname;Nachname;Benutzername;Abteilung
@@ -24,30 +27,48 @@ Anna;Beispiel;abeispiel;Buchhaltung
 Ben;Muster;bmuster;Vertrieb
 ```
 
-## Ausführen
+Der Benutzername darf höchstens 20 Zeichen lang sein.
 
-1. Skript und CSV nach DC01 kopieren, z. B. `C:\Skripte`
-2. Heruntergeladene Dateien entsperren: Rechtsklick → Eigenschaften → Registerkarte **Allgemein** → unten Haken bei **Zulassen**
-   Sonst kommt *„… is not digitally signed“*.
-3. PowerShell **als Administrator**:
+## Schritt 2 · Dateien auf DC01 bringen und entsperren
+
+1. Skript und CSV nach DC01 kopieren, z. B. nach `C:\Skripte`
+2. Heruntergeladene Dateien sind von Windows markiert. Rechtsklick auf die `.ps1` → **Eigenschaften** → Registerkarte **Allgemein** → ganz unten Haken bei **Zulassen** → OK. Dasselbe für die CSV.
+
+> [!NOTE]
+> Ohne Entsperren kommt *„… is not digitally signed. You cannot run this script on the current system.“* Bei englischem Windows heißt der Haken **Unblock**, und er steht auf **General**, nicht auf *Security*.
+
+## Schritt 3 · Probelauf
+
+PowerShell **als Administrator** öffnen:
 
 ```powershell
 cd C:\Skripte
-.\New-LabBulkUsers.ps1 -WhatIf     # Probelauf
-.\New-LabBulkUsers.ps1             # echter Lauf, fragt nach dem Startkennwort
+.\New-LabBulkUsers.ps1 -WhatIf
 ```
+
+Das Skript listet jeden Benutzer mit Ziel-OU und Gruppe auf, ändert aber nichts:
 
 ![Probelauf mit -WhatIf](../bilder/skript-whatif.png)
 
+## Schritt 4 · Echter Lauf
+
+```powershell
+.\New-LabBulkUsers.ps1
+```
+
+Startkennwort eingeben. Am Ende steht z. B. *„114 angelegt, 0 übersprungen, 0 Fehler“*.
+
 > [!IMPORTANT]
-> Das Startkennwort muss zur Kennwortrichtlinie der Domäne passen (Standard: 7 Zeichen und Komplexität; in diesem Lab 12 Zeichen). Sonst schlägt jeder einzelne Benutzer fehl.
+> Das Startkennwort muss zur Kennwortrichtlinie der Domäne passen. Standard sind 7 Zeichen mit Komplexität, in diesem Lab sind es 12 Zeichen. Sonst scheitert jeder einzelne Benutzer.
+
+Optional: `-PasswortBeiAnmeldungAendern`, dann müssen die Benutzer das Kennwort bei der ersten Anmeldung ändern.
 
 ## Prüfen
 
-- ADUC → `Lab/Benutzer` → F5: die Abteilungs-OUs mit Benutzern
+- ADUC → `Lab/Benutzer` → **F5**: Abteilungs-OUs mit Benutzern
 - Gruppe öffnen → Registerkarte **Mitglieder**
-- Log unter `C:\Temp\LabBulkUsers.log`
+- Log: `C:\Temp\LabBulkUsers.log`
 
-## Wieder entfernen
+## Wieder aufräumen
 
-ADUC → Rechtsklick auf `lab.test` → **Suchen** → Registerkarte *Erweitert* → Feld *Beschreibung* ist genau `Bulk-Import Testbenutzer`. Die Abteilungs-OUs sind gegen versehentliches Löschen geschützt: **Ansicht → Erweiterte Features**, dann OU → Eigenschaften → Registerkarte *Objekt* → Haken entfernen.
+ADUC → Rechtsklick auf `lab.test` → **Suchen** → Registerkarte *Erweitert* → Feld **Beschreibung** *ist genau* `Bulk-Import Testbenutzer`. Die Abteilungs-OUs sind gegen versehentliches Löschen geschützt: **Ansicht → Erweiterte Features**, dann OU → Eigenschaften → Registerkarte **Objekt** → Haken entfernen.

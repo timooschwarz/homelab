@@ -47,7 +47,9 @@ flowchart LR
 | 9 | [Testen](docs/anleitung/09-testen.md) | Testplan, `gpresult`, wenn S: fehlt |
 | 10 | [Linux-Dienste](docs/anleitung/10-linux-dienste.md) | Ubuntu, Docker, Uptime Kuma, Ausblick MECM |
 
-Die Anleitung arbeitet überwiegend mit der Oberfläche. PowerShell nur dort, wo es nicht anders geht oder deutlich schneller ist.
+**So sind die Kapitel aufgebaut:** Ziel und Dauer · Voraussetzungen · nummerierte Schritte mit Angabe, auf welchem Rechner du gerade bist · Prüfen · häufige Fehler. Über 30 Screenshots stammen direkt aus dem Lab.
+
+Gearbeitet wird überwiegend mit der Oberfläche. PowerShell nur dort, wo es nicht anders geht oder deutlich schneller ist. Für Kapitel 0–9 solltest du etwa einen Tag einplanen.
 
 <p align="center">
   <img src="docs/bilder/gpo-laufwerk-s.png" width="49%" alt="GPO mit Laufwerkszuordnungen">

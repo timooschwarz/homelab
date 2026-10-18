@@ -1,69 +1,82 @@
-# 8 · Gruppenrichtlinien
+# Kapitel 8 · Gruppenrichtlinien
 
-[← 7 · Dateiserver](07-dateiserver.md) · [Übersicht](../../README.md#anleitung) · weiter: [9 · Testen →](09-testen.md)
+[← Kapitel 7](07-dateiserver.md) · [Übersicht](../../README.md#anleitung) · weiter: [Kapitel 9 · Testen →](09-testen.md)
 
-Alle GPOs werden in der **Gruppenrichtlinienverwaltung** (Server-Manager → Tools) angelegt: Rechtsklick auf die Ziel-OU → **Gruppenrichtlinienobjekt hier erstellen und verknüpfen** → Name → Rechtsklick → **Bearbeiten**.
+> **Ziel:** Laufwerk S: je nach Abteilung, RDP nur für bestimmte Abteilungen, lokale Admin-Kennwörter per LAPS und eine saubere Zeitquelle.
+> **Dauer:** ca. 60 Minuten · **Wo:** DC01
 
-Namensschema: `GPO-<Computer|Benutzer>-<Zweck>`, dann sieht man in der Liste sofort, wofür sie ist.
+## So legst du eine GPO an
 
-| GPO | Verknüpft mit |
-|---|---|
-| [GPO-Benutzer-Laufwerk-S](#laufwerk-s-pro-abteilung) | Lab/Benutzer |
-| [GPO-RDP-Freigabe](#rdp-einschalten) | Lab/Computer, Lab/Server |
-| [GPO-Computer-RDP](#rdp-nur-für-bestimmte-abteilungen) | Lab/Computer |
-| [GPO-Computer-LAPS](#windows-laps) | Lab/Computer, Lab/Server |
-| [GPO-DC-Zeitserver](#zeit-für-die-domäne) | Domain Controllers |
+Server-Manager → **Tools → Gruppenrichtlinienverwaltung** → Rechtsklick auf die Ziel-OU → **Gruppenrichtlinienobjekt hier erstellen und verknüpfen…** → Name → Rechtsklick auf die neue GPO → **Bearbeiten**.
 
-## Laufwerk S: pro Abteilung
+Namensschema: `GPO-<Computer|Benutzer>-<Zweck>`. So sieht man in der Liste sofort, wofür eine GPO ist und ob sie Benutzer oder Computer betrifft.
 
-**Benutzerkonfiguration → Einstellungen → Windows-Einstellungen → Laufwerkzuordnungen** → Rechtsklick → Neu → **Zugeordnetes Laufwerk**:
+| GPO | Verknüpft mit | Kapitel |
+|---|---|---|
+| `GPO-Benutzer-Laufwerk-S` | Lab/Benutzer | [Schritt 1](#schritt-1--laufwerk-s-pro-abteilung) |
+| `GPO-RDP-Freigabe` | Lab/Computer, Lab/Server | [Schritt 2](#schritt-2--rdp-einschalten) |
+| `GPO-Computer-RDP` | Lab/Computer | [Schritt 3](#schritt-3--rdp-nur-für-bestimmte-abteilungen) |
+| `GPO-Computer-LAPS` | Lab/Computer, Lab/Server | [Schritt 4](#schritt-4--windows-laps) |
+| `GPO-DC-Zeitserver` | Domain Controllers | [Schritt 5](#schritt-5--zeitquelle-für-die-domäne) |
+
+Vor dem ersten Umbau alle GPOs sichern: **Gruppenrichtlinienobjekte** → Rechtsklick → **Alle sichern…** → Ordner mit Datum.
+
+## Schritt 1 · Laufwerk S: pro Abteilung
+
+GPO `GPO-Benutzer-Laufwerk-S` an **Lab/Benutzer** → Bearbeiten → **Benutzerkonfiguration → Einstellungen → Windows-Einstellungen → Laufwerkzuordnungen** → Rechtsklick → **Neu → Zugeordnetes Laufwerk**:
 
 | Registerkarte | Einstellung |
 |---|---|
-| Allgemein | Aktion **Ersetzen**, Pfad `\\fs01\Abteilungen\Buchhaltung`, Bezeichnung *Buchhaltung*, Laufwerk **S:** |
-| Gemeinsam | Haken bei **Zielgruppenadressierung auf Elementebene** → *Zielgruppenadressierung…* → Neues Element → **Sicherheitsgruppe** → `LAB\GG-Buchhaltung` |
+| Allgemein | Aktion **Ersetzen** · Pfad `\\fs01\Abteilungen\Buchhaltung` · Bezeichnung *Buchhaltung* · Laufwerksbuchstabe **S:** |
+| Gemeinsam | Haken bei **Zielgruppenadressierung auf Elementebene** → **Zielgruppenadressierung…** → *Neues Element* → **Sicherheitsgruppe** → `LAB\GG-Buchhaltung` |
 
-Für jede Abteilung ein Eintrag. Am schnellsten: Eintrag kopieren, einfügen, Pfad **und** Zielgruppe anpassen.
+Für jede Abteilung einen Eintrag. Am schnellsten: Eintrag kopieren, einfügen, dann **Pfad und Zielgruppe** anpassen.
 
 ![Fünf Zuordnungen für S:](../bilder/gpo-laufwerk-s.png)
 
 > [!TIP]
 > **Ersetzen** statt *Aktualisieren*: Sonst bleibt nach einem Abteilungswechsel die alte Zuordnung hängen.
 
+> [!WARNING]
+> Nach dem Kopieren steht im Targeting noch die **alte** Gruppe. Jeden Eintrag einmal öffnen und prüfen.
+
 > [!NOTE]
 > Hat der Benutzer auf das Ziel keine NTFS-Rechte, scheitert die Zuordnung **ohne Fehlermeldung**. S: fehlt dann einfach.
 
-## RDP einschalten
+## Schritt 2 · RDP einschalten
 
-Die Gruppe *Remotedesktopbenutzer* zu füllen reicht nicht. RDP muss auch an sein, und auf Servern ist es standardmäßig aus.
+Die Gruppe *Remotedesktopbenutzer* zu füllen reicht nicht. RDP muss auch eingeschaltet sein, und auf Servern ist es standardmäßig aus.
 
-**Computerkonfiguration → Richtlinien → Administrative Vorlagen → Windows-Komponenten → Remotedesktopdienste → Remotedesktop-Sitzungshost → Verbindungen** → *Benutzern die Remoteverbindung mithilfe der Remotedesktopdienste erlauben* → **Aktiviert**.
+GPO `GPO-RDP-Freigabe` an **Lab/Computer** und **Lab/Server**:
 
-Dazu die Firewall: **Computerkonfiguration → Richtlinien → Windows-Einstellungen → Sicherheitseinstellungen → Windows Defender Firewall mit erweiterter Sicherheit → Eingehende Regeln** → Neue Regel → *Vordefiniert: Remotedesktop* → im Anschluss in den Regeleigenschaften unter **Bereich** die Remote-IP auf `10.0.0.0/24` beschränken.
+1. **Computerkonfiguration → Richtlinien → Administrative Vorlagen → Windows-Komponenten → Remotedesktopdienste → Remotedesktop-Sitzungshost → Verbindungen** → *Benutzern die Remoteverbindung mithilfe der Remotedesktopdienste erlauben* → **Aktiviert**
+2. **Computerkonfiguration → Richtlinien → Windows-Einstellungen → Sicherheitseinstellungen → Windows Defender Firewall mit erweiterter Sicherheit → Eingehende Regeln** → Neue Regel → *Vordefiniert:* **Remotedesktop** → Zulassen
+3. Die neue Regel öffnen → Registerkarte **Bereich** → Remote-IP-Adresse → *Diese IP-Adressen:* `10.0.0.0/24`
 
-## RDP nur für bestimmte Abteilungen
+## Schritt 3 · RDP nur für bestimmte Abteilungen
 
-**Computerkonfiguration → Einstellungen → Systemsteuerungseinstellungen → Lokale Benutzer und Gruppen** → Neu → **Lokale Gruppe**:
+GPO `GPO-Computer-RDP` an **Lab/Computer** → **Computerkonfiguration → Einstellungen → Systemsteuerungseinstellungen → Lokale Benutzer und Gruppen** → Rechtsklick → **Neu → Lokale Gruppe**:
 
-- Gruppenname: **`Remotedesktopbenutzer (integriert)`** aus dem Dropdown wählen
-- Mitglieder hinzufügen: `LAB\GG-Buchhaltung`, `LAB\GG-Vertrieb`
+- Aktion: **Aktualisieren**
+- Gruppenname: **`Remotedesktopbenutzer (integriert)`** aus dem **Dropdown** wählen
+- Mitglieder → **Hinzufügen**: `LAB\GG-Buchhaltung`, `LAB\GG-Vertrieb`
 
 > [!WARNING]
-> Den Gruppennamen **nicht** von Hand eintippen. Wer sich vertippt (z. B. nur `ad`), legt auf jedem Client eine neue lokale Gruppe mit diesem Namen an, statt die richtige zu befüllen.
+> Den Gruppennamen **nicht** von Hand eintippen. Wer sich vertippt (im Lab einmal nur `ad`), legt auf jedem Client eine neue lokale Gruppe mit diesem Namen an, statt die richtige zu befüllen.
 
 Wer nicht in diesen Gruppen ist, bekommt beim RDP-Versuch:
 
 ![RDP verweigert](../bilder/rdp-verweigert.png)
 
-Das ist gewollt. Über die Hyper-V-Konsole (ohne erweiterten Sitzungsmodus) kann man sich trotzdem anmelden.
+Das ist gewollt. An der Hyper-V-Konsole kann sich trotzdem jeder anmelden.
 
-Nach demselben Muster lässt sich auch ein Dienstkonto zum lokalen Admin machen: Gruppe **`Administratoren (integriert)`**.
+Nach demselben Muster wird ein Dienstkonto zum lokalen Admin: neue GPO `GPO-Computer-LokaleAdmins`, Gruppe **`Administratoren (integriert)`**, Mitglied `LAB\svc_cm_push`.
 
-## Windows LAPS
+## Schritt 4 · Windows LAPS
 
 Jeder Rechner bekommt ein eigenes, zufälliges Kennwort für den lokalen Administrator, gespeichert im AD.
 
-Einmalig auf DC01 (PowerShell als Admin):
+**Einmalig** auf DC01, PowerShell als Administrator:
 
 ```powershell
 Update-LapsADSchema
@@ -71,23 +84,26 @@ Set-LapsADComputerSelfPermission -Identity "OU=Computer,OU=Lab,DC=lab,DC=test"
 Set-LapsADComputerSelfPermission -Identity "OU=Server,OU=Lab,DC=lab,DC=test"
 ```
 
-GPO: **Computerkonfiguration → Richtlinien → Administrative Vorlagen → System → LAPS**:
-- *Kennwortsicherungsverzeichnis konfigurieren* → **Aktiviert**, Active Directory
-- optional *Kennworteinstellungen* (Länge, Alter)
+GPO `GPO-Computer-LAPS` an **Lab/Computer** und **Lab/Server**:
 
-Und: **Sicherheitseinstellungen → Lokale Richtlinien → Sicherheitsoptionen → Konten: Status des Administratorkontos** → **Aktiviert**. Unter Windows 11 ist das eingebaute Admin-Konto sonst deaktiviert, LAPS setzt nur das Kennwort.
+1. **Computerkonfiguration → Richtlinien → Administrative Vorlagen → System → LAPS** → *Kennwortsicherungsverzeichnis konfigurieren* → **Aktiviert**, *Active Directory*
+2. Optional *Kennworteinstellungen* (Länge, Komplexität, Alter)
+3. **Computerkonfiguration → Richtlinien → Windows-Einstellungen → Sicherheitseinstellungen → Lokale Richtlinien → Sicherheitsoptionen** → *Konten: Status des Administratorkontos* → **Aktiviert**
+
+> [!NOTE]
+> Punkt 3 ist nötig, weil das eingebaute Administratorkonto unter Windows 11 deaktiviert ist. LAPS setzt nur das Kennwort, sonst kommt *„Ihr Konto wurde deaktiviert“*.
 
 Kennwort nachschauen: ADUC → Computerkonto → Eigenschaften → Registerkarte **LAPS**. Anmelden mit `.\Administrator`.
 
-## Zeit für die Domäne
+## Schritt 5 · Zeitquelle für die Domäne
 
-GPO an der OU **Domain Controllers**: **Computerkonfiguration → Richtlinien → Administrative Vorlagen → System → Windows-Zeitdienst → Zeitanbieter**:
+GPO `GPO-DC-Zeitserver` an der OU **Domain Controllers** → **Computerkonfiguration → Richtlinien → Administrative Vorlagen → System → Windows-Zeitdienst → Zeitanbieter**:
 
-- *Windows-NTP-Client konfigurieren* → Aktiviert, NtpServer `de.pool.ntp.org,0x8`, Typ `NTP`
-- *Windows-NTP-Client aktivieren* → Aktiviert
+- *Windows-NTP-Client konfigurieren* → **Aktiviert**, NtpServer `de.pool.ntp.org,0x8`, Type `NTP`
+- *Windows-NTP-Client aktivieren* → **Aktiviert**
 
-Alle anderen Rechner holen die Zeit automatisch vom DC. Prüfen auf DC01: `w32tm /query /status`.
+Alle anderen Rechner holen sich die Zeit automatisch vom DC. Prüfen auf DC01 mit `w32tm /query /status`. Als Quelle muss `de.pool.ntp.org` stehen, nicht *VM IC Time Synchronization Provider*.
 
-## GPOs sichern
+## Prüfen
 
-Gruppenrichtlinienverwaltung → **Gruppenrichtlinienobjekte** → Rechtsklick → **Alle sichern…** → Ordner mit Datum. Vor jedem größeren Umbau.
+Auf CLIENT01 `gpupdate /force`, ab- und wieder anmelden, dann `gpresult /r`. Unter *Angewendete Gruppenrichtlinienobjekte* müssen die passenden GPOs stehen. Den ausführlichen Testplan findest du in Kapitel 9.
