@@ -1,6 +1,6 @@
 # Kapitel 2 · Domain Controller DC01
 
-[← Kapitel 1](01-netzwerk.md) · [Übersicht](../../README.md#anleitung) · weiter: [Kapitel 3 · DNS und DHCP →](03-dns-dhcp.md)
+[← Kapitel 1](01-netzwerk.md) · [Übersicht](../../README.md#inhaltsverzeichnis) · weiter: [Kapitel 3 · DNS und DHCP →](03-dns-dhcp.md)
 
 > **Ziel:** Ein Windows Server 2025 als Domain Controller für die neue Domäne `lab.test`.
 > **Dauer:** ca. 45 Minuten · **Wo:** Host (VM anlegen), danach in DC01

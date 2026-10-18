@@ -1,6 +1,6 @@
 # Kapitel 3 · DNS und DHCP
 
-[← Kapitel 2](02-domain-controller.md) · [Übersicht](../../README.md#anleitung) · weiter: [Kapitel 4 · AD-Struktur →](04-ad-struktur.md)
+[← Kapitel 2](02-domain-controller.md) · [Übersicht](../../README.md#inhaltsverzeichnis) · weiter: [Kapitel 4 · AD-Struktur →](04-ad-struktur.md)
 
 > **Ziel:** Saubere Namensauflösung in beide Richtungen und automatische IP-Adressen für Clients.
 > **Dauer:** ca. 20 Minuten · **Wo:** DC01

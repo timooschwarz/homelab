@@ -1,6 +1,6 @@
 # Kapitel 4 · AD-Struktur: OUs, Gruppen, Konten
 
-[← Kapitel 3](03-dns-dhcp.md) · [Übersicht](../../README.md#anleitung) · weiter: [Kapitel 5 · Benutzer per Skript →](05-benutzer-per-skript.md)
+[← Kapitel 3](03-dns-dhcp.md) · [Übersicht](../../README.md#inhaltsverzeichnis) · weiter: [Kapitel 5 · Benutzer per Skript →](05-benutzer-per-skript.md)
 
 > **Ziel:** Eine OU-Struktur, an die sich GPOs sauber hängen lassen, Abteilungsgruppen und getrennte Konten.
 > **Dauer:** ca. 30 Minuten · **Wo:** DC01

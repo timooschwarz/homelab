@@ -1,6 +1,6 @@
 # Kapitel 1 · Netzwerk: eigener Switch mit NAT
 
-[← Kapitel 0](00-voraussetzungen.md) · [Übersicht](../../README.md#anleitung) · weiter: [Kapitel 2 · Domain Controller →](02-domain-controller.md)
+[← Kapitel 0](00-voraussetzungen.md) · [Übersicht](../../README.md#inhaltsverzeichnis) · weiter: [Kapitel 2 · Domain Controller →](02-domain-controller.md)
 
 > **Ziel:** Ein eigenes Lab-Netz `10.0.0.0/24`, das über den Host ins Internet kommt, ohne dein Heimnetz zu stören.
 > **Dauer:** ca. 10 Minuten · **Wo:** auf dem Host

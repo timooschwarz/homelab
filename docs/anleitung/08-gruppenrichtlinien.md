@@ -1,6 +1,6 @@
 # Kapitel 8 · Gruppenrichtlinien
 
-[← Kapitel 7](07-dateiserver.md) · [Übersicht](../../README.md#anleitung) · weiter: [Kapitel 9 · Testen →](09-testen.md)
+[← Kapitel 7](07-dateiserver.md) · [Übersicht](../../README.md#inhaltsverzeichnis) · weiter: [Kapitel 9 · Testen →](09-testen.md)
 
 > **Ziel:** Laufwerk S: je nach Abteilung, RDP nur für bestimmte Abteilungen, lokale Admin-Kennwörter per LAPS und eine saubere Zeitquelle.
 > **Dauer:** ca. 60 Minuten · **Wo:** DC01

@@ -1,6 +1,6 @@
 # Kapitel 11 · MECM (Configuration Manager)
 
-[← Kapitel 10](10-linux-dienste.md) · [Übersicht](../../README.md#anleitung)
+[← Kapitel 10](10-linux-dienste.md) · [Übersicht](../../README.md#inhaltsverzeichnis)
 
 > **Ziel:** Ein primärer Standort `LAB` auf CM01, der CLIENT01 findet und den Configuration-Manager-Client per Push installiert.
 > **Dauer:** ca. 3–4 Stunden, davon viel Warten · **Wo:** Host, DC01, CM01

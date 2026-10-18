@@ -1,6 +1,6 @@
 # Kapitel 6 · Windows-11-Client CLIENT01
 
-[← Kapitel 5](05-benutzer-per-skript.md) · [Übersicht](../../README.md#anleitung) · weiter: [Kapitel 7 · Dateiserver →](07-dateiserver.md)
+[← Kapitel 5](05-benutzer-per-skript.md) · [Übersicht](../../README.md#inhaltsverzeichnis) · weiter: [Kapitel 7 · Dateiserver →](07-dateiserver.md)
 
 > **Ziel:** Ein Windows-11-Rechner in der Domäne, an dem du dich mit den Testbenutzern anmeldest.
 > **Dauer:** ca. 40 Minuten · **Wo:** Host, danach CLIENT01

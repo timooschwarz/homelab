@@ -1,6 +1,6 @@
 # Kapitel 0 · Voraussetzungen
 
-[Übersicht](../../README.md#anleitung) · weiter: [Kapitel 1 · Netzwerk →](01-netzwerk.md)
+[Übersicht](../../README.md#inhaltsverzeichnis) · weiter: [Kapitel 1 · Netzwerk →](01-netzwerk.md)
 
 > **Ziel:** Hardware prüfen, Software besorgen, Hyper-V einschalten und eine Vorlage für neue VMs kennen.
 > **Dauer:** ca. 30 Minuten (plus Downloads) · **Wo:** auf deinem PC (Host)

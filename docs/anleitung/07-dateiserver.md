@@ -1,6 +1,6 @@
 # Kapitel 7 · Dateiserver FS01
 
-[← Kapitel 6](06-client.md) · [Übersicht](../../README.md#anleitung) · weiter: [Kapitel 8 · Gruppenrichtlinien →](08-gruppenrichtlinien.md)
+[← Kapitel 6](06-client.md) · [Übersicht](../../README.md#inhaltsverzeichnis) · weiter: [Kapitel 8 · Gruppenrichtlinien →](08-gruppenrichtlinien.md)
 
 > **Ziel:** Eine Freigabe `\\fs01\Abteilungen` mit einem Ordner pro Abteilung. Jeder sieht und bearbeitet nur seinen eigenen.
 > **Dauer:** ca. 60 Minuten · **Wo:** Host, danach FS01

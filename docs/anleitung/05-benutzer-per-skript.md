@@ -1,6 +1,6 @@
 # Kapitel 5 · Testbenutzer per Skript
 
-[← Kapitel 4](04-ad-struktur.md) · [Übersicht](../../README.md#anleitung) · weiter: [Kapitel 6 · Client →](06-client.md)
+[← Kapitel 4](04-ad-struktur.md) · [Übersicht](../../README.md#inhaltsverzeichnis) · weiter: [Kapitel 6 · Client →](06-client.md)
 
 > **Ziel:** Über 100 realistische Testbenutzer in Abteilungs-OUs, jeweils in der richtigen Gruppe.
 > **Dauer:** ca. 15 Minuten · **Wo:** DC01

@@ -1,5 +1,7 @@
 # Aufbau
 
+![Netzwerk des Labs](diagramme/netzwerk.png)
+
 ## Netz
 
 | Was | Wert |
@@ -33,6 +35,8 @@
 **Arbeitsspeicher:** Windows-VMs dynamisch, Linux-VMs und CM01 (SQL Server) fest. Siehe [Entscheidungen](entscheidungen.md).
 
 ## Active Directory
+
+![AD-Struktur](diagramme/ad-struktur.png)
 
 ```
 lab.test

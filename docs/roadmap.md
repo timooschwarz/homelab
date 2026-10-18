@@ -1,5 +1,7 @@
 # Roadmap
 
+![Roadmap](diagramme/roadmap.png)
+
 Jede Stufe baut auf der vorherigen auf: Vorlagen vor neuen Servern, Backup vor riskanten Umbauten, Logging vor der Firewall (damit man sieht, was geblockt wird).
 
 | # | Ausbaustufe | Neue VM | Status |
@@ -20,6 +22,14 @@ Jede Stufe baut auf der vorherigen auf: Vorlagen vor neuen Servern, Backup vor r
 | 13 | Ticketsystem und Inventar (GLPI) | – | geplant |
 | 14 | Entra ID und Intune, Co-Management | CLIENT02 | geplant |
 | 15 | Zweiter Domain Controller (Replikation, FSMO) | DC02 | Idee |
+
+## Geplante Hardware
+
+Das Lab zieht auf einen eigenen Mini-PC in einem 10-Zoll-Rack um. So wird verkabelt, und so reicht der Arbeitsspeicher:
+
+![Physische Verkabelung](diagramme/verkabelung.png)
+
+![RAM-Budget](diagramme/ram-budget.png)
 
 ## Weitere Ideen
 

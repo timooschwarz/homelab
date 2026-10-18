@@ -1,6 +1,6 @@
 # Kapitel 9 · Testen
 
-[← Kapitel 8](08-gruppenrichtlinien.md) · [Übersicht](../../README.md#anleitung) · weiter: [Kapitel 10 · Linux-Dienste →](10-linux-dienste.md)
+[← Kapitel 8](08-gruppenrichtlinien.md) · [Übersicht](../../README.md#inhaltsverzeichnis) · weiter: [Kapitel 10 · Linux-Dienste →](10-linux-dienste.md)
 
 > **Ziel:** Nachweisen, dass Rechte, Laufwerke und GPOs für **jede** Abteilung stimmen.
 > **Dauer:** ca. 30 Minuten · **Wo:** CLIENT01 (Hyper-V-Konsole)
