@@ -4,6 +4,7 @@
 
 > **Ziel:** Ein Windows Server 2025 als Domain Controller für die neue Domäne `lab.test`.
 > **Dauer:** ca. 45 Minuten · **Wo:** Host (VM anlegen), danach in DC01
+> **Menüs:** Server auf Englisch, deutscher Name in Klammern ([warum?](00-voraussetzungen.md#sprache-der-menüs))
 
 ## Voraussetzungen
 
@@ -26,28 +27,28 @@ Mit dem Assistenten aus [Kapitel 0](00-voraussetzungen.md#schritt-2--so-legst-du
 ## Schritt 2 · Windows installieren (DC01)
 
 1. VM starten, Leertaste drücken, sobald *„Press any key to boot from CD or DVD“* erscheint
-2. Sprache und Tastatur wählen → **Jetzt installieren**
+2. Sprache und Tastatur wählen → **Install now** (Jetzt installieren)
 3. Image: **Windows Server 2025 Standard Evaluation (Desktop Experience)**
    Ohne *Desktop Experience* gibt es keine Oberfläche, nur eine Kommandozeile.
-4. **Benutzerdefiniert** → die 60-GB-Platte → Weiter
+4. **Custom** (Benutzerdefiniert) → die 60-GB-Platte → **Next**
 5. Nach dem Neustart **keine** Taste drücken, sonst startet das Setup von vorn
 6. Kennwort für den lokalen Administrator vergeben
 
 ## Schritt 3 · Grundeinstellungen (DC01)
 
-Alles im **Server-Manager → Lokaler Server**:
+Alles im **Server Manager → Local Server** (Lokaler Server):
 
-1. **Computername** → `DC01` → Neustart
-2. **Zeitzone** → *(UTC+01:00) Amsterdam, Berlin, Bern …*
+1. **Computer name** (Computername) → `DC01` → Neustart
+2. **Time zone** (Zeitzone) → *(UTC+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna*
    Bei englischer Installation steht hier *Pacific Time*. Das merkt man sonst erst, wenn die Uhr 9 Stunden falsch geht.
-3. **Ethernet** (oder Startmenü → `ncpa.cpl`) → Rechtsklick → Eigenschaften → **Internetprotokoll Version 4** → Eigenschaften:
+3. **Ethernet** (oder Startmenü → `ncpa.cpl`) → Rechtsklick → **Properties** (Eigenschaften) → **Internet Protocol Version 4 (TCP/IPv4)** → **Properties**:
 
 | | |
 |---|---|
-| IP-Adresse | `10.0.0.10` |
-| Subnetzmaske | `255.255.255.0` |
-| Standardgateway | `10.0.0.1` |
-| Bevorzugter DNS-Server | `127.0.0.1` |
+| IP address (IP-Adresse) | `10.0.0.10` |
+| Subnet mask (Subnetzmaske) | `255.255.255.0` |
+| Default gateway (Standardgateway) | `10.0.0.1` |
+| Preferred DNS server (Bevorzugter DNS-Server) | `127.0.0.1` |
 
 Test in der Eingabeaufforderung: `ping 10.0.0.1` und `ping 8.8.8.8`.
 
@@ -56,18 +57,18 @@ Test in der Eingabeaufforderung: `ping 10.0.0.1` und `ping 8.8.8.8`.
 
 ## Schritt 4 · Active Directory installieren (DC01)
 
-1. Server-Manager → **Verwalten → Rollen und Features hinzufügen**
-2. *Rollenbasierte Installation* → `DC01` → Haken bei **Active Directory-Domänendienste** → *Features hinzufügen* → durchklicken → **Installieren**
-3. Danach oben rechts das **gelbe Fähnchen** → **Server zu einem Domänencontroller heraufstufen**
-4. **Neue Gesamtstruktur hinzufügen** → Name der Stammdomäne: `lab.test`
-5. **DSRM-Kennwort** vergeben und sicher aufheben. Das brauchst du für Wiederherstellungen.
-6. NetBIOS-Name `LAB` übernehmen → durchklicken → **Installieren**. Der Server startet neu.
+1. Server Manager → **Manage → Add Roles and Features** (Verwalten → Rollen und Features hinzufügen)
+2. **Role-based or feature-based installation** (Rollenbasierte Installation) → `DC01` → Haken bei **Active Directory Domain Services** (Active Directory-Domänendienste) → **Add Features** → durchklicken → **Install**
+3. Danach oben rechts das **gelbe Fähnchen** → **Promote this server to a domain controller** (Server zu einem Domänencontroller heraufstufen)
+4. **Add a new forest** (Neue Gesamtstruktur hinzufügen) → **Root domain name**: `lab.test`
+5. **DSRM password** vergeben und sicher aufheben. Das brauchst du für Wiederherstellungen.
+6. NetBIOS-Name `LAB` übernehmen → durchklicken → **Install**. Der Server startet neu.
 
 Ab jetzt meldest du dich mit `LAB\Administrator` an.
 
 ## Schritt 5 · DNS-Weiterleitung (DC01)
 
-Server-Manager → **Tools → DNS** → Rechtsklick auf **DC01** → Eigenschaften → Registerkarte **Weiterleitungen** → **Bearbeiten** → `8.8.8.8` (oder deinen Router) eintragen. Damit lösen die VMs auch Internet-Namen auf.
+Server Manager → **Tools → DNS** → Rechtsklick auf **DC01** → **Properties** → Registerkarte **Forwarders** (Weiterleitungen) → **Edit** → `8.8.8.8` (oder deinen Router) eintragen. Damit lösen die VMs auch Internet-Namen auf.
 
 ## Schritt 6 · Zeit und Autostart (Host)
 
@@ -82,10 +83,10 @@ Server-Manager → **Tools → DNS** → Rechtsklick auf **DC01** → Eigenschaf
 
 | Test | Erwartet |
 |---|---|
-| Server-Manager → Lokaler Server | Domäne `lab.test` |
+| Server Manager → Local Server | Domain `lab.test` |
 | `nslookup lab.test` | antwortet mit `10.0.0.10` |
 | `nslookup google.com` | antwortet (Weiterleitung klappt) |
-| Tools → Active Directory-Benutzer und -Computer | Domäne `lab.test` ist zu sehen |
+| Tools → Active Directory Users and Computers | Domäne `lab.test` ist zu sehen |
 
 Jetzt einen **Prüfpunkt** setzen: *„DC01 Domäne fertig“*.
 

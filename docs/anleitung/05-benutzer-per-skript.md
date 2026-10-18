@@ -4,6 +4,7 @@
 
 > **Ziel:** Über 100 realistische Testbenutzer in Abteilungs-OUs, jeweils in der richtigen Gruppe.
 > **Dauer:** ca. 15 Minuten · **Wo:** DC01
+> **Menüs:** Englisch, deutscher Name in Klammern
 
 Ein paar Benutzer legt man per Hand an. Für realistische Tests von Rechten, GPOs und Laufwerken braucht man aber mehr, und 100 Benutzer klickt niemand. Dafür gibt es [`New-LabBulkUsers.ps1`](../../scripts/New-LabBulkUsers.ps1).
 
@@ -32,10 +33,10 @@ Der Benutzername darf höchstens 20 Zeichen lang sein.
 ## Schritt 2 · Dateien auf DC01 bringen und entsperren
 
 1. Skript und CSV nach DC01 kopieren, z. B. nach `C:\Skripte`
-2. Heruntergeladene Dateien sind von Windows markiert. Rechtsklick auf die `.ps1` → **Eigenschaften** → Registerkarte **Allgemein** → ganz unten Haken bei **Zulassen** → OK. Dasselbe für die CSV.
+2. Heruntergeladene Dateien sind von Windows markiert. Rechtsklick auf die `.ps1` → **Properties** (Eigenschaften) → Registerkarte **General** (Allgemein) → ganz unten Haken bei **Unblock** (Zulassen) → OK. Dasselbe für die CSV.
 
 > [!NOTE]
-> Ohne Entsperren kommt *„… is not digitally signed. You cannot run this script on the current system.“* Bei englischem Windows heißt der Haken **Unblock**, und er steht auf **General**, nicht auf *Security*.
+> Ohne Entsperren kommt *„… is not digitally signed. You cannot run this script on the current system.“* Der Haken steht auf **General**, nicht auf *Security*. Das verwechselt man leicht.
 
 ## Schritt 3 · Probelauf
 
@@ -66,9 +67,9 @@ Optional: `-PasswortBeiAnmeldungAendern`, dann müssen die Benutzer das Kennwort
 ## Prüfen
 
 - ADUC → `Lab/Benutzer` → **F5**: Abteilungs-OUs mit Benutzern
-- Gruppe öffnen → Registerkarte **Mitglieder**
+- Gruppe öffnen → Registerkarte **Members** (Mitglieder)
 - Log: `C:\Temp\LabBulkUsers.log`
 
 ## Wieder aufräumen
 
-ADUC → Rechtsklick auf `lab.test` → **Suchen** → Registerkarte *Erweitert* → Feld **Beschreibung** *ist genau* `Bulk-Import Testbenutzer`. Die Abteilungs-OUs sind gegen versehentliches Löschen geschützt: **Ansicht → Erweiterte Features**, dann OU → Eigenschaften → Registerkarte **Objekt** → Haken entfernen.
+ADUC → Rechtsklick auf `lab.test` → **Find** (Suchen) → Registerkarte **Advanced** → **Field → User → Description** *is (exactly)* `Bulk-Import Testbenutzer`. Die Abteilungs-OUs sind gegen versehentliches Löschen geschützt: **View → Advanced Features** (Ansicht → Erweiterte Features), dann OU → **Properties** → Registerkarte **Object** → Haken bei *Protect object from accidental deletion* entfernen.

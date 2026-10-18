@@ -5,6 +5,14 @@
 > **Ziel:** Hardware prüfen, Software besorgen, Hyper-V einschalten und eine Vorlage für neue VMs kennen.
 > **Dauer:** ca. 30 Minuten (plus Downloads) · **Wo:** auf deinem PC (Host)
 
+## Sprache der Menüs
+
+Die Server in diesem Lab laufen auf **Englisch**, Host und Client auf **Deutsch**, genau wie in den Screenshots. Deshalb stehen Klickwege auf Servern so da:
+
+> **English name** (deutscher Name)
+
+Wer deutsche Server installiert, liest einfach den Begriff in Klammern.
+
 ## Hardware
 
 | | Minimum | Empfohlen |

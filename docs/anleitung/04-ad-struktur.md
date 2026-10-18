@@ -4,6 +4,7 @@
 
 > **Ziel:** Eine OU-Struktur, an die sich GPOs sauber hängen lassen, Abteilungsgruppen und getrennte Konten.
 > **Dauer:** ca. 30 Minuten · **Wo:** DC01
+> **Menüs:** Englisch, deutscher Name in Klammern
 
 ## Das Prinzip
 
@@ -21,17 +22,17 @@ lab.test
 
 ## Schritt 1 · OUs anlegen
 
-1. Server-Manager → **Tools → Active Directory-Benutzer und -Computer** (ADUC)
-2. Rechtsklick auf `lab.test` → **Neu → Organisationseinheit** → `Lab`
+1. Server Manager → **Tools → Active Directory Users and Computers** (Active Directory-Benutzer und -Computer, kurz ADUC)
+2. Rechtsklick auf `lab.test` → **New → Organizational Unit** (Neu → Organisationseinheit) → `Lab`
 3. Rechtsklick auf `Lab` → genauso `Benutzer`, `Computer`, `Server`, `Gruppen`, `Dienstkonten`
 
-Der Haken *„Container vor zufälligem Löschen schützen“* bleibt an.
+Der Haken **Protect container from accidental deletion** (vor zufälligem Löschen schützen) bleibt an.
 
 ![OU-Struktur in ADUC](../bilder/aduc-ou-struktur.png)
 
 ## Schritt 2 · Abteilungsgruppen anlegen
 
-Rechtsklick auf `Lab/Gruppen` → **Neu → Gruppe**, Gruppenbereich **Global**, Gruppentyp **Sicherheit**:
+Rechtsklick auf `Lab/Gruppen` → **New → Group** (Neu → Gruppe), **Group scope: Global**, **Group type: Security**:
 
 | Gruppe | Bekommt später |
 |---|---|
@@ -54,6 +55,8 @@ Rechtsklick auf `Lab/Gruppen` → **Neu → Gruppe**, Gruppenbereich **Global**,
 | `vorname.nachname` | `Lab/Benutzer` | Dein Alltagskonto **ohne** Adminrechte |
 | `svc_cm_push` | `Lab/Dienstkonten` | Beispiel für ein Dienstkonto (MECM-Client-Push) |
 
+Neuer Benutzer: Rechtsklick auf die OU → **New → User** (Neu → Benutzer). Mitglied einer Gruppe machen: Benutzer → **Properties → Member Of → Add**.
+
 So übst du gleich die Praxis aus echten Firmen: Mit dem Admin-Konto wird nur verwaltet, nicht gesurft.
 
 ## Schritt 4 · Neue Computer automatisch in die richtige OU
@@ -68,11 +71,11 @@ Einmalig in einer **Admin-Eingabeaufforderung** auf DC01:
 redircmp "OU=Computer,OU=Lab,DC=lab,DC=test"
 ```
 
-Ab jetzt landet jeder neue Client direkt in `Lab/Computer`. Server verschiebst du nach dem Domänenbeitritt von Hand nach `Lab/Server`: Rechtsklick → **Verschieben**.
+Ab jetzt landet jeder neue Client direkt in `Lab/Computer`. Server verschiebst du nach dem Domänenbeitritt von Hand nach `Lab/Server`: Rechtsklick → **Move** (Verschieben).
 
 ## Schritt 5 · AD-Papierkorb aktivieren
 
-**Tools → Active Directory-Verwaltungscenter** → links `lab (lokal)` → rechts **Papierkorb aktivieren** → bestätigen.
+**Tools → Active Directory Administrative Center** (Active Directory-Verwaltungscenter) → links `lab (local)` → rechts **Enable Recycle Bin** (Papierkorb aktivieren) → bestätigen.
 
 Gelöschte Benutzer, Gruppen und OUs lassen sich damit samt Mitgliedschaften wiederherstellen.
 
@@ -83,4 +86,4 @@ Gelöschte Benutzer, Gruppen und OUs lassen sich damit samt Mitgliedschaften wie
 
 - ADUC zeigt `Lab` mit fünf Unter-OUs
 - Die drei GG-Gruppen liegen in `Lab/Gruppen`
-- Verwaltungscenter: *Papierkorb aktivieren* ist ausgegraut, er ist also aktiv
+- Administrative Center: *Enable Recycle Bin* ist ausgegraut, er ist also aktiv
