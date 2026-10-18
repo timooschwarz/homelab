@@ -136,6 +136,39 @@ Genau das fragt die Revision in Firmen: Wer hat wann welches Konto angelegt? Dan
 > [!TIP]
 > Im Beispiel steht als Ersteller *administrator*. Mit dem eigenen Admin-Konto aus [Kapitel 4](04-ad-struktur.md#schritt-3--getrennte-konten) sieht man im Protokoll, **welche Person** es war. Ein Grund mehr für persönliche Admin-Konten.
 
+## Schritt 9 · Eigenes Dashboard „Lab-Sicherheit“
+
+Die eingebauten Ansichten sind umfangreich. Für den Alltag reicht eine Seite mit den wichtigsten Fragen: Melden alle Rechner? Gibt es Fehlanmeldungen? Wer hat am AD etwas geändert?
+
+![Dashboard Lab-Sicherheit](../bilder/wazuh-dashboard-lab-sicherheit.png)
+
+> [!IMPORTANT]
+> Zuerst die Feldliste auffrischen, sonst fehlen die Windows-Felder in den Auswahllisten: **☰ → Dashboard management → Dashboards Management → Index patterns → wazuh-alerts-\*** → oben rechts **Refresh field list**.
+
+**☰ → Dashboards → Create new dashboard**. Jede Kachel entsteht gleich: **Create new** → Typ → Quelle **`wazuh-alerts-*`** → DQL-Filter oben in die Suchzeile → rechts Metrics und Buckets einstellen → **Update** → **Save** → *Save and return*.
+
+| Kachel | Typ | DQL-Filter | Buckets |
+|---|---|---|---|
+| Alarme gesamt | Metric | `not rule.groups:sca` | – |
+| Fehlanmeldungen | Metric | `rule.groups:authentication_failed` | – |
+| Kritisch | Metric | `rule.level >= 10` | – |
+| Agents | Data Table | – | Split rows: Terms `agent.name`. Zusätzliche Metric: **Max** `timestamp` = *Zuletzt gemeldet* |
+| Alarme pro Rechner | Line | `not rule.groups:sca` | X-axis: Date Histogram `timestamp` · Split series: Terms `agent.name` |
+| Top 10 Regeln | Horizontal Bar | `not rule.groups:sca` | X-axis: Terms `rule.description`, Size 10 |
+| AD-Änderungen | Data Table | `data.win.system.eventID:(4720 or 4726 or 4728 or 4732 or 4740)` | Split rows: `subjectUserName` (Wer) → `targetUserName` (Konto) → `rule.description` (Aktion) |
+| Fehlanmeldungen nach Konto | Data Table | `data.win.system.eventID:4625` | Split rows: `targetUserName` (Konto) → `agent.name` (Rechner) |
+
+`not rule.groups:sca` blendet die CIS-Prüfungen aus. Die machen sonst den Großteil der Treffer aus und verdecken die echten Ereignisse. Die Spaltennamen setzt man pro Split rows unter *Custom label*.
+
+**Anordnung** in drei Reihen: oben die drei Zahlen und die Agents („Ist alles in Ordnung?“), in der Mitte Verlauf und Top-Regeln („Was passiert?“), unten die beiden Tabellen („Wer war das?“). Verschieben an der Titelzeile, Größe an der Ecke unten rechts. Zeitraum **Last 24 hours**, beim Speichern Haken bei *Store time with dashboard*.
+
+| Event-ID | Bedeutung |
+|---|---|
+| 4625 | Fehlgeschlagene Anmeldung |
+| 4720 · 4726 | Konto angelegt · gelöscht |
+| 4728 · 4732 | Mitglied zu globaler · lokaler Gruppe hinzugefügt |
+| 4740 | Konto gesperrt |
+
 ## Prüfen
 
 | Wo | Erwartet |
