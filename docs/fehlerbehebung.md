@@ -73,6 +73,22 @@ Fehler, die beim Aufbau aufgetreten sind, jeweils mit Ursache und Lösung.
 - **Ursache:** PTR-Eintrag falsch angelegt, außerdem fehlte ein A-Eintrag.
 - **Lösung:** PTR in der Reverse-Zone korrigieren, A-Eintrag mit Haken „PTR erstellen“ anlegen, `ipconfig /registerdns`.
 
+## Netzwerk-Hardware
+
+### Nur 90 Mbit/s statt Gigabit
+- **Symptom:** Speedtest zeigt nach dem Einbau des Switches nur rund 90 Mbit/s statt der gewohnten Bandbreite.
+- **Ursache:** Der Port handelte nur 100 Mbit aus, zu sehen unter *Switching → Port Setting → Speed Actual* (`100MF`). Schuld war das Patchkabel.
+- **Lösung:** Kabel gegen ein Cat6-Kabel getauscht, danach `1000MF`.
+- **Gelernt:** Knapp unter 100 Mbit/s ist fast immer eine 100-Mbit-Verbindung. Zuerst *Speed Actual* am Switch und die Verbindungsgeschwindigkeit am PC ansehen, dann das Kabel tauschen.
+
+### Weboberfläche des neuen Switches nicht erreichbar
+- **Ursache:** Der Switch hat ab Werk `192.168.0.1`, das Heimnetz lag in einem anderen Bereich.
+- **Lösung:** Mit dem Easy Smart Configuration Utility eine feste IP im Heimnetz gesetzt. Das Tool findet den Switch per Broadcast auch im falschen Bereich.
+
+### Switch-Einstellungen nach Neustart weg
+- **Ursache:** Beim TL-SG108E landen Änderungen erst mit **Save Config** dauerhaft im Speicher.
+- **Lösung:** Nach jeder Änderung Save Config klicken und danach ein Konfigurations-Backup ziehen.
+
 ## Hyper-V
 
 ### Linux-VMs: Out of memory bzw. Kernel Panic

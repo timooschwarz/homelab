@@ -18,4 +18,8 @@ Warum ich etwas so gebaut habe, wie es ist. Kurz gehalten, im Stil von Architect
 | Kennwörter | Hauptzugänge lokal in KeePassXC, alle übrigen Lab-Kennwörter in Infisical | Wer Infisical aufschließt, braucht einen Zugang, der nicht in Infisical liegt |
 | Connection Manager | Devolutions Remote Desktop Manager Free | RDP, SSH und Hyper-V-Konsole an einer Stelle |
 | Hardware | Umzug auf einen Mini-PC (Ryzen 5 PRO, 32 GB) im 10-Zoll-Rack | Lab soll dauerhaft laufen, ohne den großen PC anzulassen. Ca. 15–25 W |
+| Hypervisor auf dem Mini-PC | Weiter Hyper-V, nicht Proxmox | Passt zum Windows-Schwerpunkt und zur Prüfung AZ-802. Die VMs lassen sich direkt exportieren und importieren |
+| Switch | TP-Link TL-SG108E (managed, gebraucht) | Kann 802.1Q-VLANs für die spätere Netztrennung, Metallgehäuse, sehr günstig. Nachteil: nur 1 Gbit und keine Rackwinkel, deshalb 3D-gedruckte Halterung |
+| Verkabelung im Rack | Patchpanel: Geräte hinten, vorne kurze Kabel auf den Switch-Port gleicher Nummer | Vorne ordentlich, Umstecken für VLAN-Tests ohne an die Geräte zu müssen |
+| Switch-Verwaltung | Feste IP im Heimnetz, Uplink immer untagged in VLAN 1 | Erreichbar vom Arbeits-PC, und man sperrt sich bei VLAN-Übungen nicht aus |
 | Dokumentation | Notion | Datenbanken für Aufgaben, Änderungen und Runbooks mit Verknüpfungen |

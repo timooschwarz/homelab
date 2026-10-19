@@ -6,7 +6,7 @@ Jede Stufe baut auf der vorherigen auf: Vorlagen vor neuen Servern, Backup vor r
 
 | # | Ausbaustufe | Neue VM | Status |
 |---|---|---|---|
-| 0 | Umzug auf Mini-PC im 10-Zoll-Rack | – | ab Lieferung |
+| 0 | Umzug auf Mini-PC im 10-Zoll-Rack | – | Rack und Switch ✅, Mini-PC folgt |
 | 1 | Monitoring (Uptime Kuma, Netdata) | – | ✅ |
 | 2 | Reverse Proxy und DNS-Namen | – | ✅ |
 | 3 | Infisical für Kennwörter | – | ✅ |
@@ -23,11 +23,9 @@ Jede Stufe baut auf der vorherigen auf: Vorlagen vor neuen Servern, Backup vor r
 | 14 | Entra ID und Intune, Co-Management | CLIENT02 | geplant |
 | 15 | Zweiter Domain Controller (Replikation, FSMO) | DC02 | Idee |
 
-## Geplante Hardware
+## Hardware
 
-Das Lab zieht auf einen eigenen Mini-PC in einem 10-Zoll-Rack um. So wird verkabelt, und so reicht der Arbeitsspeicher:
-
-![Physische Verkabelung](diagramme/verkabelung.png)
+Das Lab zieht auf einen eigenen Mini-PC in einem 10-Zoll-Rack um. Rack und Switch stehen seit dem 19.10.2026, Belegung, Verkabelung und Switch-Einrichtung: [Hardware](hardware.md). So reicht der Arbeitsspeicher auf dem Mini-PC:
 
 ![RAM-Budget](diagramme/ram-budget.png)
 

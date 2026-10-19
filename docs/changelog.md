@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-19
+- 10-Zoll-Rack aufgebaut: Blindblenden in HE 1–3, Fachboden für den Mini-PC in HE 6
+- Managed Switch TL-SG108E eingerichtet: feste IP im Heimnetz, Firmware geprüft, Uplink auf Port 8
+- Neue Seite [Hardware](hardware.md) mit Rack-Belegung, Verkabelung über Patchpanel und Switch-Einrichtung
+- Drei neue Fälle in der [Fehlerbehebung](fehlerbehebung.md) (100 Mbit statt Gigabit, Switch nicht erreichbar, Save Config)
+
 ## 2026-10-18
 - LOG01 (10.0.0.70) mit Wazuh 4.14.9, Agents auf DC01, FS01, CLIENT01, daraus Kapitel 13
 - MECM: erste Anwendung (7-Zip) verteilt, als Available im Softwarecenter und als Required ohne Klick, daraus Kapitel 12
