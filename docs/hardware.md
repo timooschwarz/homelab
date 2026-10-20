@@ -5,7 +5,7 @@
 [![Netzwerk](https://img.shields.io/badge/-Netzwerk-1D9E75?style=flat-square)](../README.md#thema-netz) [![Hyper-V](https://img.shields.io/badge/-Hyper--V-5F5E5A?style=flat-square)](../README.md#thema-hyperv)
 
 > **Ziel:** Das Lab läuft dauerhaft auf einem eigenen, sparsamen Mini-PC statt auf dem großen PC. Mini-PC, Switch und NAS sitzen ordentlich verkabelt in einem kleinen 10-Zoll-Rack.
-> **Stand:** 19.10.2026 · Rack aufgebaut, Switch eingerichtet. Mini-PC und NAS werden eingebaut, sobald sie da sind.
+> **Stand:** 20.10.2026 · Rack aufgebaut, Switch eingerichtet, Patchpanel (HE 4) und SBC Shelf (HE 8) montiert. Mini-PC und NAS werden eingebaut, sobald sie da sind.
 
 Die Anleitung (Kapitel 0–13) funktioniert weiterhin auf einem einzigen PC mit Hyper-V. Dieses Kapitel beschreibt, wie ich das Lab danach auf eigene Hardware umziehe. Es ist optional.
 
@@ -75,6 +75,8 @@ Ab Werk hat der Switch die feste IP `192.168.0.1`. Liegt dein Heimnetz in einem 
 - **Von unten nach oben** einbauen, dann stößt man beim Schrauben nirgends an.
 - **Schrauben erst handfest** anziehen und am Ende festziehen. So lässt sich noch um ein Loch korrigieren.
 - Das NAS ragt mit HAT, Kühler und SSDs über 1 HE hinaus. Deshalb liegt es ganz unten und die HE darüber bleibt frei bzw. bekommt eine Belüftungsblende.
+- Das DeskPi SBC Shelf hat zwei Pi-Plätze mit kleinen Adapterplatinen (KL-P24), die USB-C und HDMI nach vorne führen. Fürs NAS werden sie nicht gebraucht: Der Pi bekommt Strom über das 12-V-Netzteil am Penta HAT. Dann **nicht zusätzlich** per USB-C einspeisen.
+- Den Pi am besten auf dem Tisch aufs Shelf schrauben und das Shelf danach einbauen.
 
 ## Häufige Fehler
 
