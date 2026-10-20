@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-20
+- PVE01 (10.0.0.90): Proxmox VE 9.2 als Generation-1-VM in Hyper-V, Installation per Terminal-Installer
+- Homelable 3.6 als LXC-Container (10.0.0.91) per Community-Script, Canvas mit allen VMs und Live-Status, daraus [Kapitel 14](anleitung/14-homelable.md)
+- `GPO-Computer-Ping` zusätzlich an Lab/Server und Domain Controllers, Ping auf dem Hyper-V-Host nur aus `10.0.0.0/24`
+- Infisical von TOOLS01 entfernt, alle Kennwörter in KeePassXC
+- Fünf neue Fälle in der [Fehlerbehebung](fehlerbehebung.md) (Proxmox-Installer unter Hyper-V, fehlende Server im Scan, Host antwortet nicht auf Ping)
+
 ## 2026-10-19
 - 10-Zoll-Rack aufgebaut: Blindblenden in HE 1–3, Fachboden für den Mini-PC in HE 6
 - Managed Switch TL-SG108E eingerichtet: feste IP im Heimnetz, Firmware geprüft, Uplink auf Port 8

@@ -73,6 +73,15 @@ Fehler, die beim Aufbau aufgetreten sind, jeweils mit Ursache und Lösung.
 - **Ursache:** PTR-Eintrag falsch angelegt, außerdem fehlte ein A-Eintrag.
 - **Lösung:** PTR in der Reverse-Zone korrigieren, A-Eintrag mit Haken „PTR erstellen“ anlegen, `ipconfig /registerdns`.
 
+### Windows-Server fehlen im Netzwerkscan
+- **Symptom:** Homelable findet nur die Linux-VMs, DC01, CM01 und FS01 fehlen.
+- **Ursache:** Die Ping-GPO hing nur an `Lab/Computer`. Server und DC blockieren ICMP in der Windows-Firewall.
+- **Lösung:** `GPO-Computer-Ping` zusätzlich mit `Lab/Server` und `Domain Controllers` verknüpfen, `gpupdate /force`.
+
+### Hyper-V-Host bleibt im Monitoring rot
+- **Ursache:** Der Host ist nicht in der Domäne, die GPO greift dort nicht. Windows blockiert Ping im LAB-Netz.
+- **Lösung:** Regel *Datei- und Druckerfreigabe (restriktiv) (Echoanforderung – ICMPv4 eingehend)* aktivieren, Remote-IP auf `10.0.0.0/24` beschränken.
+
 ## Netzwerk-Hardware
 
 ### Nur 90 Mbit/s statt Gigabit
@@ -111,6 +120,20 @@ Fehler, die beim Aufbau aufgetreten sind, jeweils mit Ursache und Lösung.
 ### Maximaler RAM lässt sich nicht senken
 - **Ursache:** Bei laufender VM kann der Maximalwert nur erhöht werden.
 - **Lösung:** VM herunterfahren, Wert ändern.
+
+### Proxmox-Installer findet die ISO nicht
+- **Meldung:** `searching for block device containing the ISO`, danach endlos `testing again in … seconds`
+- **Ursache:** Generation-2-VM. Der Proxmox-Installer erkennt das DVD-Laufwerk am SCSI-Controller nicht.
+- **Lösung:** PVE01 als **Generation 1** neu anlegen, dort hängt das DVD-Laufwerk am IDE-Controller.
+
+### Grafischer Proxmox-Installer bricht ab
+- **Meldung:** `Installation aborted - unable to continue`
+- **Ursache:** Der grafische Installer kommt mit der Hyper-V-Grafik nicht klar. Netz und ISO waren in Ordnung (DHCP-Adresse von DC01 im Log).
+- **Lösung:** Im Boot-Menü **Install Proxmox VE (Terminal UI)**.
+
+### `@` lässt sich in der Hyper-V-Konsole nicht tippen
+- **Ursache:** AltGr wird im Konsolenfenster nicht durchgereicht, *Zwischenablage → Text eingeben* half auch nicht.
+- **Lösung:** Im Proxmox-Installer kurz das Tastaturlayout **U.S. English** wählen (`@` = Shift + 2). Kennwort nur aus Buchstaben ohne y/z und Ziffern, dann ist das Layout egal. Später im Webinterface ändern.
 
 ## Linux und Docker
 

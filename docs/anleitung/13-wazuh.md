@@ -1,6 +1,6 @@
 # Kapitel 13 · Wazuh: Sicherheitsüberwachung (SIEM)
 
-[← Kapitel 12](12-softwareverteilung.md) · [Übersicht](../../README.md#inhaltsverzeichnis)
+[← Kapitel 12](12-softwareverteilung.md) · [Übersicht](../../README.md#inhaltsverzeichnis) · weiter: [Kapitel 14 · Homelable →](14-homelable.md)
 
 [![Sicherheit](https://img.shields.io/badge/-Sicherheit-EF9F27?style=flat-square)](../../README.md#thema-sec) [![Linux & Docker](https://img.shields.io/badge/-Linux%20%26%20Docker-E95420?style=flat-square)](../../README.md#thema-linux) [![Testen](https://img.shields.io/badge/-Testen-D4537E?style=flat-square)](../../README.md#thema-test)
 

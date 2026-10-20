@@ -15,11 +15,12 @@ Warum ich etwas so gebaut habe, wie es ist. Kurz gehalten, im Stil von Architect
 | Reverse Proxy | Nginx Proxy Manager | Weboberfläche, schnell eingerichtet, reicht fürs Lab |
 | Jump Host | Warpgate für RDP und SSH | Lernprojekt. Echter Schutz erst, wenn der Zugriff nur noch darüber erlaubt ist |
 | Fernzugriff | NetBird (kostenloser Tarif) mit TOOLS01 als Routing Peer | Kein eigener Server nötig, RDP steht nie direkt im Internet |
-| Kennwörter | Hauptzugänge lokal in KeePassXC, alle übrigen Lab-Kennwörter in Infisical | Wer Infisical aufschließt, braucht einen Zugang, der nicht in Infisical liegt |
+| Kennwörter | Alle Lab-Kennwörter lokal in KeePassXC. Infisical wieder entfernt | Infisical lief, wurde aber nie genutzt. Als reine Passwortablage bringt es nichts gegenüber KeePassXC, kostet RAM auf TOOLS01 und liegt selbst im Lab: Ist TOOLS01 kaputt, fehlen die Kennwörter zum Reparieren. Sinnvoll erst, wenn Dienste ihre Secrets automatisch abrufen sollen |
 | Connection Manager | Devolutions Remote Desktop Manager Free | RDP, SSH und Hyper-V-Konsole an einer Stelle |
 | Hardware | Umzug auf einen Mini-PC (Ryzen 5 PRO, 32 GB) im 10-Zoll-Rack | Lab soll dauerhaft laufen, ohne den großen PC anzulassen. Ca. 15–25 W |
 | Hypervisor auf dem Mini-PC | Weiter Hyper-V, nicht Proxmox | Passt zum Windows-Schwerpunkt und zur Prüfung AZ-802. Die VMs lassen sich direkt exportieren und importieren |
 | Switch | TP-Link TL-SG108E (managed, gebraucht) | Kann 802.1Q-VLANs für die spätere Netztrennung, Metallgehäuse, sehr günstig. Nachteil: nur 1 Gbit und keine Rackwinkel, deshalb 3D-gedruckte Halterung |
 | Verkabelung im Rack | Patchpanel: Geräte hinten, vorne kurze Kabel auf den Switch-Port gleicher Nummer | Vorne ordentlich, Umstecken für VLAN-Tests ohne an die Geräte zu müssen |
 | Switch-Verwaltung | Feste IP im Heimnetz, Uplink immer untagged in VLAN 1 | Erreichbar vom Arbeits-PC, und man sperrt sich bei VLAN-Übungen nicht aus |
+| Netzwerkkarte | Homelable als LXC auf Proxmox, vorerst Proxmox als VM in Hyper-V | Schneller Überblick „läuft alles?“, ergänzt NetBox statt es zu ersetzen. Im LXC liefert der Scan MAC-Adressen (unter Docker Desktop nicht), und der Container lässt sich per Backup auf einen echten Proxmox-Host umziehen |
 | Dokumentation | Notion | Datenbanken für Aufgaben, Änderungen und Runbooks mit Verknüpfungen |

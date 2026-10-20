@@ -9,7 +9,7 @@ Jede Stufe baut auf der vorherigen auf: Vorlagen vor neuen Servern, Backup vor r
 | 0 | Umzug auf Mini-PC im 10-Zoll-Rack | – | Rack und Switch ✅, Mini-PC folgt |
 | 1 | Monitoring (Uptime Kuma, Netdata) | – | ✅ |
 | 2 | Reverse Proxy und DNS-Namen | – | ✅ |
-| 3 | Infisical für Kennwörter | – | ✅ |
+| 3 | Infisical für Kennwörter | – | wieder entfernt, KeePassXC reicht |
 | 4 | Quick Wins (AD-Papierkorb, Lizenzdaten, Monitore) | – | teilweise |
 | 5 | VM-Vorlagen | – | geplant |
 | 6 | Backup und Restore (Veeam) | BKP01 | geplant |
@@ -22,6 +22,7 @@ Jede Stufe baut auf der vorherigen auf: Vorlagen vor neuen Servern, Backup vor r
 | 13 | Ticketsystem und Inventar (GLPI) | – | geplant |
 | 14 | Entra ID und Intune, Co-Management | CLIENT02 | geplant |
 | 15 | Zweiter Domain Controller (Replikation, FSMO) | DC02 | Idee |
+| – | Netzwerkkarte mit Live-Status ([Kapitel 14](anleitung/14-homelable.md)) | PVE01 | ✅ |
 
 ## Hardware
 

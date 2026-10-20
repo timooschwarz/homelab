@@ -4,7 +4,7 @@
 
 [![Linux & Docker](https://img.shields.io/badge/-Linux%20%26%20Docker-E95420?style=flat-square)](../../README.md#thema-linux) [![Netzwerk](https://img.shields.io/badge/-Netzwerk-1D9E75?style=flat-square)](../../README.md#thema-netz) [![DNS](https://img.shields.io/badge/-DNS-1D9E75?style=flat-square)](../../README.md#thema-dns)
 
-> **Ziel:** Eine Ubuntu-VM mit Docker für Überwachung, Reverse Proxy, Jump Host und Kennwortverwaltung.
+> **Ziel:** Eine Ubuntu-VM mit Docker für Überwachung, Reverse Proxy und Jump Host.
 > **Dauer:** ca. 90 Minuten · **Wo:** Host, danach TOOLS01 (per SSH)
 
 ## Schritt 1 · VM anlegen (Host)
@@ -100,16 +100,12 @@ Nach demselben Muster laufen auf TOOLS01:
 | **Nginx Proxy Manager** | Namen wie `kuma.lab.test` statt IP:Port. Im DNS auf DC01 je einen CNAME auf `tools01.lab.test` anlegen | 80, 81 (Admin) |
 | **Netdata** | Leistungsdaten der Linux-VMs | 19999 |
 | **Warpgate** | Jump Host für RDP und SSH mit Sitzungsaufzeichnung | 8888 |
-| **Infisical** | Kennwörter und Secrets des Labs | 8080 |
 
 So kommt eine Anfrage über den Namen beim richtigen Container an:
 
 ![Reverse Proxy auf TOOLS01](../diagramme/reverse-proxy.png)
 
-<p align="center">
-  <img src="../bilder/npm-proxy-hosts.png" width="49%" alt="Nginx Proxy Manager">
-  <img src="../bilder/infisical-uebersicht.png" width="49%" alt="Infisical">
-</p>
+<img src="../bilder/npm-proxy-hosts.png" width="640" alt="Nginx Proxy Manager">
 
 Auf einer eigenen VM `NETBOX01` (`10.0.0.30`, 4 GB fest) läuft **NetBox** per `netbox-docker` als Quelle der Wahrheit für IP-Adressen und VMs:
 

@@ -17,7 +17,7 @@
 
 - Forward-Zone `lab.test` mit A-Einträgen für alle Server
 - Reverse-Zone `0.0.10.in-addr.arpa` mit PTR-Einträgen
-- CNAMEs `netbox`, `kuma`, `netdata`, `proxy`, `infisical` → `tools01.lab.test` (dahinter Nginx Proxy Manager)
+- CNAMEs `netbox`, `kuma`, `netdata`, `proxy` → `tools01.lab.test` (dahinter Nginx Proxy Manager)
 
 ## Server
 
@@ -29,6 +29,8 @@
 | FS01 | 10.0.0.40 | Windows Server 2025 | Dateiserver, Datenplatte E: | immer an |
 | TOOLS01 | 10.0.0.50 | Ubuntu Server | Docker-Dienste | immer an |
 | LOG01 | 10.0.0.70 | Ubuntu Server | Wazuh 4.14 (SIEM), 8 GB fest | bei Bedarf |
+| PVE01 | 10.0.0.90 | Proxmox VE 9.2 (Hyper-V-VM, Gen 1) | Host für LXC-Container, 4 GB fest | immer an |
+| HOMELABLE | 10.0.0.91 | LXC auf PVE01 (Debian 13) | [Homelable](anleitung/14-homelable.md): Netzwerkkarte mit Live-Status | immer an |
 | CLIENT01 | DHCP | Windows 11 Pro | Testclient | bei Bedarf |
 
 **Startreihenfolge:** DC01 → CM01, FS01, NETBOX01, TOOLS01 → CLIENT01. Herunterfahren umgekehrt, DC01 zuletzt. Ohne DC01 gibt es kein DNS, und die anderen VMs laufen in Fehler.
@@ -41,12 +43,12 @@
 
 ```
 lab.test
-├── Domain Controllers   → DC01 · GPO-DC-Zeitserver
+├── Domain Controllers   → DC01 · GPO-DC-Zeitserver, Ping
 └── Lab
     ├── Benutzer         → Laufwerk S:
     │   └── IT, Buchhaltung, Vertrieb, Personal, Leitung
     ├── Computer         → CLIENT01 · RDP, lokale Admins, LAPS, Ping, Design
-    ├── Server           → FS01, CM01 · LAPS
+    ├── Server           → FS01, CM01 · LAPS, Ping
     ├── Gruppen          → GG-IT, GG-Buchhaltung, GG-Vertrieb, GG-Personal, GG-Leitung
     └── Dienstkonten     → svc_cm_push, svc_cm_naa
 ```
@@ -65,7 +67,7 @@ lab.test
 | GPO-RDP-Freigabe | Lab/Computer, Lab/Server | RDP einschalten, Firewall-Ausnahme nur für `10.0.0.0/24` |
 | GPO-Computer-LokaleAdmins | Lab/Computer | MECM-Push-Konto als lokaler Administrator |
 | GPO-Computer-LAPS | Lab/Computer, Lab/Server | Windows LAPS, Kennwortsicherung im AD |
-| GPO-Computer-Ping | Lab/Computer | ICMPv4 Echo eingehend erlauben |
+| GPO-Computer-Ping | Lab/Computer, Lab/Server, Domain Controllers | ICMPv4 Echo eingehend erlauben (für Uptime Kuma und den Homelable-Scan) |
 | GPO-Computer-Design | Lab/Computer | Hintergrundbild aus NETLOGON, per Files-Preference lokal kopiert |
 | GPO-DC-Zeitserver | Domain Controllers | NTP-Quelle `de.pool.ntp.org` |
 | Default Domain Policy | Domäne | Kennwort- und Sperrrichtlinie |
@@ -99,6 +101,5 @@ lab.test
 | Uptime Kuma | Überwachung per Ping, Port und DNS (auch für die Windows-Server) |
 | Netdata | Leistungsdaten der Linux-VMs |
 | Warpgate | Jump Host für RDP und SSH mit Sitzungsaufzeichnung |
-| Infisical | Verwaltung der Lab-Kennwörter |
 
 Alle Dienste liegen unter `~/tools/<dienst>` mit eigener `docker-compose.yml` und `restart: unless-stopped`.
