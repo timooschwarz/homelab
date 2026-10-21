@@ -5,7 +5,7 @@
 [![Netzwerk](https://img.shields.io/badge/-Netzwerk-1D9E75?style=flat-square)](../README.md#thema-netz) [![Hyper-V](https://img.shields.io/badge/-Hyper--V-5F5E5A?style=flat-square)](../README.md#thema-hyperv)
 
 > **Ziel:** Das Lab läuft dauerhaft auf einem eigenen, sparsamen Mini-PC statt auf dem großen PC. Mini-PC, Switch und NAS sitzen ordentlich verkabelt in einem kleinen 10-Zoll-Rack.
-> **Stand:** 21.10.2026 · Rack aufgebaut, Switch eingerichtet, Patchpanel (HE 4) und SBC Shelf (HE 8) montiert. Mini-PC aufgerüstet, Proxmox VE installiert. Das NAS folgt.
+> **Stand:** 21.10.2026 · Rack aufgebaut, Switch eingerichtet, Patchpanel (HE 4) und SBC Shelf (HE 8) montiert. Mini-PC aufgerüstet und eingebaut, Proxmox VE installiert, alles über das Patchpanel verkabelt. Das NAS folgt.
 
 Die Anleitung (Kapitel 0–13) funktioniert weiterhin auf einem einzigen PC mit Hyper-V. Dieses Kapitel beschreibt, wie ich das Lab danach auf eigene Hardware umziehe. Es ist optional. Auf dem Mini-PC läuft **Proxmox VE** statt Hyper-V: Die Windows-Server laufen dort als KVM-VMs, Linux-Dienste können als schlanke LXC-Container laufen.
 
