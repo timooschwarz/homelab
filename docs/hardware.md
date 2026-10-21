@@ -11,15 +11,19 @@ Die Anleitung (Kapitel 0–13) funktioniert weiterhin auf einem einzigen PC mit 
 
 ## Komponenten
 
-| Teil | Aufgabe | Höheneinheit |
+| Teil | Aufgabe | Position (von oben) |
 |---|---|---|
 | DeskPi RackMate T1 Plus | 10-Zoll-Rack, 8 HE, 260 mm tief | – |
-| 3× Blindblende 1 HE | Platzhalter für ein späteres 7-Zoll-Display | HE 1–3 |
-| Keystone-Patchpanel, 12 Ports | Geräte hinten anstecken, vorne kurze Kabel zum Switch | HE 4 |
-| TP-Link TL-SG108E (V2) | Managed Switch mit 802.1Q-VLANs, in einer 3D-gedruckten 10-Zoll-Halterung | HE 5 |
-| HP EliteDesk 805 G6 Mini auf Fachboden | Proxmox-Host `pve01`: Ryzen 5 PRO 4650GE (6 Kerne, 12 Threads), 32 GB DDR4, 2× NVMe + 1× SATA-SSD | HE 6 |
-| Belüftungsblende 1 HE | Verdeckt das NAS von vorne, lässt Luft durch | HE 7 |
-| Raspberry Pi 5 + Radxa Penta SATA HAT auf SBC Shelf | NAS mit OpenMediaVault, 4× 1 TB SSD, Backup-Ziel | HE 8 |
+| Blindblende 1 HE | Abschluss oben | 1 |
+| Keystone-Patchpanel, 12 Ports | Geräte hinten anstecken, vorne kurze Kabel zum Switch | 2 |
+| Blindblende + gelochte Blende | Abstand, die Patchkabel laufen davor nach unten | 3–4 |
+| TP-Link TL-SG108E (V2) | Managed Switch mit 802.1Q-VLANs, in einer 3D-gedruckten 10-Zoll-Halterung | 5 |
+| HP EliteDesk 805 G6 Mini auf Fachboden | Proxmox-Host `pve01`: Ryzen 5 PRO 4650GE (6 Kerne, 12 Threads), 32 GB DDR4, 2× NVMe + 1× SATA-SSD | 6 |
+| frei bzw. Belüftungsblende | Platz für HAT, Kühler und SSDs des NAS | 7 |
+| Raspberry Pi 5 + Radxa Penta SATA HAT auf SBC Shelf | NAS mit OpenMediaVault, 4× 1 TB SSD, Backup-Ziel | 8 |
+
+> [!NOTE]
+> Das Patchpanel sitzt bewusst oben mit Abstand zum Switch. So fallen die kurzen Kabel sauber vor den Blenden nach unten. Die Patchpanel-Nummern sind dadurch um 2 versetzt: Patchpanel 3–10 gehen auf Switch 1–8.
 
 ![Rack-Belegung von vorne](diagramme/rack-belegung-2026-10-19.png)
 
@@ -29,15 +33,15 @@ Im Dauerbetrieb braucht alles zusammen etwa 30–40 W.
 
 ![Verkabelung im Rack](diagramme/verkabelung-2026-10-19.png)
 
-**Prinzip:** Jedes Gerät wird **hinten** ins Patchpanel gesteckt. **Vorne** verbindet ein kurzes Kabel (15–25 cm) jeden Patchpanel-Port mit dem Switch-Port **derselben Nummer**. Vorne sieht man dann nur eine ordentliche Reihe, und zum Umstecken muss man hinten nichts anfassen.
+**Prinzip:** Jedes Gerät wird **hinten** ins Patchpanel gesteckt. **Vorne** verbindet ein kurzes Kabel jeden Patchpanel-Port mit dem passenden Switch-Port. Vorne sieht man dann nur eine ordentliche Reihe, und zum Umstecken muss man hinten nichts anfassen.
 
-| Port | Gerät | Hinweis |
-|---|---|---|
-| 1 | Mini-PC (Proxmox-Host) | Später Trunk: Heimnetz untagged, Lab-VLANs tagged |
-| 2 | NAS | Bleibt im Heimnetz |
-| 3–6 | frei | Für VLAN-Übungen |
-| 7 | Arbeits-PC | |
-| 8 | Uplink zur LAN-Dose | Immer untagged in VLAN 1, sonst ist die Verwaltung des Switches weg |
+| Switch-Port | Patchpanel | Gerät | Hinweis |
+|---|---|---|---|
+| 1 | 3 | Mini-PC (Proxmox-Host) | Später Trunk: Heimnetz untagged, Lab-VLANs tagged |
+| 2 | 4 | NAS | Bleibt im Heimnetz |
+| 3–6 | 5–8 | frei | Für VLAN-Übungen |
+| 7 | 9 | Arbeits-PC | |
+| 8 | 10 | Uplink zur LAN-Dose | Immer untagged in VLAN 1, sonst ist die Verwaltung des Switches weg |
 
 **Keystones einsetzen:** Beim DeskPi-Panel werden die Keystone-Kupplungen **von hinten** eingesetzt, mit der **Federlasche nach oben**. Von vorne passen sie nicht durch, der vordere Rand dient als Anschlag. Erst unten einhaken, dann oben eindrücken, bis es klickt.
 
