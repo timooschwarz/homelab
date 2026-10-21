@@ -232,7 +232,7 @@ docs/
   bilder/             Screenshots aus dem Lab
   diagramme/          Übersichtsgrafiken
   aufbau.md           Referenz des fertigen Labs
-  hardware.md         Mini-PC, Switch und NAS im 10-Zoll-Rack
+  hardware.md         Mini-PC (Proxmox), Switch und NAS im 10-Zoll-Rack
   fehlerbehebung.md   Gelöste Fehler mit Ursache und Lösung
   entscheidungen.md   Begründungen
   roadmap.md          Nächste Ausbaustufen

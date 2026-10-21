@@ -98,6 +98,16 @@ Fehler, die beim Aufbau aufgetreten sind, jeweils mit Ursache und Lösung.
 - **Ursache:** Beim TL-SG108E landen Änderungen erst mit **Save Config** dauerhaft im Speicher.
 - **Lösung:** Nach jeder Änderung Save Config klicken und danach ein Konfigurations-Backup ziehen.
 
+### Mini-PC startet nach Neustart nicht mehr
+- **Symptom:** Nach dem ersten Neustart nach der Proxmox-Installation (hart ausgeschaltet) leuchtet die Power-LED dauerhaft weiß, aber kein HP-Logo, kein Bild, Tastatur und Maus bleiben dunkel. Keine Blinkcodes, kein Piepen. Komplett stromlos machen half nicht.
+- **Lösung:** Alles abgesteckt bis auf Strom und HDMI. Damit startete er sofort mit HP-Logo und Proxmox.
+- **Ursache:** Nicht eindeutig geklärt, sehr wahrscheinlich hat ein angestecktes USB-Gerät den Start blockiert. Die Hardware war in Ordnung.
+- **Gelernt:** Erst auf das Minimum abstecken, bevor man das Gehäuse öffnet. Und: Ohne Netzwerkkabel bringt ein Ping-Test nichts.
+
+### Antennenabdeckung beim Öffnen abgebrochen
+- **Ursache:** Das runde Teil oben rechts an der Rückseite des EliteDesk für eine Schraube gehalten. Es ist eine Plastikabdeckung für einen optionalen WLAN-Antennenanschluss.
+- **Folge:** Rein kosmetisch. Die einzige Deckelschraube sitzt neben dem Schloss-Symbol.
+
 ## Hyper-V
 
 ### Linux-VMs: Out of memory bzw. Kernel Panic

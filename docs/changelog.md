@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-21
+- HP EliteDesk 805 G6 Mini aufgerüstet: 32 GB DDR4, 2× NVMe und 1× SATA-SSD, im BIOS geprüft
+- Proxmox VE 9.2 auf dem Mini-PC installiert (`pve01`, `192.168.2.20`), erreichbar über die Weboberfläche
+- [Hardware](hardware.md): neue Abschnitte zum Aufrüsten des Mini-PCs und zur Proxmox-Installation per USB-Stick
+- Zwei neue Fälle in der [Fehlerbehebung](fehlerbehebung.md) (Mini-PC startet nicht, Antennenabdeckung)
+
 ## 2026-10-20
 - PVE01 (10.0.0.90): Proxmox VE 9.2 als Generation-1-VM in Hyper-V, Installation per Terminal-Installer
 - Homelable 3.6 als LXC-Container (10.0.0.91) per Community-Script, Canvas mit allen VMs und Live-Status, daraus [Kapitel 14](anleitung/14-homelable.md)

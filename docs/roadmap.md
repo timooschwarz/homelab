@@ -6,7 +6,7 @@ Jede Stufe baut auf der vorherigen auf: Vorlagen vor neuen Servern, Backup vor r
 
 | # | Ausbaustufe | Neue VM | Status |
 |---|---|---|---|
-| 0 | Umzug auf Mini-PC im 10-Zoll-Rack | – | Rack und Switch ✅, Mini-PC folgt |
+| 0 | Umzug auf Mini-PC im 10-Zoll-Rack | – | Rack, Switch und Proxmox auf dem Mini-PC ✅, VM-Umzug folgt |
 | 1 | Monitoring (Uptime Kuma, Netdata) | – | ✅ |
 | 2 | Reverse Proxy und DNS-Namen | – | ✅ |
 | 3 | Infisical für Kennwörter | – | wieder entfernt, KeePassXC reicht |
@@ -26,7 +26,7 @@ Jede Stufe baut auf der vorherigen auf: Vorlagen vor neuen Servern, Backup vor r
 
 ## Hardware
 
-Das Lab zieht auf einen eigenen Mini-PC in einem 10-Zoll-Rack um. Rack und Switch stehen seit dem 19.10.2026, Belegung, Verkabelung und Switch-Einrichtung: [Hardware](hardware.md). So reicht der Arbeitsspeicher auf dem Mini-PC:
+Das Lab zieht auf einen eigenen Mini-PC in einem 10-Zoll-Rack um. Rack und Switch stehen seit dem 19.10.2026, auf dem Mini-PC läuft seit dem 21.10.2026 Proxmox VE. Als Nächstes ziehen die Hyper-V-VMs um. Belegung, Verkabelung und Switch-Einrichtung: [Hardware](hardware.md). So reicht der Arbeitsspeicher auf dem Mini-PC:
 
 ![RAM-Budget](diagramme/ram-budget.png)
 
