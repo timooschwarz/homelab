@@ -176,6 +176,24 @@ Danach braucht der Mini-PC weder Monitor noch Tastatur: Verwaltet wird nur noch 
 
 Später bekommt der Beszel-Container eine zweite Netzwerkkarte im Lab-Netz, damit er auch die VMs überwachen kann.
 
+## Zugriff von unterwegs mit Tailscale
+
+> **Dauer:** ca. 10 Minuten · **Wo:** Proxmox-Shell, Tailscale-Weboberfläche, Handy
+
+Statt Ports im Router freizugeben, läuft Tailscale auf dem Proxmox-Host als **Subnet Router**. Damit ist das ganze Heimnetz über ein verschlüsseltes VPN erreichbar, ohne dass irgendetwas aus dem Internet offen ist.
+
+1. In der Shell von `pve01`:
+   ```
+   curl -fsSL https://tailscale.com/install.sh | sh
+   echo 'net.ipv4.ip_forward = 1' > /etc/sysctl.d/99-tailscale.conf && sysctl -p /etc/sysctl.d/99-tailscale.conf
+   tailscale up --advertise-routes=192.168.2.0/24
+   ```
+   Den angezeigten Link öffnen und anmelden. Die Warnungen zu IPv6-Forwarding und UDP GRO kann man ignorieren.
+2. In der [Tailscale-Verwaltung](https://login.tailscale.com/admin/machines) bei `pve01` → **⋯ → Edit route settings** → `192.168.2.0/24` freigeben. Im selben Menü **Disable key expiry**, sonst muss der Server alle 180 Tage neu angemeldet werden.
+3. Tailscale-App aufs Handy, mit demselben Konto anmelden.
+
+**Prüfen:** Am Handy WLAN aus, mobile Daten an, Tailscale an, dann z. B. `http://192.168.2.21:8090` öffnen.
+
 ## Montage-Tipps
 
 - **3 Löcher an der Schiene = 1 HE**, von oben gezählt. Ein 1-HE-Gerät wird im 1. und 3. Loch seiner HE verschraubt.

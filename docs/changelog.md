@@ -4,6 +4,7 @@
 - HP EliteDesk 805 G6 Mini aufgerüstet: 32 GB DDR4, 2× NVMe und 1× SATA-SSD, im BIOS geprüft
 - Proxmox VE 9.2 auf dem Mini-PC installiert (`pve01`, `192.168.2.20`), erreichbar über die Weboberfläche
 - [Hardware](hardware.md): neue Abschnitte zum Aufrüsten des Mini-PCs und zur Proxmox-Installation per USB-Stick
+- Tailscale als Subnet Router auf dem Proxmox-Host, Zugriff aufs Heimnetz vom Handy ohne Portfreigabe
 - Beszel als LXC (`192.168.2.21`) mit Agent auf dem Proxmox-Host: CPU, RAM, Disk und Temperatur im Blick
 - Mini-PC und Switch ins Rack eingebaut, Patchpanel nach oben versetzt, alle Geräte über das Patchpanel verkabelt (Port 1, 7, 8 mit Gigabit)
 - Speicher `vmdata` (LVM-Thin) und `backup` (Verzeichnis) eingerichtet
