@@ -129,6 +129,23 @@ So ist der Mini-PC bestückt:
 > [!WARNING]
 > Startet er danach nur bis `grub>`: siehe [Fehlerbehebung](fehlerbehebung.md#proxmox-startet-nach-dem-update-nur-bis-grub).
 
+**Speicher einrichten:**
+
+Die beiden anderen SSDs werden in der Weboberfläche eingebunden. Vorher alte Partitionen löschen, sonst bietet Proxmox die Platten gar nicht an („No Disks unused").
+
+1. *pve01 → Disks*: Platte auswählen → **Wipe Disk**.
+   > [!WARNING]
+   > Die Namen `/dev/nvme0n1` und `/dev/nvme1n1` können nach einem Neustart die Plätze tauschen. Platten immer an **Seriennummer und Größe** erkennen, nie am Namen.
+2. *Disks → LVM-Thin → Create: Thinpool*: 1-TB-NVMe, Name `vmdata`. Hier liegen VMs und Container.
+3. *Disks → Directory → Create: Directory*: SATA-SSD, ext4, Name `backup`.
+4. *Datacenter → Storage → backup → Edit*: bei *Content* **Backup**, **ISO image** und **Import** auswählen.
+
+| Speicher | Typ | Inhalt |
+|---|---|---|
+| `local` / `local-lvm` | Systemplatte | Proxmox selbst, Reserve |
+| `vmdata` | LVM-Thin | VM-Festplatten, Container |
+| `backup` | Verzeichnis (ext4) | Backups, ISOs, Import aus Hyper-V |
+
 Danach braucht der Mini-PC weder Monitor noch Tastatur: Verwaltet wird nur noch über die Weboberfläche.
 
 ## Montage-Tipps
