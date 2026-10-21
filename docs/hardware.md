@@ -121,6 +121,14 @@ So ist der Mini-PC bestückt:
 
 **Prüfen:** Am Arbeits-PC `https://192.168.2.20:8006` öffnen, Zertifikatswarnung bestätigen, Anmeldung als `root` mit Realm *Linux PAM*.
 
+**Danach aktualisieren:**
+
+1. *pve01 → Updates → Repositories*: die beiden **enterprise**-Einträge (pve, ceph) auswählen → **Disable**. Dann **Add → No-Subscription**. Ohne Abo schlagen Updates sonst fehl.
+2. *pve01 → Updates*: **Refresh**, dann **Upgrade** (öffnet ein Konsolenfenster, mit `Y` bestätigen; Textseiten mit `q` schließen). Danach **Reboot**.
+
+> [!WARNING]
+> Startet er danach nur bis `grub>`: siehe [Fehlerbehebung](fehlerbehebung.md#proxmox-startet-nach-dem-update-nur-bis-grub).
+
 Danach braucht der Mini-PC weder Monitor noch Tastatur: Verwaltet wird nur noch über die Weboberfläche.
 
 ## Montage-Tipps

@@ -4,7 +4,8 @@
 - HP EliteDesk 805 G6 Mini aufgerüstet: 32 GB DDR4, 2× NVMe und 1× SATA-SSD, im BIOS geprüft
 - Proxmox VE 9.2 auf dem Mini-PC installiert (`pve01`, `192.168.2.20`), erreichbar über die Weboberfläche
 - [Hardware](hardware.md): neue Abschnitte zum Aufrüsten des Mini-PCs und zur Proxmox-Installation per USB-Stick
-- Zwei neue Fälle in der [Fehlerbehebung](fehlerbehebung.md) (Mini-PC startet nicht, Antennenabdeckung)
+- Proxmox auf No-Subscription-Repo umgestellt und aktualisiert, GRUB nach dem Update repariert
+- Drei neue Fälle in der [Fehlerbehebung](fehlerbehebung.md) (Mini-PC startet nicht, GRUB-Konsole nach Update, Antennenabdeckung)
 
 ## 2026-10-20
 - PVE01 (10.0.0.90): Proxmox VE 9.2 als Generation-1-VM in Hyper-V, Installation per Terminal-Installer

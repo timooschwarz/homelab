@@ -104,6 +104,22 @@ Fehler, die beim Aufbau aufgetreten sind, jeweils mit Ursache und Lösung.
 - **Ursache:** Nicht eindeutig geklärt, sehr wahrscheinlich hat ein angestecktes USB-Gerät den Start blockiert. Die Hardware war in Ordnung.
 - **Gelernt:** Erst auf das Minimum abstecken, bevor man das Gehäuse öffnet. Und: Ohne Netzwerkkabel bringt ein Ping-Test nichts.
 
+### Proxmox startet nach dem Update nur bis `grub>`
+- **Symptom:** Nach `apt full-upgrade` und Reboot kommt statt des Boot-Menüs nur die GRUB-Konsole `grub>`.
+- **Sofort-Hilfe (von Hand starten):** In der Konsole gilt US-Tastatur (`=` auf ´, `-` auf ß, `/` auf -). Jede Zeile mit Enter, Dateinamen mit Tab ergänzen:
+  ```
+  set root=(lvm/pve-root)
+  linux /boot/vmlinuz-<version>-pve root=/dev/mapper/pve-root ro quiet
+  initrd /boot/initrd.img-<version>-pve
+  boot
+  ```
+- **Dauerhafte Lösung:** In Proxmox GRUB neu auf die EFI-Partition schreiben:
+  ```
+  grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=proxmox
+  update-grub
+  ```
+- **Gelernt:** Vorher mit `lsblk` und `efibootmgr -v` prüfen, von welcher Platte der Rechner startet. Alte Windows-Partitionen auf den anderen SSDs vor dem Einbinden mit **Wipe Disk** löschen.
+
 ### Antennenabdeckung beim Öffnen abgebrochen
 - **Ursache:** Das runde Teil oben rechts an der Rückseite des EliteDesk für eine Schraube gehalten. Es ist eine Plastikabdeckung für einen optionalen WLAN-Antennenanschluss.
 - **Folge:** Rein kosmetisch. Die einzige Deckelschraube sitzt neben dem Schloss-Symbol.
