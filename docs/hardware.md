@@ -25,13 +25,13 @@ Die Anleitung (Kapitel 0–13) funktioniert weiterhin auf einem einzigen PC mit 
 > [!NOTE]
 > Das Patchpanel sitzt bewusst oben mit Abstand zum Switch. So fallen die kurzen Kabel sauber vor den Blenden nach unten. Die Patchpanel-Nummern sind dadurch um 2 versetzt: Patchpanel 3–10 gehen auf Switch 1–8.
 
-![Rack-Belegung von vorne](diagramme/rack-belegung-2026-10-19.png)
+![Rack-Belegung von vorne](diagramme/rack-belegung-2026-10-21.png)
 
 Im Dauerbetrieb braucht alles zusammen etwa 30–40 W.
 
 ## Verkabelung
 
-![Verkabelung im Rack](diagramme/verkabelung-2026-10-19.png)
+![Verkabelung im Rack](diagramme/verkabelung-2026-10-21.png)
 
 **Prinzip:** Jedes Gerät wird **hinten** ins Patchpanel gesteckt. **Vorne** verbindet ein kurzes Kabel jeden Patchpanel-Port mit dem passenden Switch-Port. Vorne sieht man dann nur eine ordentliche Reihe, und zum Umstecken muss man hinten nichts anfassen.
 

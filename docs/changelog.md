@@ -6,6 +6,7 @@
 - [Hardware](hardware.md): neue Abschnitte zum Aufrüsten des Mini-PCs und zur Proxmox-Installation per USB-Stick
 - Tailscale als Subnet Router auf dem Proxmox-Host, Zugriff aufs Heimnetz vom Handy ohne Portfreigabe
 - Beszel als LXC (`192.168.2.21`) mit Agent auf dem Proxmox-Host: CPU, RAM, Disk und Temperatur im Blick
+- Neue Grafiken für Rack-Belegung und Verkabelung (Stand 21.10.)
 - Mini-PC und Switch ins Rack eingebaut, Patchpanel nach oben versetzt, alle Geräte über das Patchpanel verkabelt (Port 1, 7, 8 mit Gigabit)
 - Speicher `vmdata` (LVM-Thin) und `backup` (Verzeichnis) eingerichtet
 - Proxmox auf No-Subscription-Repo umgestellt und aktualisiert, GRUB nach dem Update repariert
