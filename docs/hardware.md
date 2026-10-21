@@ -154,6 +154,28 @@ Die beiden anderen SSDs werden in der Weboberfläche eingebunden. Vorher alte Pa
 
 Danach braucht der Mini-PC weder Monitor noch Tastatur: Verwaltet wird nur noch über die Weboberfläche.
 
+## Monitoring mit Beszel
+
+> **Dauer:** ca. 15 Minuten · **Wo:** Proxmox-Shell und Browser
+
+[Beszel](https://beszel.dev) zeigt CPU, RAM, Festplatten, Netzwerk und Temperaturen des Hosts mit Verlauf. Der Hub läuft als LXC-Container, auf dem Proxmox-Host selbst läuft ein kleiner Agent.
+
+1. **Hub anlegen:** Auf [community-scripts.org](https://community-scripts.org/) das Script **Beszel** in der Shell von `pve01` ausführen, *Advanced Install*:
+   - Hostname `beszel`, Unprivileged
+   - IP fest im Heimnetz, z. B. `192.168.2.21/24`, Gateway `192.168.2.1`
+   - Template-Storage `local`, Container-Storage `vmdata`
+   - Alle anderen Fragen mit dem Standard bestätigen. „Save as defaults“ mit **No** beantworten, sonst wird die feste IP beim nächsten Mal wiederverwendet.
+2. `http://192.168.2.21:8090` öffnen und das Admin-Konto anlegen.
+3. **Add System** → Reiter **Binary** (nicht Docker, auf dem Proxmox-Host gibt es kein Docker). Name `pve01`, IP `192.168.2.20`, Port `45876`.
+4. **Copy Linux command** und den Befehl in der Shell von **pve01** ausführen (auf dem Host, nicht im Container). Danach in Beszel **Add System**.
+
+**Prüfen:** Nach etwa einer Minute ist `pve01` grün und zeigt Werte. Im Leerlauf liegen CPU und RAM im einstelligen Prozentbereich, die CPU bei gut 40 °C.
+
+> [!NOTE]
+> Der Installationsbefehl enthält einen Token. Ihn nicht öffentlich posten oder ins Repo legen.
+
+Später bekommt der Beszel-Container eine zweite Netzwerkkarte im Lab-Netz, damit er auch die VMs überwachen kann.
+
 ## Montage-Tipps
 
 - **3 Löcher an der Schiene = 1 HE**, von oben gezählt. Ein 1-HE-Gerät wird im 1. und 3. Loch seiner HE verschraubt.
