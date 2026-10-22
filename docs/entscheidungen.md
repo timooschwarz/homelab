@@ -27,3 +27,5 @@ Warum ich etwas so gebaut habe, wie es ist. Kurz gehalten, im Stil von Architect
 | Switch-Verwaltung | Feste IP im Heimnetz, Uplink immer untagged in VLAN 1 | Erreichbar vom Arbeits-PC, und man sperrt sich bei VLAN-Übungen nicht aus |
 | Netzwerkkarte | Homelable als LXC auf Proxmox, vorerst Proxmox als VM in Hyper-V | Schneller Überblick „läuft alles?“, ergänzt NetBox statt es zu ersetzen. Im LXC liefert der Scan MAC-Adressen (unter Docker Desktop nicht), und der Container lässt sich per Backup auf einen echten Proxmox-Host umziehen |
 | Dokumentation | Notion | Datenbanken für Aufgaben, Änderungen und Runbooks mit Verknüpfungen |
+| NetBox | Als LXC auf pve01 im Heimnetz (`192.168.2.22`) statt als VM im Lab-Netz | Weniger RAM, startet in Sekunden, wird mit gesichert. Verwaltungswerkzeuge wie Beszel und NetBox gehören ins Verwaltungsnetz, nicht in das Netz, das sie dokumentieren |
+| Backups | Zwei Jobs: 01:30 lokal auf pve01, 03:30 auf das Pi-NAS | Lokal geht der Restore schnell, das NAS hilft, wenn pve01 selbst ausfällt. Verschiedene Geräte, aber noch keine Kopie außer Haus |

@@ -174,6 +174,12 @@ Fehler, die beim Aufbau aufgetreten sind, jeweils mit Ursache und Lösung.
 - **Ursache:** Vermutlich zu wenig Arbeitsspeicher beim Setup (dynamisch, 2 GB Start).
 - **Lösung:** 4 GB fest während der Installation.
 
+### Prüfpunkt-Kette kaputt, VM startet nicht mehr (`0xC03A0019`)
+- **Symptom:** Vor dem Umzug auf Proxmox soll die Platte von NETBOX01 zusammengeführt werden. *Datenträger bearbeiten* und `Convert-VHD` brechen ab mit „Fehler beim Öffnen einer in der Kette höhergestellten virtuellen Festplatte (0xC03A0019)“. Die VM startet auch in Hyper-V nicht mehr.
+- **Ursache:** Die VM lief auf einer `.avhdx`, Hyper-V kannte aber keine Prüfpunkte mehr dazu. Die Prüfpunkte wurden irgendwann gelöscht, ohne dass die Zusammenführung sauber durchlief. Die Dateinamen der Kette passen noch, intern aber nicht mehr. `Test-VHD` meldet trotzdem `True`.
+- **Lösung:** Nicht reparierbar mit vertretbarem Aufwand. NetBox frisch als LXC auf Proxmox aufgesetzt.
+- **Gelernt:** Vor dem Umzug prüfen, ob jede VM, die auf einer `.avhdx` läuft, auch Prüfpunkte in Hyper-V hat (`Get-VMHardDiskDrive` und `Get-VMSnapshot` vergleichen). Prüfpunkte nur bei ausgeschalteter VM löschen und warten, bis die Spalte *Status* leer ist, bevor die VM wieder startet. Hyper-V-Befehle immer in der 64-Bit-PowerShell, nicht in *(x86)*.
+
 ### Secure Boot blockiert den Ubuntu-Installer
 - **Meldung:** `The signed image's hash is not allowed (DB)`
 - **Lösung:** Secure-Boot-Vorlage *Microsoft UEFI Certificate Authority* wählen.

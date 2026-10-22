@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-22 (später Abend)
+- pve01: zweite Bridge `vmbr1` mit `10.0.0.1/24` und NAT für das Lab-Netz, Tailscale gibt zusätzlich `10.0.0.0/24` frei
+- Zweiter Backup-Job: täglich 01:30 lokal auf `backup` (3 Tage, 2 Wochen), 03:30 weiter aufs NAS
+- NetBox neu als LXC 101 (`192.168.2.22`, Community-Script) statt NETBOX01 in Hyper-V, befüllt mit Standort, Netzen, Geräten, Clustern, VMs und IPs (CSV-Import)
+- Pi-NAS: SMB-Freigabe mit eigenem Benutzer, Beszel-Alarme mit Push per ntfy
+- Neuer Fall in der [Fehlerbehebung](fehlerbehebung.md): kaputte Prüfpunkt-Kette in Hyper-V (`0xC03A0019`)
+
 ## 2026-10-22 (abends)
 - Neues [Kapitel 16 · NAS mit Raspberry Pi](anleitung/16-pi-nas.md): Pi 5 mit Penta SATA HAT zusammengebaut, Raspberry Pi OS Lite und OpenMediaVault 8 installiert, RAID 5 aus 4× 1 TB SSD, NFS-Freigabe, Proxmox-Storage `nas` und täglicher Backup-Job (03:30, 7/4/3)
 - Zwei harte Fehler gelöst: Timeouts am JMB585 unter Kernel 6.18 (`dtoverlay=pcie-32bit-dma-pi5`) und extrem langsames Lesen alter Daten bei den Samsung 840 EVO (alle SSDs per `blkdiscard` getrimmt)
