@@ -14,7 +14,7 @@ Warum ich etwas so gebaut habe, wie es ist. Kurz gehalten, im Stil von Architect
 | Überwachung | Netdata nur für Linux, Windows-Server per Ping, Port und DNS in Uptime Kuma | Das lokale Netdata-Dashboard für Windows-Agenten ist im kostenlosen Tarif gesperrt |
 | Reverse Proxy | Nginx Proxy Manager | Weboberfläche, schnell eingerichtet, reicht fürs Lab |
 | Jump Host | Warpgate für RDP und SSH | Lernprojekt. Echter Schutz erst, wenn der Zugriff nur noch darüber erlaubt ist |
-| Fernzugriff | NetBird (kostenloser Tarif) mit TOOLS01 als Routing Peer | Kein eigener Server nötig, RDP steht nie direkt im Internet |
+| Fernzugriff aufs Lab-Netz | NetBird (kostenloser Tarif) mit TOOLS01 als Routing Peer | Kein eigener Server nötig, RDP steht nie direkt im Internet. Wird geprüft, sobald das Lab auf pve01 läuft: dann reicht wahrscheinlich Tailscale für beide Netze |
 | Kennwörter | Alle Lab-Kennwörter lokal in KeePassXC. Infisical wieder entfernt | Infisical lief, wurde aber nie genutzt. Als reine Passwortablage bringt es nichts gegenüber KeePassXC, kostet RAM auf TOOLS01 und liegt selbst im Lab: Ist TOOLS01 kaputt, fehlen die Kennwörter zum Reparieren. Sinnvoll erst, wenn Dienste ihre Secrets automatisch abrufen sollen |
 | Connection Manager | Devolutions Remote Desktop Manager Free | RDP, SSH und Hyper-V-Konsole an einer Stelle |
 | Hardware | Umzug auf einen Mini-PC (Ryzen 5 PRO, 32 GB) im 10-Zoll-Rack | Lab soll dauerhaft laufen, ohne den großen PC anzulassen. Ca. 15–25 W |

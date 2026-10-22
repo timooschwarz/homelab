@@ -8,7 +8,7 @@
 ![MECM](https://img.shields.io/badge/MECM-Current%20Branch-107C10)
 ![Ubuntu](https://img.shields.io/badge/Ubuntu-Docker-E95420?logo=ubuntu&logoColor=white)
 
-![Netzwerk des Labs](docs/diagramme/netzwerk-2026-10-18.png)
+![Netzwerk des Labs](docs/diagramme/netzwerk-2026-10-22.png)
 
 ---
 
