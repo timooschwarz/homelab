@@ -120,6 +120,14 @@ Fehler, die beim Aufbau aufgetreten sind, jeweils mit Ursache und Lösung.
   ```
 - **Gelernt:** Vorher mit `lsblk` und `efibootmgr -v` prüfen, von welcher Platte der Rechner startet. Alte Windows-Partitionen auf den anderen SSDs vor dem Einbinden mit **Wipe Disk** löschen.
 
+### Proxmox bietet eine SSD nicht an („No Disks unused“)
+- **Ursache:** Auf der Platte waren noch Partitionen eines alten Windows.
+- **Lösung:** *pve01 → Disks* → Platte auswählen → **Wipe Disk**, danach taucht sie in LVM-Thin bzw. Directory auf.
+
+### NVMe-Namen nach Neustart vertauscht
+- **Symptom:** Die 1-TB-SSD hieß vor dem Neustart `/dev/nvme1n1`, danach `/dev/nvme0n1`.
+- **Gelernt:** Linux nummeriert NVMe-Geräte beim Start in der Reihenfolge, in der sie sich melden. Platten immer an Seriennummer und Größe erkennen.
+
 ### Antennenabdeckung beim Öffnen abgebrochen
 - **Ursache:** Das runde Teil oben rechts an der Rückseite des EliteDesk für eine Schraube gehalten. Es ist eine Plastikabdeckung für einen optionalen WLAN-Antennenanschluss.
 - **Folge:** Rein kosmetisch. Die einzige Deckelschraube sitzt neben dem Schloss-Symbol.

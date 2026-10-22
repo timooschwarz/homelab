@@ -6,7 +6,7 @@ Jede Stufe baut auf der vorherigen auf: Vorlagen vor neuen Servern, Backup vor r
 
 | # | Ausbaustufe | Neue VM | Status |
 |---|---|---|---|
-| 0 | Umzug auf Mini-PC im 10-Zoll-Rack | – | Rack, Switch und Proxmox auf dem Mini-PC ✅, VM-Umzug folgt |
+| 0 | Umzug auf Mini-PC im 10-Zoll-Rack | – | Rack, Switch und Proxmox auf dem Mini-PC ✅ ([Kapitel 15](anleitung/15-proxmox-host.md)), VM-Umzug folgt |
 | 1 | Monitoring (Uptime Kuma, Netdata) | – | ✅ |
 | 2 | Reverse Proxy und DNS-Namen | – | ✅ |
 | 3 | Infisical für Kennwörter | – | wieder entfernt, KeePassXC reicht |

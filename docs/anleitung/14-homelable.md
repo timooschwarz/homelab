@@ -1,8 +1,8 @@
 # Kapitel 14 · Homelable: Netzwerkkarte mit Live-Status (Proxmox in Hyper-V)
 
-[← Kapitel 13](13-wazuh.md) · [Übersicht](../../README.md#inhaltsverzeichnis)
+[← Kapitel 13](13-wazuh.md) · [Übersicht](../../README.md#inhaltsverzeichnis) · [Kapitel 15 →](15-proxmox-host.md)
 
-[![Netzwerk](https://img.shields.io/badge/-Netzwerk-1D9E75?style=flat-square)](../../README.md#thema-netz) [![Linux & Docker](https://img.shields.io/badge/-Linux%20%26%20Docker-E95420?style=flat-square)](../../README.md#thema-linux) [![Hyper-V](https://img.shields.io/badge/-Hyper--V-5F5E5A?style=flat-square)](../../README.md#thema-hyperv) [![Gruppenrichtlinien](https://img.shields.io/badge/-Gruppenrichtlinien-7F77DD?style=flat-square)](../../README.md#thema-gpo)
+[![Proxmox](https://img.shields.io/badge/-Proxmox-E57000?style=flat-square)](../../README.md#thema-proxmox) [![Netzwerk](https://img.shields.io/badge/-Netzwerk-1D9E75?style=flat-square)](../../README.md#thema-netz) [![Linux & Docker](https://img.shields.io/badge/-Linux%20%26%20Docker-E95420?style=flat-square)](../../README.md#thema-linux) [![Hyper-V](https://img.shields.io/badge/-Hyper--V-5F5E5A?style=flat-square)](../../README.md#thema-hyperv) [![Gruppenrichtlinien](https://img.shields.io/badge/-Gruppenrichtlinien-7F77DD?style=flat-square)](../../README.md#thema-gpo)
 
 > **Ziel:** Eine grafische Karte des Labs, auf der jede VM mit Live-Status (grün/rot) zu sehen ist. Dafür läuft Proxmox VE als VM in Hyper-V und darin [Homelable](https://homelable.net/) als LXC-Container.
 > **Dauer:** ca. 1,5 Stunden · **Wo:** Host, PVE01 (Weboberfläche), DC01
@@ -156,3 +156,5 @@ Container **100 (homelable)** → **Backup → Jetzt sichern** → Storage `loca
 | Ein Gerät heißt nach dem Scan wie ein Demo-Gerät | Demo-Eintrag hatte zufällig dieselbe IP (`10.0.0.1`) | Umbenennen, auch unter *Identity → Name* über **Edit** |
 
 Wie es danach weitergeht: [Roadmap](../roadmap.md)
+
+Weiter mit Proxmox auf echter Hardware: [Kapitel 15](15-proxmox-host.md)

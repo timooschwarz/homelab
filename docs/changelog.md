@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-22
+- Neues [Kapitel 15 · Proxmox auf eigener Hardware](anleitung/15-proxmox-host.md) mit Screenshots und zwei Grafiken (Überblick, Speicher): Aufrüsten, Installation, Paketquellen, Speicher, Beszel, Tailscale
+- Die Proxmox-Abschnitte aus [Hardware](hardware.md) sind ins Kapitel umgezogen
+- [Entscheidungen](entscheidungen.md): Proxmox statt Hyper-V auf dem Mini-PC, Speicheraufteilung, Beszel, Tailscale
+- Erste Nacht im Dauerbetrieb: pve01 stabil, CPU im Leerlauf ca. 36 °C, Tailscale-Zugriff übers Handy getestet
+
 ## 2026-10-21
 - HP EliteDesk 805 G6 Mini aufgerüstet: 32 GB DDR4, 2× NVMe und 1× SATA-SSD, im BIOS geprüft
 - Proxmox VE 9.2 auf dem Mini-PC installiert (`pve01`, `192.168.2.20`), erreichbar über die Weboberfläche
