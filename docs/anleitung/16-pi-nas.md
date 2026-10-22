@@ -15,7 +15,7 @@
 | Hostname | `pi-nas`, erreichbar als `pi-nas.local` |
 | IP | per DHCP, im Router fest an die MAC gebunden (bei mir `192.168.2.234`) |
 | Speicher | RAID 5 aus 4 SSDs, EXT4, ca. 2,7 TB nutzbar |
-| Freigaben | `backup-pve` per NFS nur für pve01, `daten` für SMB |
+| Freigaben | `backup-pve` per NFS nur für pve01, `daten` per SMB für den PC |
 
 > [!NOTE]
 > 4 GB RAM reichen für OMV und ein paar Docker-Container. ZFS wäre auf dem Pi mit 4 GB knapp und braucht Kernel-Module, deshalb hier klassisches Software-RAID mit `mdadm`.
@@ -150,7 +150,17 @@ Warum RAID 5: Eine SSD darf ausfallen, es bleiben ca. 2,7 von 4 TB nutzbar. Da d
 
 Mit *Selection mode All* werden auch VMs, die später dazukommen, automatisch mitgesichert.
 
-## Schritt 9 · Überwachung mit Beszel
+## Schritt 9 · SMB-Freigabe für den PC (OMV)
+
+1. **Users → Users → Create:** eigener Benutzer nur für die Freigabe, z. B. `nas-timo`, Shell **`/usr/sbin/nologin`**, Gruppe nur `users`.
+   > [!TIP]
+   > Nicht den SSH-Benutzer aus dem Imager nehmen. Der ist Admin (`sudo`) und hat kein SMB-Kennwort. Setzt du es in OMV, änderst du gleichzeitig dein SSH-Kennwort.
+2. **Storage → Shared Folders** → `daten` → **Permissions** → beim neuen Benutzer **Read/Write**.
+3. **Services → SMB/CIFS → Settings** → **Enabled**, Minimum **SMB2** lassen → **Save**.
+4. **Services → SMB/CIFS → Shares → Create** → `daten` → **Save**, gelben Balken übernehmen.
+5. Am PC im Explorer `\\<IP des Pi>\daten`, mit dem neuen Benutzer anmelden. Danach als Netzlaufwerk verbinden.
+
+## Schritt 10 · Überwachung mit Beszel
 
 1. In Beszel (`http://192.168.2.21:8090`) **Add System** → Reiter **Binary** → Name `pi-nas`, IP des Pi → **Copy Linux command**.
 2. Den Befehl per SSH auf dem Pi ausführen, arm64 wird automatisch erkannt.
@@ -171,6 +181,7 @@ Während des RAID-Syncs lag der Pi bei mir bei ca. 47 °C mit einer Load um 2,5,
 - [ ] OMV: Dateisystem auf `md0` **Available**, beide Shared Folders da
 - [ ] Proxmox: Storage `nas` aktiv, Größe ca. 2,7 TB
 - [ ] Backup-Job läuft mit **OK**, Datei liegt auf `nas`
+- [ ] `\\<IP>\daten` im Explorer erreichbar, Testdatei lässt sich anlegen
 - [ ] `pi-nas` in Beszel grün mit Temperatur
 
 ## Häufige Fehler
@@ -206,4 +217,4 @@ for d in a b c d; do sudo blkdiscard -f /dev/sd$d; done
 
 Danach den `dd`-Test wiederholen (bei mir 440, 162, 440, 440 MB/s) und das RAID in OMV neu anlegen. Der Sync lief dann mit ca. 110 MB/s.
 
-Wie es weitergeht: SMB-Freigabe `daten`, Benachrichtigungen in OMV, Uptime Kuma als Wächter für pve01. [Roadmap](../roadmap.md)
+Wie es weitergeht: Benachrichtigungen in OMV, Uptime Kuma als Wächter für pve01. [Roadmap](../roadmap.md)
