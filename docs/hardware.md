@@ -5,7 +5,7 @@
 [![Netzwerk](https://img.shields.io/badge/-Netzwerk-1D9E75?style=flat-square)](../README.md#thema-netz) [![Hyper-V](https://img.shields.io/badge/-Hyper--V-5F5E5A?style=flat-square)](../README.md#thema-hyperv)
 
 > **Ziel:** Das Lab läuft dauerhaft auf einem eigenen, sparsamen Mini-PC statt auf dem großen PC. Mini-PC, Switch und NAS sitzen ordentlich verkabelt in einem kleinen 10-Zoll-Rack.
-> **Stand:** 21.10.2026 · Rack aufgebaut, Patchpanel (HE 2), Switch (HE 5), Mini-PC (HE 6) und SBC Shelf (HE 8) eingebaut, alles über das Patchpanel verkabelt. Auf dem Mini-PC läuft Proxmox VE ([Kapitel 15](anleitung/15-proxmox-host.md)). Das NAS folgt.
+> **Stand:** 21.10.2026 · Rack aufgebaut, Patchpanel (HE 2), Switch (HE 5), Mini-PC (HE 6) und SBC Shelf (HE 8) eingebaut, alles über das Patchpanel verkabelt. Auf dem Mini-PC läuft Proxmox VE ([Kapitel 15](anleitung/15-proxmox-host.md)). Das NAS läuft seit 22.10. auf dem Tisch ([Kapitel 16](anleitung/16-pi-nas.md)), der Platz im Rack ist noch offen.
 
 Die Anleitung (Kapitel 0–14) funktioniert weiterhin auf einem einzigen PC mit Hyper-V. Diese Seite beschreibt Rack, Verkabelung und Switch für den Umzug auf eigene Hardware. Es ist optional. Auf dem Mini-PC läuft **Proxmox VE** statt Hyper-V: Die Windows-Server laufen dort als KVM-VMs, Linux-Dienste können als schlanke LXC-Container laufen.
 
@@ -87,6 +87,7 @@ Aufrüsten, Proxmox installieren, Speicher, Monitoring mit Beszel und Fernzugrif
 - Das NAS ragt mit HAT, Kühler und SSDs über 1 HE hinaus. Deshalb liegt es ganz unten und die HE darüber bleibt frei bzw. bekommt eine Belüftungsblende.
 - Das DeskPi SBC Shelf hat zwei Pi-Plätze mit kleinen Adapterplatinen (KL-P24), die USB-C und HDMI nach vorne führen. Fürs NAS werden sie nicht gebraucht: Der Pi bekommt Strom über das 12-V-Netzteil am Penta HAT. Dann **nicht zusätzlich** per USB-C einspeisen.
 - Den Pi am besten auf dem Tisch aufs Shelf schrauben und das Shelf danach einbauen.
+- **Nachgemessen:** Mit HAT, Kühler und stehenden SSDs passt das NAS bei mir nicht in die 2 HE unter dem Fachboden des Mini-PCs. Lösung ohne alles umzubauen: gelochte Blende aus HE 4 raus, Switch nach HE 4, Fachboden mit Mini-PC nach HE 5. Dann sind HE 6–8 frei (ca. 13 cm).
 
 ## Häufige Fehler
 

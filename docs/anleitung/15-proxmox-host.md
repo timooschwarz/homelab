@@ -275,4 +275,4 @@ boot
   <img src="../bilder/proxmox-grub-install.png" width="49%" alt="grub-install und update-grub ohne Fehler">
 </p>
 
-Wie es weitergeht: Lab-Netz als zweite Bridge auf pve01, dann ziehen die VMs aus Hyper-V um, DC01 zuerst. [Roadmap](../roadmap.md)
+Wie es weitergeht: Backups aufs NAS in [Kapitel 16](16-pi-nas.md). Danach Lab-Netz als zweite Bridge auf pve01, dann ziehen die VMs aus Hyper-V um, DC01 zuerst. [Roadmap](../roadmap.md)

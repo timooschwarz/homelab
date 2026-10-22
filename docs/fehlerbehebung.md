@@ -132,6 +132,37 @@ Fehler, die beim Aufbau aufgetreten sind, jeweils mit Ursache und Lösung.
 - **Ursache:** Das runde Teil oben rechts an der Rückseite des EliteDesk für eine Schraube gehalten. Es ist eine Plastikabdeckung für einen optionalen WLAN-Antennenanschluss.
 - **Folge:** Rein kosmetisch. Die einzige Deckelschraube sitzt neben dem Schloss-Symbol.
 
+## NAS (Raspberry Pi und OpenMediaVault)
+
+### RAID-Sync kriecht, Timeouts am SATA-Controller
+- **Symptom:** RAID 5 synchronisiert mit wenigen hundert K/sec. Im `dmesg` stehen `failed command: READ FPDMA QUEUED`, `timeout`, `hard resetting link` und I/O-Fehler auf mehreren SSDs.
+- **Ursache:** Der JMB585 auf dem Penta HAT braucht seit Kernel 6.18 auf dem Pi 5 eine zusätzliche Einstellung.
+- **Lösung:** In `/boot/firmware/config.txt` unter `[all]`: `dtoverlay=pcie-32bit-dma-pi5`, PCIe Gen 3 weglassen, neu starten.
+- **Gelernt:** Fehler auf mehreren Platten gleichzeitig deuten auf Controller oder Verbindung, nicht auf die Platten.
+
+### Keine Fehler mehr, Sync trotzdem bei 1 MB/s
+- **Symptom:** Log sauber, SMART *PASSED* und *No Errors Logged*, aber eine SSD liest beim `dd`-Test 1 GB minutenlang nicht.
+- **Ursache:** Samsung 840 EVO mit alter Firmware lesen lange liegende Daten extrem langsam. Der Resync liest alles, was noch von früher drauf ist.
+- **Lösung:** RAID stoppen, Superblocks löschen, alle SSDs mit `blkdiscard` komplett trimmen, RAID neu anlegen. Danach ca. 110 MB/s. Dauerhaft: Firmware-Update mit Samsung Magician.
+- **Gelernt:** Eine Platte einzeln mit `dd` lesen trennt „Platte langsam“ von „Controller kaputt“ in einer Minute.
+
+### SSDs nach Änderung der config.txt verschwunden
+- **Ursache:** Beim Löschen einer Zeile mit Strg+K in nano gingen die Abschnitte `[cm5]`, `[pi5]` und `[all]` mit. Die PCIe-Zeilen standen danach unter `[cm4]` und galten für den Pi 5 nicht.
+- **Lösung:** Abschnitte wiederherstellen, PCIe-Zeilen unter `[all]`. Vor dem Neustart mit `tail -15 /boot/firmware/config.txt` prüfen.
+
+### Pi nach der OMV-Installation nicht mehr erreichbar
+- **Ursache:** OMV übernimmt das Netzwerk und holt per DHCP eine neue IP.
+- **Lösung:** `ssh benutzer@pi-nas.local`, auf dem Pi `hostname -I`. Danach im Router eine DHCP-Reservierung setzen.
+
+### Proxmox: „storage 'nas' is not online“
+- **Ursache:** Die NFS-Freigabe war angelegt, der NFS-Dienst in OMV aber nicht eingeschaltet.
+- **Lösung:** **Services → NFS → Settings → Enabled**, übernehmen, dann in Proxmox erneut **Add**.
+
+### Fehler wegen eines Leerzeichens
+- **Symptom:** OMV meldet bei den NFS-Extra-Options *doesn't match the pattern*, Proxmox beim Export *invalid format*.
+- **Ursache:** Ein Leerzeichen am Anfang, meist vom Kopieren.
+- **Lösung:** Feld leeren und von Hand tippen.
+
 ## Hyper-V
 
 ### Linux-VMs: Out of memory bzw. Kernel Panic

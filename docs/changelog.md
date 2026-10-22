@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-22 (abends)
+- Neues [Kapitel 16 · NAS mit Raspberry Pi](anleitung/16-pi-nas.md): Pi 5 mit Penta SATA HAT zusammengebaut, Raspberry Pi OS Lite und OpenMediaVault 8 installiert, RAID 5 aus 4× 1 TB SSD, NFS-Freigabe, Proxmox-Storage `nas` und täglicher Backup-Job (03:30, 7/4/3)
+- Zwei harte Fehler gelöst: Timeouts am JMB585 unter Kernel 6.18 (`dtoverlay=pcie-32bit-dma-pi5`) und extrem langsames Lesen alter Daten bei den Samsung 840 EVO (alle SSDs per `blkdiscard` getrimmt)
+- Sechs neue Fälle in der [Fehlerbehebung](fehlerbehebung.md)
+- [Hardware](hardware.md): NAS passt mit stehenden SSDs nicht in 2 HE, Umbauvorschlag ergänzt
+
 ## 2026-10-22
 - Neues [Kapitel 15 · Proxmox auf eigener Hardware](anleitung/15-proxmox-host.md) mit Screenshots und zwei Grafiken (Überblick, Speicher): Aufrüsten, Installation, Paketquellen, Speicher, Beszel, Tailscale
 - Die Proxmox-Abschnitte aus [Hardware](hardware.md) sind ins Kapitel umgezogen

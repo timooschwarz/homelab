@@ -46,6 +46,7 @@ Ich habe dieses Lab als Junior Admin aufgebaut, um Alltagsaufgaben aus der Firma
 - Sicherheitsüberwachung mit Wazuh: Fehlanmeldungen und neue Konten werden gemeldet
 - Optional: Uptime Kuma, Netdata, Nginx Proxy Manager, NetBox, Warpgate und eine Netzwerkkarte mit Live-Status (Homelable auf Proxmox)
 - Optional: Umzug auf einen sparsamen Mini-PC mit Proxmox im 10-Zoll-Rack, Monitoring mit Beszel, Fernzugriff über Tailscale
+- Optional: NAS mit Raspberry Pi 5 und OpenMediaVault, auf das Proxmox jede Nacht sichert
 
 **So sind die Kapitel aufgebaut:** Ziel und Dauer · nummerierte Schritte mit Angabe, auf welchem Rechner du gerade bist · Prüfen · häufige Fehler. Über 50 Screenshots stammen direkt aus dem Lab. Gearbeitet wird überwiegend mit der Oberfläche, PowerShell nur dort, wo es deutlich schneller ist.
 
@@ -67,6 +68,7 @@ Ich habe dieses Lab als Junior Admin aufgebaut, um Alltagsaufgaben aus der Firma
 | NetBox | v4.7.2 |
 | Proxmox VE · Homelable | 9.2 · 3.6 |
 | Mini-PC (Kapitel 15) | HP EliteDesk 805 G6 Mini, Ryzen 5 PRO 4650GE, 32 GB · Beszel 0.21 · Tailscale 1.104 |
+| NAS (Kapitel 16) | Raspberry Pi 5 (4 GB), Radxa Penta SATA HAT, Raspberry Pi OS Lite (Trixie), OpenMediaVault 8 |
 
 ---
 
@@ -150,6 +152,7 @@ Für alle, die mehr wollen: eine Ubuntu-VM mit Docker für Überwachung und Verw
 | [13 · Wazuh](docs/anleitung/13-wazuh.md) | SIEM auf LOG01, Agents auf allen Windows-Rechnern, Fehlanmeldungen erkennen |
 | [14 · Homelable](docs/anleitung/14-homelable.md) | Proxmox als VM in Hyper-V, Netzwerkkarte des Labs mit Live-Status, Ping für Server freigeben |
 | [15 · Proxmox auf eigener Hardware](docs/anleitung/15-proxmox-host.md) | Mini-PC aufrüsten, Proxmox installieren, Speicher, Monitoring mit Beszel, Fernzugriff mit Tailscale |
+| [16 · NAS mit Raspberry Pi](docs/anleitung/16-pi-nas.md) | Pi 5 mit Penta SATA HAT, OpenMediaVault, RAID 5, NFS-Freigabe und nächtliche Proxmox-Backups |
 
 <p align="center">
   <img src="docs/bilder/uptime-kuma-dashboard.png" width="49%" alt="Uptime Kuma">
@@ -169,7 +172,7 @@ Jedes Kapitel hat oben Tags. Ein Klick auf einen Tag führt hierher, zu allen Ka
 | <a id="thema-ad"></a>![Active Directory](https://img.shields.io/badge/-Active%20Directory-378ADD?style=flat-square) | [2 · Domain Controller](docs/anleitung/02-domain-controller.md) · [3 · DNS und DHCP](docs/anleitung/03-dns-dhcp.md) · [4 · AD-Struktur](docs/anleitung/04-ad-struktur.md) · [5 · Benutzer per Skript](docs/anleitung/05-benutzer-per-skript.md) · [6 · Client](docs/anleitung/06-client.md) · [11 · MECM](docs/anleitung/11-mecm.md) |
 | <a id="thema-dns"></a>![DNS](https://img.shields.io/badge/-DNS-1D9E75?style=flat-square) | [2 · Domain Controller](docs/anleitung/02-domain-controller.md) · [3 · DNS und DHCP](docs/anleitung/03-dns-dhcp.md) · [10 · Linux-Dienste](docs/anleitung/10-linux-dienste.md) |
 | <a id="thema-dhcp"></a>![DHCP](https://img.shields.io/badge/-DHCP-1D9E75?style=flat-square) | [3 · DNS und DHCP](docs/anleitung/03-dns-dhcp.md) |
-| <a id="thema-netz"></a>![Netzwerk](https://img.shields.io/badge/-Netzwerk-1D9E75?style=flat-square) | [1 · Netzwerk](docs/anleitung/01-netzwerk.md) · [10 · Linux-Dienste](docs/anleitung/10-linux-dienste.md) · [14 · Homelable](docs/anleitung/14-homelable.md) · [15 · Proxmox-Host](docs/anleitung/15-proxmox-host.md) · [Hardware](docs/hardware.md) |
+| <a id="thema-netz"></a>![Netzwerk](https://img.shields.io/badge/-Netzwerk-1D9E75?style=flat-square) | [1 · Netzwerk](docs/anleitung/01-netzwerk.md) · [10 · Linux-Dienste](docs/anleitung/10-linux-dienste.md) · [14 · Homelable](docs/anleitung/14-homelable.md) · [15 · Proxmox-Host](docs/anleitung/15-proxmox-host.md) · [16 · Pi-NAS](docs/anleitung/16-pi-nas.md) · [Hardware](docs/hardware.md) |
 | <a id="thema-gpo"></a>![Gruppenrichtlinien](https://img.shields.io/badge/-Gruppenrichtlinien-7F77DD?style=flat-square) | [8 · Gruppenrichtlinien](docs/anleitung/08-gruppenrichtlinien.md) · [9 · Testen](docs/anleitung/09-testen.md) · [11 · MECM](docs/anleitung/11-mecm.md) · [14 · Homelable](docs/anleitung/14-homelable.md) |
 | <a id="thema-file"></a>![Dateiserver](https://img.shields.io/badge/-Dateiserver-0F766E?style=flat-square) | [7 · Dateiserver](docs/anleitung/07-dateiserver.md) · [8 · Gruppenrichtlinien](docs/anleitung/08-gruppenrichtlinien.md) · [9 · Testen](docs/anleitung/09-testen.md) |
 | <a id="thema-sec"></a>![Sicherheit](https://img.shields.io/badge/-Sicherheit-EF9F27?style=flat-square) | [4 · AD-Struktur](docs/anleitung/04-ad-struktur.md) · [7 · Dateiserver](docs/anleitung/07-dateiserver.md) · [8 · Gruppenrichtlinien](docs/anleitung/08-gruppenrichtlinien.md) · [13 · Wazuh](docs/anleitung/13-wazuh.md) · [15 · Proxmox-Host](docs/anleitung/15-proxmox-host.md) |
@@ -177,8 +180,8 @@ Jedes Kapitel hat oben Tags. Ein Klick auf einen Tag führt hierher, zu allen Ka
 | <a id="thema-ps"></a>![PowerShell](https://img.shields.io/badge/-PowerShell-5391FE?style=flat-square) | [1 · Netzwerk](docs/anleitung/01-netzwerk.md) · [5 · Benutzer per Skript](docs/anleitung/05-benutzer-per-skript.md) |
 | <a id="thema-hyperv"></a>![Hyper-V](https://img.shields.io/badge/-Hyper--V-5F5E5A?style=flat-square) | [0 · Voraussetzungen](docs/anleitung/00-voraussetzungen.md) · [1 · Netzwerk](docs/anleitung/01-netzwerk.md) · [14 · Homelable](docs/anleitung/14-homelable.md) |
 | <a id="thema-test"></a>![Testen](https://img.shields.io/badge/-Testen-D4537E?style=flat-square) | [9 · Testen](docs/anleitung/09-testen.md) · [12 · Software verteilen](docs/anleitung/12-softwareverteilung.md) · [13 · Wazuh](docs/anleitung/13-wazuh.md) |
-| <a id="thema-linux"></a>![Linux & Docker](https://img.shields.io/badge/-Linux%20%26%20Docker-E95420?style=flat-square) | [10 · Linux-Dienste](docs/anleitung/10-linux-dienste.md) · [13 · Wazuh](docs/anleitung/13-wazuh.md) · [14 · Homelable](docs/anleitung/14-homelable.md) · [15 · Proxmox-Host](docs/anleitung/15-proxmox-host.md) |
-| <a id="thema-proxmox"></a>![Proxmox](https://img.shields.io/badge/-Proxmox-E57000?style=flat-square) | [14 · Homelable](docs/anleitung/14-homelable.md) · [15 · Proxmox-Host](docs/anleitung/15-proxmox-host.md) |
+| <a id="thema-linux"></a>![Linux & Docker](https://img.shields.io/badge/-Linux%20%26%20Docker-E95420?style=flat-square) | [10 · Linux-Dienste](docs/anleitung/10-linux-dienste.md) · [13 · Wazuh](docs/anleitung/13-wazuh.md) · [14 · Homelable](docs/anleitung/14-homelable.md) · [15 · Proxmox-Host](docs/anleitung/15-proxmox-host.md) · [16 · Pi-NAS](docs/anleitung/16-pi-nas.md) |
+| <a id="thema-proxmox"></a>![Proxmox](https://img.shields.io/badge/-Proxmox-E57000?style=flat-square) | [14 · Homelable](docs/anleitung/14-homelable.md) · [15 · Proxmox-Host](docs/anleitung/15-proxmox-host.md) · [16 · Pi-NAS](docs/anleitung/16-pi-nas.md) |
 | <a id="thema-mecm"></a>![MECM](https://img.shields.io/badge/-MECM-107C10?style=flat-square) | [11 · MECM](docs/anleitung/11-mecm.md) · [12 · Software verteilen](docs/anleitung/12-softwareverteilung.md) |
 
 ---
