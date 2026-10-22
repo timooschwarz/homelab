@@ -155,7 +155,11 @@ Mit *Selection mode All* werden auch VMs, die später dazukommen, automatisch mi
 1. In Beszel (`http://192.168.2.21:8090`) **Add System** → Reiter **Binary** → Name `pi-nas`, IP des Pi → **Copy Linux command**.
 2. Den Befehl per SSH auf dem Pi ausführen, arm64 wird automatisch erkannt.
 3. **Add System** abschließen, `pi-nas` wird nach ein paar Sekunden grün.
-4. Beim Pi auf die **Glocke**: Alarme für **Disk** über 85 % und **Temperatur** über 70 °C.
+4. Beim Pi auf die **Glocke** (in der Tabelle ganz rechts, ggf. seitlich scrollen): **Status**, **Disk** über 85 % und **Temperatur** über 70 °C.
+5. Damit die Alarme irgendwo ankommen: **Zahnrad → Notifications → Webhook / Push → Add URL**. Ich nutze [ntfy](https://ntfy.sh): App aufs Handy, ein langes, zufälliges Thema abonnieren und in Beszel `ntfy://ntfy.sh/<thema>` eintragen. **Test URL**, dann **Save Settings**.
+
+> [!WARNING]
+> Ein ntfy-Thema auf ntfy.sh ist öffentlich: Wer den Namen kennt, liest mit. Deshalb keinen erratbaren Namen nehmen. Und wie bei OMV: Ein Leerzeichen vor der URL führt zu *first path segment in URL cannot contain colon*.
 
 Während des RAID-Syncs lag der Pi bei mir bei ca. 47 °C mit einer Load um 2,5, also unkritisch.
 
