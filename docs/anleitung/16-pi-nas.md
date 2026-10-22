@@ -150,6 +150,15 @@ Warum RAID 5: Eine SSD darf ausfallen, es bleiben ca. 2,7 von 4 TB nutzbar. Da d
 
 Mit *Selection mode All* werden auch VMs, die später dazukommen, automatisch mitgesichert.
 
+## Schritt 9 · Überwachung mit Beszel
+
+1. In Beszel (`http://192.168.2.21:8090`) **Add System** → Reiter **Binary** → Name `pi-nas`, IP des Pi → **Copy Linux command**.
+2. Den Befehl per SSH auf dem Pi ausführen, arm64 wird automatisch erkannt.
+3. **Add System** abschließen, `pi-nas` wird nach ein paar Sekunden grün.
+4. Beim Pi auf die **Glocke**: Alarme für **Disk** über 85 % und **Temperatur** über 70 °C.
+
+Während des RAID-Syncs lag der Pi bei mir bei ca. 47 °C mit einer Load um 2,5, also unkritisch.
+
 ## Prüfen
 
 - [ ] `lspci` zeigt den JMicron-Controller, `lsblk` vier SSDs
@@ -158,6 +167,7 @@ Mit *Selection mode All* werden auch VMs, die später dazukommen, automatisch mi
 - [ ] OMV: Dateisystem auf `md0` **Available**, beide Shared Folders da
 - [ ] Proxmox: Storage `nas` aktiv, Größe ca. 2,7 TB
 - [ ] Backup-Job läuft mit **OK**, Datei liegt auf `nas`
+- [ ] `pi-nas` in Beszel grün mit Temperatur
 
 ## Häufige Fehler
 
@@ -192,4 +202,4 @@ for d in a b c d; do sudo blkdiscard -f /dev/sd$d; done
 
 Danach den `dd`-Test wiederholen (bei mir 440, 162, 440, 440 MB/s) und das RAID in OMV neu anlegen. Der Sync lief dann mit ca. 110 MB/s.
 
-Wie es weitergeht: SMB-Freigabe `daten`, Beszel-Agent auf dem Pi, Benachrichtigungen in OMV, Uptime Kuma als Wächter für pve01. [Roadmap](../roadmap.md)
+Wie es weitergeht: SMB-Freigabe `daten`, Benachrichtigungen in OMV, Uptime Kuma als Wächter für pve01. [Roadmap](../roadmap.md)
