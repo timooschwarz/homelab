@@ -6,13 +6,13 @@ Jede Stufe baut auf der vorherigen auf: Vorlagen vor neuen Servern, Backup vor r
 
 | # | Ausbaustufe | Neue VM | Status |
 |---|---|---|---|
-| 0 | Umzug auf Mini-PC im 10-Zoll-Rack | – | Rack, Switch und Proxmox auf dem Mini-PC ✅ ([Kapitel 15](anleitung/15-proxmox-host.md)), VM-Umzug folgt |
+| 0 | Umzug auf Mini-PC im 10-Zoll-Rack | – | Rack, Switch und Proxmox auf dem Mini-PC ✅ ([Kapitel 15](anleitung/15-proxmox-host.md)), Pi-NAS ✅ ([Kapitel 16](anleitung/16-pi-nas.md)), VM-Umzug folgt |
 | 1 | Monitoring (Uptime Kuma, Netdata, Beszel) | – | ✅ (Beszel seit 21.10.) |
 | 2 | Reverse Proxy und DNS-Namen | – | ✅ |
 | 3 | Infisical für Kennwörter | – | wieder entfernt, KeePassXC reicht |
 | 4 | Quick Wins (AD-Papierkorb, Lizenzdaten, Monitore) | – | teilweise |
 | 5 | VM-Vorlagen | – | geplant |
-| 6 | Backup und Restore (Veeam) | BKP01 | geplant |
+| 6 | Backup und Restore | BKP01 | Proxmox-Backups jede Nacht aufs Pi-NAS ✅ ([Kapitel 16](anleitung/16-pi-nas.md)), Veeam für Windows-Restores geplant |
 | 7 | Patch-Management über MECM | – | geplant |
 | 8 | Eigene CA und HTTPS (auch für MECM) | CA01 | geplant |
 | 9 | Gitea und Mailpit | – | geplant |

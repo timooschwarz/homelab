@@ -1,73 +1,85 @@
-# Homelab `lab.test`: Windows-Firmennetz in Hyper-V
+# Homelab `lab.test`
 
-**Eine Schritt-für-Schritt-Anleitung zum Nachbauen.** Active Directory, DNS, DHCP, Dateiserver mit Abteilungsrechten, Gruppenrichtlinien, Windows LAPS und MECM, alles auf einem einzigen PC mit Hyper-V.
+**Ein Windows-Firmennetz zum Nachbauen, Schritt für Schritt.** Von der ersten VM in Hyper-V über Active Directory, Gruppenrichtlinien und MECM bis zum eigenen 10-Zoll-Rack mit Proxmox-Mini-PC und Raspberry-Pi-NAS.
 
 ![Windows Server 2025](https://img.shields.io/badge/Windows%20Server-2025-0078D4?logo=windows&logoColor=white)
 ![Windows 11](https://img.shields.io/badge/Client-Windows%2011-0078D4?logo=windows11&logoColor=white)
 ![Hyper-V](https://img.shields.io/badge/Hyper--V-Lab-5C2D91)
 ![MECM](https://img.shields.io/badge/MECM-Current%20Branch-107C10)
 ![Ubuntu](https://img.shields.io/badge/Ubuntu-Docker-E95420?logo=ubuntu&logoColor=white)
+![Proxmox VE](https://img.shields.io/badge/Proxmox%20VE-9.2-E57000?logo=proxmox&logoColor=white)
+![Raspberry Pi](https://img.shields.io/badge/Raspberry%20Pi%205-NAS-A22846?logo=raspberrypi&logoColor=white)
+![Kapitel](https://img.shields.io/badge/Kapitel-17-555555)
 
 ![Netzwerk des Labs](docs/diagramme/netzwerk-2026-10-22.png)
+
+> [!NOTE]
+> **Stand 22.10.2026:** Das Windows-Lab (Kapitel 0–14) ist komplett und läuft in Hyper-V. Der Mini-PC `pve01` mit Proxmox steht im Rack, das Pi-NAS sichert seit heute jede Nacht alle VMs und Container. Als Nächstes ziehen die VMs aus Hyper-V auf `pve01` um. Was wann dazukam: [Changelog](docs/changelog.md)
 
 ---
 
 ## Inhaltsverzeichnis
 
-1. [Einführung](#einführung)
-2. [Teil 1 · Vorbereitung](#teil-1--vorbereitung)
-3. [Teil 2 · Active Directory](#teil-2--active-directory)
-4. [Teil 3 · Client, Dateiserver und Gruppenrichtlinien](#teil-3--client-dateiserver-und-gruppenrichtlinien)
-5. [Teil 4 · Testen](#teil-4--testen)
-6. [Teil 5 · Optional: Linux-Dienste, MECM, Wazuh und eigene Hardware](#teil-5--optional-linux-dienste-mecm-wazuh-und-eigene-hardware)
-7. [Nach Thema](#nach-thema)
-8. [Betrieb: Starten und Stoppen](#betrieb-starten-und-stoppen)
-9. [Fehler, aus denen ich am meisten gelernt habe](#fehler-aus-denen-ich-am-meisten-gelernt-habe)
-10. [Was ich dabei gelernt habe](#was-ich-dabei-gelernt-habe)
-11. [Wie es weitergeht](#wie-es-weitergeht)
-12. [Aufbau des Repos](#aufbau-des-repos)
+- [Einführung](#einführung) · [Welcher Weg passt zu dir?](#welcher-weg-passt-zu-dir) · [Getestet mit](#getestet-mit)
+- **Die Anleitung**
+  - [Teil 1 · Vorbereitung](#teil-1--vorbereitung): [0 · Voraussetzungen](docs/anleitung/00-voraussetzungen.md) · [1 · Netzwerk](docs/anleitung/01-netzwerk.md)
+  - [Teil 2 · Active Directory](#teil-2--active-directory): [2 · Domain Controller](docs/anleitung/02-domain-controller.md) · [3 · DNS und DHCP](docs/anleitung/03-dns-dhcp.md) · [4 · AD-Struktur](docs/anleitung/04-ad-struktur.md) · [5 · Benutzer per Skript](docs/anleitung/05-benutzer-per-skript.md)
+  - [Teil 3 · Client, Dateiserver und Gruppenrichtlinien](#teil-3--client-dateiserver-und-gruppenrichtlinien): [6 · Client](docs/anleitung/06-client.md) · [7 · Dateiserver](docs/anleitung/07-dateiserver.md) · [8 · Gruppenrichtlinien](docs/anleitung/08-gruppenrichtlinien.md)
+  - [Teil 4 · Testen](#teil-4--testen): [9 · Testen](docs/anleitung/09-testen.md)
+  - [Teil 5 · Erweiterungen: Linux, MECM und Sicherheit](#teil-5--erweiterungen-linux-mecm-und-sicherheit): [10 · Linux-Dienste](docs/anleitung/10-linux-dienste.md) · [11 · MECM](docs/anleitung/11-mecm.md) · [12 · Software verteilen](docs/anleitung/12-softwareverteilung.md) · [13 · Wazuh](docs/anleitung/13-wazuh.md) · [14 · Homelable](docs/anleitung/14-homelable.md)
+  - [Teil 6 · Eigene Hardware: Proxmox, Rack und NAS](#teil-6--eigene-hardware-proxmox-rack-und-nas): [15 · Proxmox auf dem Mini-PC](docs/anleitung/15-proxmox-host.md) · [16 · NAS mit Raspberry Pi](docs/anleitung/16-pi-nas.md) · [Hardware und Rack](docs/hardware.md)
+- [Nach Thema](#nach-thema)
+- [Betrieb: Starten, Stoppen, Sichern](#betrieb-starten-stoppen-sichern)
+- [Fehler, aus denen ich am meisten gelernt habe](#fehler-aus-denen-ich-am-meisten-gelernt-habe)
+- [Was ich dabei gelernt habe](#was-ich-dabei-gelernt-habe)
+- [Wie es weitergeht](#wie-es-weitergeht)
+- [Aufbau des Repos](#aufbau-des-repos)
 
 ---
 
 ## Einführung
 
-Ich habe dieses Lab als Junior Admin aufgebaut, um Alltagsaufgaben aus der Firma gefahrlos zu üben: Benutzer anlegen, Rechte vergeben, Laufwerke verteilen, Software ausrollen. Diese Anleitung beschreibt jeden Schritt so, dass du ihn nachklicken kannst, **inklusive der Fehler, die mir dabei passiert sind**, und wie man sie findet.
+Ich habe dieses Lab als Junior Admin aufgebaut, um Alltagsaufgaben aus der Firma gefahrlos zu üben: Benutzer anlegen, Rechte vergeben, Laufwerke verteilen, Software ausrollen. Die Anleitung beschreibt jeden Schritt so, dass du ihn nachklicken kannst, **inklusive der Fehler, die mir dabei passiert sind**, und wie man sie findet.
 
 **Für wen:** Azubis und Einsteiger in der Systemintegration und alle, die sich auf ein Vorstellungsgespräch als Windows-Admin vorbereiten.
 
 **Was am Ende läuft:**
 
-- Domäne `lab.test` mit sauberer OU-Struktur unter `Lab/`
-- Rund 120 Testbenutzer in 5 Abteilungen, per [Skript](scripts/New-LabBulkUsers.ps1) aus einer CSV angelegt
-- Freigabe `\\fs01\Abteilungen`, in der jeder nur seinen Abteilungsordner sieht
-- Laufwerk **S:** automatisch je nach Abteilung
-- RDP nur für bestimmte Abteilungen, lokale Admin-Kennwörter per Windows LAPS
-- MECM mit Client-Push und Softwareverteilung auf den Windows-11-Client
-- Sicherheitsüberwachung mit Wazuh: Fehlanmeldungen und neue Konten werden gemeldet
-- Optional: Uptime Kuma, Netdata, Nginx Proxy Manager, NetBox, Warpgate und eine Netzwerkkarte mit Live-Status (Homelable auf Proxmox)
-- Optional: Umzug auf einen sparsamen Mini-PC mit Proxmox im 10-Zoll-Rack, Monitoring mit Beszel, Fernzugriff über Tailscale
-- Optional: NAS mit Raspberry Pi 5 und OpenMediaVault, auf das Proxmox jede Nacht sichert
+| Bereich | Was du baust |
+|---|---|
+| Active Directory | Domäne `lab.test` mit OU-Struktur unter `Lab/`, rund 120 Testbenutzer in 5 Abteilungen per [Skript](scripts/New-LabBulkUsers.ps1) |
+| Dateiserver | Freigabe `\\fs01\Abteilungen`, jeder sieht nur seinen Abteilungsordner, Laufwerk **S:** automatisch je nach Abteilung |
+| Sicherheit | RDP nur für bestimmte Abteilungen, Windows LAPS, getrennte Admin-Konten, Wazuh meldet Fehlanmeldungen und neue Konten |
+| Softwareverteilung | MECM mit Client-Push, Anwendungen im Softwarecenter und als Pflicht-Installation |
+| Betrieb | Uptime Kuma, Netdata, Nginx Proxy Manager, NetBox, Warpgate, Netzwerkkarte mit Live-Status (Homelable) |
+| Eigene Hardware | Mini-PC mit Proxmox im 10-Zoll-Rack, Monitoring mit Beszel und Push aufs Handy, Fernzugriff über Tailscale, Pi-NAS mit RAID 5 für nächtliche Backups |
 
-**So sind die Kapitel aufgebaut:** Ziel und Dauer · nummerierte Schritte mit Angabe, auf welchem Rechner du gerade bist · Prüfen · häufige Fehler. Über 50 Screenshots stammen direkt aus dem Lab. Gearbeitet wird überwiegend mit der Oberfläche, PowerShell nur dort, wo es deutlich schneller ist.
+**So sind die Kapitel aufgebaut:** Ziel und Dauer · nummerierte Schritte mit Angabe, auf welchem Rechner du gerade bist · Prüfen · häufige Fehler. Rund 80 Screenshots und Fotos stammen direkt aus dem Lab. Gearbeitet wird überwiegend mit der Oberfläche, Befehle nur dort, wo es deutlich schneller ist.
 
 > [!TIP]
 > Die Server laufen auf Englisch. Klickwege stehen deshalb so da: **English name** (deutscher Name).
 
-**Zeitbedarf:** Teil 1–4 etwa ein Tag. Teil 5 ist optional, MECM allein braucht einen halben Tag.
+### Welcher Weg passt zu dir?
 
-**Getestet mit** (Stand Oktober 2026):
+| Du willst … | Dann | Du brauchst | Zeit |
+|---|---|---|---|
+| ein Windows-Firmennetz verstehen und üben | Teil 1–4 | einen PC mit Windows 11 Pro und 32–64 GB RAM | ca. 1 Tag |
+| zusätzlich Werkzeuge aus dem Firmenalltag | Teil 5, Kapitel einzeln wählbar | denselben PC, MECM braucht viel RAM | je 1–4 Stunden |
+| das Lab rund um die Uhr laufen lassen | Teil 6 | Mini-PC, optional Rack, Switch und Raspberry Pi | ca. 1 Wochenende |
+
+### Getestet mit
+
+Stand Oktober 2026.
 
 | Komponente | Version |
 |---|---|
 | Hyper-V-Host (Kapitel 0–14) | Windows 11 mit Hyper-V (ab Pro), 64 GB RAM |
 | Server | Windows Server 2025 Evaluation, englische Oberfläche |
 | Client | Windows 11, deutsche Oberfläche |
-| MECM | Configuration Manager Current Branch, Build 9141 |
-| Datenbank | SQL Server 2022 Evaluation |
-| Linux | Ubuntu Server 26.04 LTS mit Docker |
-| NetBox | v4.7.2 |
-| Proxmox VE · Homelable | 9.2 · 3.6 |
-| Mini-PC (Kapitel 15) | HP EliteDesk 805 G6 Mini, Ryzen 5 PRO 4650GE, 32 GB · Beszel 0.21 · Tailscale 1.104 |
+| MECM | Configuration Manager Current Branch, Build 9141 · SQL Server 2022 Evaluation |
+| Linux | Ubuntu Server 26.04 LTS mit Docker · NetBox 4.7.2 · Wazuh 4.14 |
+| Proxmox | Proxmox VE 9.2 · Homelable 3.6 · Beszel 0.21 · Tailscale 1.104 |
+| Mini-PC (Kapitel 15) | HP EliteDesk 805 G6 Mini, Ryzen 5 PRO 4650GE, 32 GB |
 | NAS (Kapitel 16) | Raspberry Pi 5 (4 GB), Radxa Penta SATA HAT, Raspberry Pi OS Lite (Trixie), OpenMediaVault 8 |
 
 ---
@@ -76,10 +88,10 @@ Ich habe dieses Lab als Junior Admin aufgebaut, um Alltagsaufgaben aus der Firma
 
 Bevor die erste VM läuft: Hardware prüfen, Hyper-V einschalten und ein eigenes Netz für das Lab bauen.
 
-| Kapitel | Was du machst |
-|---|---|
-| [0 · Voraussetzungen](docs/anleitung/00-voraussetzungen.md) | Hardware, ISOs herunterladen, Hyper-V aktivieren, VM-Assistent |
-| [1 · Netzwerk](docs/anleitung/01-netzwerk.md) | Interner Switch `LAB` mit NAT, damit die VMs ins Internet kommen |
+| Kapitel | Was du machst | Dauer |
+|---|---|---|
+| [0 · Voraussetzungen](docs/anleitung/00-voraussetzungen.md) | Hardware, ISOs herunterladen, Hyper-V aktivieren, VM-Assistent | 30 Min. |
+| [1 · Netzwerk](docs/anleitung/01-netzwerk.md) | Interner Switch `LAB` mit NAT, damit die VMs ins Internet kommen | 10 Min. |
 
 <p align="center">
   <img src="docs/bilder/hyperv-neue-vm-generation.png" width="49%" alt="Hyper-V: neue VM">
@@ -94,12 +106,12 @@ Bevor die erste VM läuft: Hardware prüfen, Hyper-V einschalten und ein eigenes
 
 Das Herz des Labs: DC01 wird Domain Controller für `lab.test`, bekommt DNS und DHCP, und du legst die Struktur an, an die später alle Richtlinien gehängt werden.
 
-| Kapitel | Was du machst |
-|---|---|
-| [2 · Domain Controller](docs/anleitung/02-domain-controller.md) | Windows Server installieren, AD DS, neue Gesamtstruktur `lab.test` |
-| [3 · DNS und DHCP](docs/anleitung/03-dns-dhcp.md) | Reverse-Zone, A- und PTR-Einträge, DHCP-Bereich, AD-Subnetz |
-| [4 · AD-Struktur](docs/anleitung/04-ad-struktur.md) | OUs, Abteilungsgruppen, getrennte Admin-Konten, AD-Papierkorb |
-| [5 · Benutzer per Skript](docs/anleitung/05-benutzer-per-skript.md) | Über 100 Testbenutzer aus einer CSV, mit Probelauf |
+| Kapitel | Was du machst | Dauer |
+|---|---|---|
+| [2 · Domain Controller](docs/anleitung/02-domain-controller.md) | Windows Server installieren, AD DS, neue Gesamtstruktur `lab.test` | 45 Min. |
+| [3 · DNS und DHCP](docs/anleitung/03-dns-dhcp.md) | Reverse-Zone, A- und PTR-Einträge, DHCP-Bereich, AD-Subnetz | 20 Min. |
+| [4 · AD-Struktur](docs/anleitung/04-ad-struktur.md) | OUs, Abteilungsgruppen, getrennte Admin-Konten, AD-Papierkorb | 30 Min. |
+| [5 · Benutzer per Skript](docs/anleitung/05-benutzer-per-skript.md) | Über 100 Testbenutzer aus einer CSV, mit Probelauf | 15 Min. |
 
 ![AD-Struktur mit OUs, GPOs und Gruppen](docs/diagramme/ad-struktur.png)
 
@@ -113,11 +125,11 @@ Das Herz des Labs: DC01 wird Domain Controller für `lab.test`, bekommt DNS und 
 
 Jetzt wird es ein echtes Firmennetz: ein Windows-11-Client tritt der Domäne bei, FS01 stellt Abteilungsordner bereit, und Gruppenrichtlinien verteilen Laufwerke und Rechte.
 
-| Kapitel | Was du machst |
-|---|---|
-| [6 · Client](docs/anleitung/06-client.md) | Windows 11 installieren und der Domäne beitreten |
-| [7 · Dateiserver](docs/anleitung/07-dateiserver.md) | Zweite Platte, Freigabe, NTFS-Rechte pro Abteilung, zugriffsbasierte Aufzählung |
-| [8 · Gruppenrichtlinien](docs/anleitung/08-gruppenrichtlinien.md) | Laufwerk S:, RDP für bestimmte Abteilungen, Windows LAPS, Zeitquelle |
+| Kapitel | Was du machst | Dauer |
+|---|---|---|
+| [6 · Client](docs/anleitung/06-client.md) | Windows 11 installieren und der Domäne beitreten | 40 Min. |
+| [7 · Dateiserver](docs/anleitung/07-dateiserver.md) | Zweite Platte, Freigabe, NTFS-Rechte pro Abteilung, zugriffsbasierte Aufzählung | 60 Min. |
+| [8 · Gruppenrichtlinien](docs/anleitung/08-gruppenrichtlinien.md) | Laufwerk S:, RDP für bestimmte Abteilungen, Windows LAPS, Zeitquelle | 60 Min. |
 
 <p align="center">
   <img src="docs/bilder/gpo-laufwerk-s.png" width="49%" alt="GPO mit Laufwerkszuordnungen">
@@ -132,34 +144,60 @@ Jetzt wird es ein echtes Firmennetz: ein Windows-11-Client tritt der Domäne bei
 
 Mit einem Benutzer **jeder** Abteilung prüfen, ob Laufwerk, Ordner und RDP so funktionieren wie geplant. Hier findest du die Fehler, die beim Einrichten nicht auffallen.
 
-| Kapitel | Was du machst |
-|---|---|
-| [9 · Testen](docs/anleitung/09-testen.md) | Testplan pro Abteilung, `gpresult`, was tun, wenn S: fehlt |
+| Kapitel | Was du machst | Dauer |
+|---|---|---|
+| [9 · Testen](docs/anleitung/09-testen.md) | Testplan pro Abteilung, `gpresult`, was tun, wenn S: fehlt | 30 Min. |
 
 **[→ Weiter mit Kapitel 9](docs/anleitung/09-testen.md)**
 
 ---
 
-## Teil 5 · Optional: Linux-Dienste, MECM, Wazuh und eigene Hardware
+## Teil 5 · Erweiterungen: Linux, MECM und Sicherheit
 
-Für alle, die mehr wollen: eine Ubuntu-VM mit Docker für Überwachung und Verwaltung, ein Configuration Manager, wie er in vielen Firmen läuft, eine Karte des ganzen Labs mit Live-Status und der Umzug auf einen eigenen Mini-PC mit Proxmox.
+Optional und einzeln wählbar: eine Ubuntu-VM mit Docker für Überwachung und Verwaltung, ein Configuration Manager, wie er in vielen Firmen läuft, ein SIEM und eine Karte des ganzen Labs mit Live-Status.
 
-| Kapitel | Was du machst |
-|---|---|
-| [10 · Linux-Dienste](docs/anleitung/10-linux-dienste.md) | Ubuntu, Docker, Uptime Kuma, Nginx Proxy Manager, NetBox |
-| [11 · MECM](docs/anleitung/11-mecm.md) | SQL Server, Configuration Manager, Enhanced HTTP, Client-Push |
-| [12 · Software verteilen](docs/anleitung/12-softwareverteilung.md) | 7-Zip als Anwendung, Softwarecenter, Pflicht-Installation |
-| [13 · Wazuh](docs/anleitung/13-wazuh.md) | SIEM auf LOG01, Agents auf allen Windows-Rechnern, Fehlanmeldungen erkennen |
-| [14 · Homelable](docs/anleitung/14-homelable.md) | Proxmox als VM in Hyper-V, Netzwerkkarte des Labs mit Live-Status, Ping für Server freigeben |
-| [15 · Proxmox auf eigener Hardware](docs/anleitung/15-proxmox-host.md) | Mini-PC aufrüsten, Proxmox installieren, Speicher, Monitoring mit Beszel, Fernzugriff mit Tailscale |
-| [16 · NAS mit Raspberry Pi](docs/anleitung/16-pi-nas.md) | Pi 5 mit Penta SATA HAT, OpenMediaVault, RAID 5, NFS-Freigabe und nächtliche Proxmox-Backups |
+| Kapitel | Was du machst | Dauer |
+|---|---|---|
+| [10 · Linux-Dienste](docs/anleitung/10-linux-dienste.md) | Ubuntu, Docker, Uptime Kuma, Nginx Proxy Manager, NetBox | 1,5 Std. |
+| [11 · MECM](docs/anleitung/11-mecm.md) | SQL Server, Configuration Manager, Enhanced HTTP, Client-Push | 3–4 Std. |
+| [12 · Software verteilen](docs/anleitung/12-softwareverteilung.md) | 7-Zip als Anwendung, Softwarecenter, Pflicht-Installation | 45 Min. |
+| [13 · Wazuh](docs/anleitung/13-wazuh.md) | SIEM auf LOG01, Agents auf allen Windows-Rechnern, Fehlanmeldungen erkennen | 1,5 Std. |
+| [14 · Homelable](docs/anleitung/14-homelable.md) | Proxmox als VM in Hyper-V, Netzwerkkarte des Labs mit Live-Status | 1,5 Std. |
 
 <p align="center">
-  <img src="docs/bilder/uptime-kuma-dashboard.png" width="49%" alt="Uptime Kuma">
   <img src="docs/bilder/mecm-konsole-geraete.png" width="49%" alt="MECM-Konsole">
+  <img src="docs/bilder/wazuh-dashboard-lab-sicherheit.png" width="49%" alt="Wazuh-Dashboard">
 </p>
 
 **[→ Weiter mit Kapitel 10](docs/anleitung/10-linux-dienste.md)**
+
+---
+
+## Teil 6 · Eigene Hardware: Proxmox, Rack und NAS
+
+Damit das Lab rund um die Uhr läuft, ohne dass der große PC an sein muss: ein sparsamer Mini-PC mit Proxmox im 10-Zoll-Rack und ein Raspberry Pi als NAS, auf das jede Nacht gesichert wird.
+
+| Kapitel | Was du machst | Dauer |
+|---|---|---|
+| [15 · Proxmox auf dem Mini-PC](docs/anleitung/15-proxmox-host.md) | Mini-PC aufrüsten, Proxmox installieren, Speicher, Monitoring mit Beszel, Fernzugriff mit Tailscale | 3 Std. |
+| [16 · NAS mit Raspberry Pi](docs/anleitung/16-pi-nas.md) | Pi 5 mit Penta SATA HAT, OpenMediaVault, RAID 5, NFS, nächtliche Proxmox-Backups, Alarme aufs Handy | 3 Std. |
+| [Hardware und Rack](docs/hardware.md) | Rack-Belegung, Patchpanel, Verkabelung, Managed Switch | – |
+
+```mermaid
+flowchart LR
+    VM["VMs und Container<br/>auf pve01"] -->|"täglich 03:30<br/>NFS"| NAS["pi-nas<br/>RAID 5 · 2,7 TB"]
+    pve01["pve01<br/>Proxmox VE"] --- VM
+    Beszel["Beszel"] -.->|überwacht| pve01
+    Beszel -.->|überwacht| NAS
+    Beszel -->|Push| Handy["Handy<br/>ntfy · Tailscale"]
+```
+
+<p align="center">
+  <img src="docs/diagramme/rack-belegung-2026-10-21.png" width="49%" alt="Rack-Belegung">
+  <img src="docs/diagramme/proxmox-host-ueberblick.png" width="49%" alt="pve01 im Heimnetz">
+</p>
+
+**[→ Weiter mit Kapitel 15](docs/anleitung/15-proxmox-host.md)**
 
 ---
 
@@ -174,7 +212,7 @@ Jedes Kapitel hat oben Tags. Ein Klick auf einen Tag führt hierher, zu allen Ka
 | <a id="thema-dhcp"></a>![DHCP](https://img.shields.io/badge/-DHCP-1D9E75?style=flat-square) | [3 · DNS und DHCP](docs/anleitung/03-dns-dhcp.md) |
 | <a id="thema-netz"></a>![Netzwerk](https://img.shields.io/badge/-Netzwerk-1D9E75?style=flat-square) | [1 · Netzwerk](docs/anleitung/01-netzwerk.md) · [10 · Linux-Dienste](docs/anleitung/10-linux-dienste.md) · [14 · Homelable](docs/anleitung/14-homelable.md) · [15 · Proxmox-Host](docs/anleitung/15-proxmox-host.md) · [16 · Pi-NAS](docs/anleitung/16-pi-nas.md) · [Hardware](docs/hardware.md) |
 | <a id="thema-gpo"></a>![Gruppenrichtlinien](https://img.shields.io/badge/-Gruppenrichtlinien-7F77DD?style=flat-square) | [8 · Gruppenrichtlinien](docs/anleitung/08-gruppenrichtlinien.md) · [9 · Testen](docs/anleitung/09-testen.md) · [11 · MECM](docs/anleitung/11-mecm.md) · [14 · Homelable](docs/anleitung/14-homelable.md) |
-| <a id="thema-file"></a>![Dateiserver](https://img.shields.io/badge/-Dateiserver-0F766E?style=flat-square) | [7 · Dateiserver](docs/anleitung/07-dateiserver.md) · [8 · Gruppenrichtlinien](docs/anleitung/08-gruppenrichtlinien.md) · [9 · Testen](docs/anleitung/09-testen.md) |
+| <a id="thema-file"></a>![Dateiserver](https://img.shields.io/badge/-Dateiserver-0F766E?style=flat-square) | [7 · Dateiserver](docs/anleitung/07-dateiserver.md) · [8 · Gruppenrichtlinien](docs/anleitung/08-gruppenrichtlinien.md) · [9 · Testen](docs/anleitung/09-testen.md) · [16 · Pi-NAS](docs/anleitung/16-pi-nas.md) |
 | <a id="thema-sec"></a>![Sicherheit](https://img.shields.io/badge/-Sicherheit-EF9F27?style=flat-square) | [4 · AD-Struktur](docs/anleitung/04-ad-struktur.md) · [7 · Dateiserver](docs/anleitung/07-dateiserver.md) · [8 · Gruppenrichtlinien](docs/anleitung/08-gruppenrichtlinien.md) · [13 · Wazuh](docs/anleitung/13-wazuh.md) · [15 · Proxmox-Host](docs/anleitung/15-proxmox-host.md) |
 | <a id="thema-client"></a>![Windows 11](https://img.shields.io/badge/-Windows%2011-0078D4?style=flat-square) | [6 · Client](docs/anleitung/06-client.md) · [12 · Software verteilen](docs/anleitung/12-softwareverteilung.md) |
 | <a id="thema-ps"></a>![PowerShell](https://img.shields.io/badge/-PowerShell-5391FE?style=flat-square) | [1 · Netzwerk](docs/anleitung/01-netzwerk.md) · [5 · Benutzer per Skript](docs/anleitung/05-benutzer-per-skript.md) |
@@ -186,11 +224,17 @@ Jedes Kapitel hat oben Tags. Ein Klick auf einen Tag führt hierher, zu allen Ka
 
 ---
 
-## Betrieb: Starten und Stoppen
+## Betrieb: Starten, Stoppen, Sichern
 
 DC01 startet immer zuerst und fährt zuletzt herunter. Ohne DC01 gibt es kein DNS, und die anderen VMs laufen in Fehler.
 
 ![Startreihenfolge der VMs](docs/diagramme/startreihenfolge.png)
+
+| Was | Wie |
+|---|---|
+| Sicherung | Proxmox sichert jede Nacht um 03:30 alle VMs und Container per NFS aufs Pi-NAS, aufbewahrt werden 7 Tage, 4 Wochen und 3 Monate ([Kapitel 16](docs/anleitung/16-pi-nas.md)) |
+| Überwachung | Beszel für pve01 und das NAS mit Push aufs Handy, Uptime Kuma und Netdata für die Lab-VMs |
+| Fernzugriff | Tailscale auf pve01, kein offener Port im Router |
 
 Alle Server, GPOs und Rechte im fertigen Lab: [Aufbau](docs/aufbau.md)
 
@@ -205,8 +249,11 @@ Alle Server, GPOs und Rechte im fertigen Lab: [Aufbau](docs/aufbau.md)
 | GPO macht Dienstkonto nicht zum lokalen Admin, es entsteht eine Gruppe „ad“ | Gruppenname von Hand eingetippt | Eingebaute Gruppe per Dropdown wählen |
 | MECM-Client: `CCM_E_NO_CLIENT_PKI_CERT` | Site auf HTTPS only, keine PKI | Enhanced HTTP |
 | Linux-VMs stürzen ab (OOM, Kernel Panic) | Dynamischer Arbeitsspeicher | Fester RAM für Linux und SQL Server |
+| Proxmox startet nach dem Update nur bis `grub>` | GRUB findet seine Konfiguration nicht | Einmal von Hand booten, `grub-install` und `update-grub` |
+| RAID auf dem Pi-NAS synchronisiert mit 0,5 MB/s, Timeouts auf mehreren SSDs | SATA-Controller JMB585 und Kernel 6.18 | `dtoverlay=pcie-32bit-dma-pi5` in der `config.txt` |
+| Danach keine Fehler mehr, aber eine SSD liest fast nichts | Alte Samsung 840 EVO lesen lange liegende Daten extrem langsam | Alle SSDs komplett trimmen, RAID neu anlegen |
 
-Alle 36 Fälle: [Fehlerbehebung](docs/fehlerbehebung.md)
+Alle 42 Fälle: [Fehlerbehebung](docs/fehlerbehebung.md)
 
 ---
 
@@ -219,6 +266,8 @@ Alle 36 Fälle: [Fehlerbehebung](docs/fehlerbehebung.md)
 - **Getrennte Konten und LAPS.** Verwaltet wird mit dem Admin-Konto, gearbeitet mit dem normalen Konto, und jeder Rechner hat ein eigenes lokales Admin-Kennwort.
 - **Vor jedem Umbau sichern.** Prüfpunkt der VM und GPO-Sicherung kosten eine Minute und haben mehrmals eine Neuinstallation erspart.
 - **Abhängigkeiten früh klären.** MECM braucht die richtige SQL-Sortierung und ohne eigene PKI Enhanced HTTP. Beides fällt erst spät auf, wenn man es nicht vorher weiß.
+- **Hardware-Fehler eingrenzen wie Software-Fehler.** Fehler auf mehreren Platten gleichzeitig deuten auf Controller oder Verbindung. Jede Platte einzeln testen trennt in einer Minute „Platte langsam“ von „Controller kaputt“.
+- **Eine Kopie gehört woanders hin.** Backups nur auf dem Proxmox-Host helfen nicht, wenn genau der ausfällt. Deshalb die zweite Kopie aufs NAS, und RAID ist dabei kein Ersatz für ein Backup.
 - **Dokumentieren, während man baut.** Jede Änderung steht im [Changelog](docs/changelog.md), IP-Adressen und VMs stehen in NetBox.
 
 ---
@@ -226,6 +275,8 @@ Alle 36 Fälle: [Fehlerbehebung](docs/fehlerbehebung.md)
 ## Wie es weitergeht
 
 ![Roadmap: Ausbaustufen](docs/diagramme/roadmap.png)
+
+Als Nächstes: Lab-Netz als zweite Bridge auf pve01, dann ziehen die VMs aus Hyper-V um, DC01 zuerst.
 
 Details: [Roadmap](docs/roadmap.md) · Eigene Hardware im 10-Zoll-Rack: [Hardware](docs/hardware.md) · Warum etwas so gebaut ist: [Entscheidungen](docs/entscheidungen.md) · Was wann dazukam: [Changelog](docs/changelog.md)
 
@@ -235,11 +286,11 @@ Details: [Roadmap](docs/roadmap.md) · Eigene Hardware im 10-Zoll-Rack: [Hardwar
 
 ```
 docs/
-  anleitung/          Schritt-für-Schritt-Anleitung, Kapitel 0–15
-  bilder/             Screenshots aus dem Lab
+  anleitung/          Schritt-für-Schritt-Anleitung, Kapitel 0–16
+  bilder/             Screenshots und Fotos aus dem Lab
   diagramme/          Übersichtsgrafiken
   aufbau.md           Referenz des fertigen Labs
-  hardware.md         Mini-PC (Proxmox), Switch und NAS im 10-Zoll-Rack
+  hardware.md         Mini-PC, Switch und NAS im 10-Zoll-Rack
   fehlerbehebung.md   Gelöste Fehler mit Ursache und Lösung
   entscheidungen.md   Begründungen
   roadmap.md          Nächste Ausbaustufen
