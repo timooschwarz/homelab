@@ -45,6 +45,7 @@ Ich habe dieses Lab als Junior Admin aufgebaut, um Alltagsaufgaben aus der Firma
 - MECM mit Client-Push und Softwareverteilung auf den Windows-11-Client
 - Sicherheitsüberwachung mit Wazuh: Fehlanmeldungen und neue Konten werden gemeldet
 - Optional: Uptime Kuma, Netdata, Nginx Proxy Manager, NetBox, Warpgate und eine Netzwerkkarte mit Live-Status (Homelable auf Proxmox)
+- Optional: Umzug auf einen sparsamen Mini-PC mit Proxmox im 10-Zoll-Rack, Monitoring mit Beszel, Fernzugriff über Tailscale
 
 **So sind die Kapitel aufgebaut:** Ziel und Dauer · nummerierte Schritte mit Angabe, auf welchem Rechner du gerade bist · Prüfen · häufige Fehler. Über 50 Screenshots stammen direkt aus dem Lab. Gearbeitet wird überwiegend mit der Oberfläche, PowerShell nur dort, wo es deutlich schneller ist.
 
@@ -57,7 +58,7 @@ Ich habe dieses Lab als Junior Admin aufgebaut, um Alltagsaufgaben aus der Firma
 
 | Komponente | Version |
 |---|---|
-| Hyper-V-Host | Windows 11 mit Hyper-V (ab Pro), 64 GB RAM |
+| Hyper-V-Host (Kapitel 0–14) | Windows 11 mit Hyper-V (ab Pro), 64 GB RAM |
 | Server | Windows Server 2025 Evaluation, englische Oberfläche |
 | Client | Windows 11, deutsche Oberfläche |
 | MECM | Configuration Manager Current Branch, Build 9141 |

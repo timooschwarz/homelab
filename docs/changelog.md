@@ -4,6 +4,7 @@
 - Neues [Kapitel 15 · Proxmox auf eigener Hardware](anleitung/15-proxmox-host.md) mit Screenshots und zwei Grafiken (Überblick, Speicher): Aufrüsten, Installation, Paketquellen, Speicher, Beszel, Tailscale
 - Die Proxmox-Abschnitte aus [Hardware](hardware.md) sind ins Kapitel umgezogen
 - [Entscheidungen](entscheidungen.md): Proxmox statt Hyper-V auf dem Mini-PC, Speicheraufteilung, Beszel, Tailscale
+- Grafiken RAM-Budget (jetzt mit Proxmox statt Windows-Host) und Roadmap (aktueller Status) neu, [Aufbau](aufbau.md) um pve01 und beszel ergänzt
 - Erste Nacht im Dauerbetrieb: pve01 stabil, CPU im Leerlauf ca. 36 °C, Tailscale-Zugriff übers Handy getestet
 
 ## 2026-10-21

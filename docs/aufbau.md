@@ -33,6 +33,16 @@
 | HOMELABLE | 10.0.0.91 | LXC auf PVE01 (Debian 13) | [Homelable](anleitung/14-homelable.md): Netzwerkkarte mit Live-Status | immer an |
 | CLIENT01 | DHCP | Windows 11 Pro | Testclient | bei Bedarf |
 
+**Mini-PC im Heimnetz** ([Kapitel 15](anleitung/15-proxmox-host.md)):
+
+| Gerät | IP | OS | Aufgabe | Betrieb |
+|---|---|---|---|---|
+| pve01 | 192.168.2.20 | Proxmox VE 9.2 auf HP EliteDesk 805 G6 Mini | Hypervisor, Beszel-Agent, Tailscale Subnet Router | immer an |
+| beszel | 192.168.2.21 | LXC auf pve01 | Monitoring-Hub ([Beszel](anleitung/15-proxmox-host.md#schritt-6--monitoring-mit-beszel-browser)) | immer an |
+| Switch | 192.168.2.10 | TL-SG108E | Managed Switch im Rack ([Hardware](hardware.md)) | immer an |
+
+Die VMs oben ziehen nach und nach aus Hyper-V auf pve01 um.
+
 **Startreihenfolge:** DC01 → CM01, FS01, NETBOX01, TOOLS01 → CLIENT01. Herunterfahren umgekehrt, DC01 zuletzt. Ohne DC01 gibt es kein DNS, und die anderen VMs laufen in Fehler.
 
 **Arbeitsspeicher:** Windows-VMs dynamisch, Linux-VMs und CM01 (SQL Server) fest. Siehe [Entscheidungen](entscheidungen.md).
