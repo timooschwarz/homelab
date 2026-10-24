@@ -9,12 +9,12 @@
 ![Ubuntu](https://img.shields.io/badge/Ubuntu-Docker-E95420?logo=ubuntu&logoColor=white)
 ![Proxmox VE](https://img.shields.io/badge/Proxmox%20VE-9.2-E57000?logo=proxmox&logoColor=white)
 ![Raspberry Pi](https://img.shields.io/badge/Raspberry%20Pi%205-NAS-A22846?logo=raspberrypi&logoColor=white)
-![Kapitel](https://img.shields.io/badge/Kapitel-17-555555)
+![Kapitel](https://img.shields.io/badge/Kapitel-18-555555)
 
 ![Netzwerk des Labs](docs/diagramme/netzwerk-2026-10-22.png)
 
 > [!NOTE]
-> **Stand 22.10.2026:** Das Windows-Lab (Kapitel 0–14) ist komplett und läuft in Hyper-V. Der Mini-PC `pve01` mit Proxmox steht im Rack, das Pi-NAS sichert seit heute jede Nacht alle VMs und Container. Als Nächstes ziehen die VMs aus Hyper-V auf `pve01` um. Was wann dazukam: [Changelog](docs/changelog.md)
+> **Stand 24.10.2026:** DC01, FS01, TOOLS01, LOG01 und der Testclient sind aus Hyper-V auf den Mini-PC `pve01` mit Proxmox umgezogen ([Kapitel 17](docs/anleitung/17-umzug-hyperv-proxmox.md)). Das Pi-NAS sichert jede Nacht alle VMs und Container. Als Nächstes folgen der MECM-Server und Homelable. Was wann dazukam: [Changelog](docs/changelog.md)
 
 ---
 
@@ -27,7 +27,7 @@
   - [Teil 3 · Client, Dateiserver und Gruppenrichtlinien](#teil-3--client-dateiserver-und-gruppenrichtlinien): [6 · Client](docs/anleitung/06-client.md) · [7 · Dateiserver](docs/anleitung/07-dateiserver.md) · [8 · Gruppenrichtlinien](docs/anleitung/08-gruppenrichtlinien.md)
   - [Teil 4 · Testen](#teil-4--testen): [9 · Testen](docs/anleitung/09-testen.md)
   - [Teil 5 · Erweiterungen: Linux, MECM und Sicherheit](#teil-5--erweiterungen-linux-mecm-und-sicherheit): [10 · Linux-Dienste](docs/anleitung/10-linux-dienste.md) · [11 · MECM](docs/anleitung/11-mecm.md) · [12 · Software verteilen](docs/anleitung/12-softwareverteilung.md) · [13 · Wazuh](docs/anleitung/13-wazuh.md) · [14 · Homelable](docs/anleitung/14-homelable.md)
-  - [Teil 6 · Eigene Hardware: Proxmox, Rack und NAS](#teil-6--eigene-hardware-proxmox-rack-und-nas): [15 · Proxmox auf dem Mini-PC](docs/anleitung/15-proxmox-host.md) · [16 · NAS mit Raspberry Pi](docs/anleitung/16-pi-nas.md) · [Hardware und Rack](docs/hardware.md)
+  - [Teil 6 · Eigene Hardware: Proxmox, Rack und NAS](#teil-6--eigene-hardware-proxmox-rack-und-nas): [15 · Proxmox auf dem Mini-PC](docs/anleitung/15-proxmox-host.md) · [16 · NAS mit Raspberry Pi](docs/anleitung/16-pi-nas.md) · [17 · Umzug von Hyper-V](docs/anleitung/17-umzug-hyperv-proxmox.md) · [Hardware und Rack](docs/hardware.md)
 - [Nach Thema](#nach-thema)
 - [Betrieb: Starten, Stoppen, Sichern](#betrieb-starten-stoppen-sichern)
 - [Fehler, aus denen ich am meisten gelernt habe](#fehler-aus-denen-ich-am-meisten-gelernt-habe)
@@ -181,6 +181,7 @@ Damit das Lab rund um die Uhr läuft, ohne dass der große PC an sein muss: ein 
 |---|---|---|
 | [15 · Proxmox auf dem Mini-PC](docs/anleitung/15-proxmox-host.md) | Mini-PC aufrüsten, Proxmox installieren, Speicher, Monitoring mit Beszel, Fernzugriff mit Tailscale | 3 Std. |
 | [16 · NAS mit Raspberry Pi](docs/anleitung/16-pi-nas.md) | Pi 5 mit Penta SATA HAT, OpenMediaVault, RAID 5, NFS, nächtliche Proxmox-Backups, Alarme aufs Handy | 3 Std. |
+| [17 · Umzug von Hyper-V auf Proxmox](docs/anleitung/17-umzug-hyperv-proxmox.md) | VHDX übernehmen, Linux-Treiber nachrüsten, Netzwerk und Guest Agent, Arbeits-PC umstellen | 3–4 Std. |
 | [Hardware und Rack](docs/hardware.md) | Rack-Belegung, Patchpanel, Verkabelung, Managed Switch | – |
 
 ```mermaid
@@ -207,19 +208,19 @@ Jedes Kapitel hat oben Tags. Ein Klick auf einen Tag führt hierher, zu allen Ka
 
 | Thema | Kapitel |
 |---|---|
-| <a id="thema-ad"></a>![Active Directory](https://img.shields.io/badge/-Active%20Directory-378ADD?style=flat-square) | [2 · Domain Controller](docs/anleitung/02-domain-controller.md) · [3 · DNS und DHCP](docs/anleitung/03-dns-dhcp.md) · [4 · AD-Struktur](docs/anleitung/04-ad-struktur.md) · [5 · Benutzer per Skript](docs/anleitung/05-benutzer-per-skript.md) · [6 · Client](docs/anleitung/06-client.md) · [11 · MECM](docs/anleitung/11-mecm.md) |
+| <a id="thema-ad"></a>![Active Directory](https://img.shields.io/badge/-Active%20Directory-378ADD?style=flat-square) | [2 · Domain Controller](docs/anleitung/02-domain-controller.md) · [3 · DNS und DHCP](docs/anleitung/03-dns-dhcp.md) · [4 · AD-Struktur](docs/anleitung/04-ad-struktur.md) · [5 · Benutzer per Skript](docs/anleitung/05-benutzer-per-skript.md) · [6 · Client](docs/anleitung/06-client.md) · [11 · MECM](docs/anleitung/11-mecm.md) · [17 · Umzug](docs/anleitung/17-umzug-hyperv-proxmox.md) |
 | <a id="thema-dns"></a>![DNS](https://img.shields.io/badge/-DNS-1D9E75?style=flat-square) | [2 · Domain Controller](docs/anleitung/02-domain-controller.md) · [3 · DNS und DHCP](docs/anleitung/03-dns-dhcp.md) · [10 · Linux-Dienste](docs/anleitung/10-linux-dienste.md) |
 | <a id="thema-dhcp"></a>![DHCP](https://img.shields.io/badge/-DHCP-1D9E75?style=flat-square) | [3 · DNS und DHCP](docs/anleitung/03-dns-dhcp.md) |
-| <a id="thema-netz"></a>![Netzwerk](https://img.shields.io/badge/-Netzwerk-1D9E75?style=flat-square) | [1 · Netzwerk](docs/anleitung/01-netzwerk.md) · [10 · Linux-Dienste](docs/anleitung/10-linux-dienste.md) · [14 · Homelable](docs/anleitung/14-homelable.md) · [15 · Proxmox-Host](docs/anleitung/15-proxmox-host.md) · [16 · Pi-NAS](docs/anleitung/16-pi-nas.md) · [Hardware](docs/hardware.md) |
+| <a id="thema-netz"></a>![Netzwerk](https://img.shields.io/badge/-Netzwerk-1D9E75?style=flat-square) | [1 · Netzwerk](docs/anleitung/01-netzwerk.md) · [10 · Linux-Dienste](docs/anleitung/10-linux-dienste.md) · [14 · Homelable](docs/anleitung/14-homelable.md) · [15 · Proxmox-Host](docs/anleitung/15-proxmox-host.md) · [16 · Pi-NAS](docs/anleitung/16-pi-nas.md) · [Hardware](docs/hardware.md) · [17 · Umzug](docs/anleitung/17-umzug-hyperv-proxmox.md) |
 | <a id="thema-gpo"></a>![Gruppenrichtlinien](https://img.shields.io/badge/-Gruppenrichtlinien-7F77DD?style=flat-square) | [8 · Gruppenrichtlinien](docs/anleitung/08-gruppenrichtlinien.md) · [9 · Testen](docs/anleitung/09-testen.md) · [11 · MECM](docs/anleitung/11-mecm.md) · [14 · Homelable](docs/anleitung/14-homelable.md) |
 | <a id="thema-file"></a>![Dateiserver](https://img.shields.io/badge/-Dateiserver-0F766E?style=flat-square) | [7 · Dateiserver](docs/anleitung/07-dateiserver.md) · [8 · Gruppenrichtlinien](docs/anleitung/08-gruppenrichtlinien.md) · [9 · Testen](docs/anleitung/09-testen.md) · [16 · Pi-NAS](docs/anleitung/16-pi-nas.md) |
 | <a id="thema-sec"></a>![Sicherheit](https://img.shields.io/badge/-Sicherheit-EF9F27?style=flat-square) | [4 · AD-Struktur](docs/anleitung/04-ad-struktur.md) · [7 · Dateiserver](docs/anleitung/07-dateiserver.md) · [8 · Gruppenrichtlinien](docs/anleitung/08-gruppenrichtlinien.md) · [13 · Wazuh](docs/anleitung/13-wazuh.md) · [15 · Proxmox-Host](docs/anleitung/15-proxmox-host.md) |
 | <a id="thema-client"></a>![Windows 11](https://img.shields.io/badge/-Windows%2011-0078D4?style=flat-square) | [6 · Client](docs/anleitung/06-client.md) · [12 · Software verteilen](docs/anleitung/12-softwareverteilung.md) |
 | <a id="thema-ps"></a>![PowerShell](https://img.shields.io/badge/-PowerShell-5391FE?style=flat-square) | [1 · Netzwerk](docs/anleitung/01-netzwerk.md) · [5 · Benutzer per Skript](docs/anleitung/05-benutzer-per-skript.md) |
-| <a id="thema-hyperv"></a>![Hyper-V](https://img.shields.io/badge/-Hyper--V-5F5E5A?style=flat-square) | [0 · Voraussetzungen](docs/anleitung/00-voraussetzungen.md) · [1 · Netzwerk](docs/anleitung/01-netzwerk.md) · [14 · Homelable](docs/anleitung/14-homelable.md) |
+| <a id="thema-hyperv"></a>![Hyper-V](https://img.shields.io/badge/-Hyper--V-5F5E5A?style=flat-square) | [0 · Voraussetzungen](docs/anleitung/00-voraussetzungen.md) · [1 · Netzwerk](docs/anleitung/01-netzwerk.md) · [14 · Homelable](docs/anleitung/14-homelable.md) · [17 · Umzug](docs/anleitung/17-umzug-hyperv-proxmox.md) |
 | <a id="thema-test"></a>![Testen](https://img.shields.io/badge/-Testen-D4537E?style=flat-square) | [9 · Testen](docs/anleitung/09-testen.md) · [12 · Software verteilen](docs/anleitung/12-softwareverteilung.md) · [13 · Wazuh](docs/anleitung/13-wazuh.md) |
-| <a id="thema-linux"></a>![Linux & Docker](https://img.shields.io/badge/-Linux%20%26%20Docker-E95420?style=flat-square) | [10 · Linux-Dienste](docs/anleitung/10-linux-dienste.md) · [13 · Wazuh](docs/anleitung/13-wazuh.md) · [14 · Homelable](docs/anleitung/14-homelable.md) · [15 · Proxmox-Host](docs/anleitung/15-proxmox-host.md) · [16 · Pi-NAS](docs/anleitung/16-pi-nas.md) |
-| <a id="thema-proxmox"></a>![Proxmox](https://img.shields.io/badge/-Proxmox-E57000?style=flat-square) | [14 · Homelable](docs/anleitung/14-homelable.md) · [15 · Proxmox-Host](docs/anleitung/15-proxmox-host.md) · [16 · Pi-NAS](docs/anleitung/16-pi-nas.md) |
+| <a id="thema-linux"></a>![Linux & Docker](https://img.shields.io/badge/-Linux%20%26%20Docker-E95420?style=flat-square) | [10 · Linux-Dienste](docs/anleitung/10-linux-dienste.md) · [13 · Wazuh](docs/anleitung/13-wazuh.md) · [14 · Homelable](docs/anleitung/14-homelable.md) · [15 · Proxmox-Host](docs/anleitung/15-proxmox-host.md) · [16 · Pi-NAS](docs/anleitung/16-pi-nas.md) · [17 · Umzug](docs/anleitung/17-umzug-hyperv-proxmox.md) |
+| <a id="thema-proxmox"></a>![Proxmox](https://img.shields.io/badge/-Proxmox-E57000?style=flat-square) | [14 · Homelable](docs/anleitung/14-homelable.md) · [15 · Proxmox-Host](docs/anleitung/15-proxmox-host.md) · [16 · Pi-NAS](docs/anleitung/16-pi-nas.md) · [17 · Umzug](docs/anleitung/17-umzug-hyperv-proxmox.md) |
 | <a id="thema-mecm"></a>![MECM](https://img.shields.io/badge/-MECM-107C10?style=flat-square) | [11 · MECM](docs/anleitung/11-mecm.md) · [12 · Software verteilen](docs/anleitung/12-softwareverteilung.md) |
 
 ---
@@ -286,7 +287,7 @@ Details: [Roadmap](docs/roadmap.md) · Eigene Hardware im 10-Zoll-Rack: [Hardwar
 
 ```
 docs/
-  anleitung/          Schritt-für-Schritt-Anleitung, Kapitel 0–16
+  anleitung/          Schritt-für-Schritt-Anleitung, Kapitel 0–17
   bilder/             Screenshots und Fotos aus dem Lab
   diagramme/          Übersichtsgrafiken
   aufbau.md           Referenz des fertigen Labs

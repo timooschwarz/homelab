@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-10-24
+- Neues [Kapitel 17 · Umzug von Hyper-V auf Proxmox](anleitung/17-umzug-hyperv-proxmox.md): DC01 (VM 110), FS01 (140), TOOLS01 (150), LOG01 (170) und CLIENT01 (900) laufen auf pve01 im Lab-Netz `vmbr1`, IPs und Domäne unverändert
+- Linux-VMs: initramfs per dracut mit allen Treibern neu gebaut, Netplan auf die neue MAC umgestellt, QEMU Guest Agent überall
+- Wazuh auf 6 GB RAM mit 3 GB Indexer-Heap, Agents melden wieder
+- Arbeits-PC: vEthernet (LAB) aus, feste Route `10.0.0.0/24` über pve01
+- NetBox: Cluster der umgezogenen VMs auf pve01, vCPUs nachgetragen
+- Testclient aus den Backup-Jobs ausgenommen
+- Zehn neue Fälle in der [Fehlerbehebung](fehlerbehebung.md#umzug-hyper-v--proxmox)
+
 ## 2026-10-22 (später Abend)
 - pve01: zweite Bridge `vmbr1` mit `10.0.0.1/24` und NAT für das Lab-Netz, Tailscale gibt zusätzlich `10.0.0.0/24` frei
 - Zweiter Backup-Job: täglich 01:30 lokal auf `backup` (3 Tage, 2 Wochen), 03:30 weiter aufs NAS

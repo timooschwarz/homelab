@@ -1,6 +1,6 @@
 # Kapitel 16 · NAS mit Raspberry Pi 5 und OpenMediaVault als Backup-Ziel
 
-[← Kapitel 15](15-proxmox-host.md) · [Übersicht](../../README.md#inhaltsverzeichnis) · [Hardware und Rack](../hardware.md)
+[← Kapitel 15](15-proxmox-host.md) · [Übersicht](../../README.md#inhaltsverzeichnis) · [Hardware und Rack](../hardware.md) · [Kapitel 17 →](17-umzug-hyperv-proxmox.md)
 
 [![Proxmox](https://img.shields.io/badge/-Proxmox-E57000?style=flat-square)](../../README.md#thema-proxmox) [![Linux & Docker](https://img.shields.io/badge/-Linux%20%26%20Docker-E95420?style=flat-square)](../../README.md#thema-linux) [![Netzwerk](https://img.shields.io/badge/-Netzwerk-1D9E75?style=flat-square)](../../README.md#thema-netz)
 

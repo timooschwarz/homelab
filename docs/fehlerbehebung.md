@@ -206,6 +206,56 @@ Fehler, die beim Aufbau aufgetreten sind, jeweils mit Ursache und Lösung.
 - **Ursache:** AltGr wird im Konsolenfenster nicht durchgereicht, *Zwischenablage → Text eingeben* half auch nicht.
 - **Lösung:** Im Proxmox-Installer kurz das Tastaturlayout **U.S. English** wählen (`@` = Shift + 2). Kennwort nur aus Buchstaben ohne y/z und Ziffern, dann ist das Layout egal. Später im Webinterface ändern.
 
+## Umzug Hyper-V → Proxmox
+
+### Linux-VM bleibt beim Start hängen, danach Emergency Mode
+- **Meldung:** `A start job is running for /dev/disk/by-uuid/… (no limit)`, später `dracut-initqueue timeout`, `… does not exist`, `Entering emergency mode`
+- **Ursache:** Ubuntu baut das initramfs mit `hostonly`, also nur mit den Treibern der Hyper-V-Hardware. Unter Proxmox fehlt der Treiber für den SATA-/VirtIO-Controller, die Root-Platte wird nicht gefunden.
+- **Lösung:** VM in Hyper-V starten, `/etc/dracut.conf.d/90-proxmox.conf` mit `hostonly="no"` und `add_drivers+=" ahci sd_mod virtio_pci virtio_scsi virtio_blk virtio_net "` anlegen, `sudo dracut -f /boot/initrd.img-$(uname -r) $(uname -r)`, Prüfpunkt löschen, Platte neu hochladen und importieren ([Kapitel 17](anleitung/17-umzug-hyperv-proxmox.md#schritt-3--nur-linux-treiber-für-proxmox-nachrüsten-hyper-v-konsole)).
+- **Gelernt:** Bei Linux-VMs die Treiber **vor** dem Kopieren nachrüsten. Windows bringt Treiber für SATA und E1000E selbst mit.
+
+### `dracut --regenerate-all` bricht ab
+- **Meldung:** `Can't write to /boot/efi/…/7.0.0-30-generic: Directory … does not exist`, `image generation failed`
+- **Ursache:** Ein älterer Kernel ist noch registriert, sein Verzeichnis auf der EFI-Partition fehlt.
+- **Lösung:** Nur das Image für den laufenden Kernel bauen: `sudo dracut -f /boot/initrd.img-$(uname -r) $(uname -r)`.
+
+### Änderungen landen nicht in der kopierten `.vhdx`
+- **Symptom:** Nach dem Treiber-Fix in Hyper-V bootet die VM auf Proxmox trotzdem nicht.
+- **Ursache:** Beim Start hat Hyper-V einen **automatischen Prüfpunkt** angelegt, die Änderungen stecken in einer `.avhdx`.
+- **Lösung:** Prüfpunkt löschen, warten bis zusammengeführt, dann kopieren. Unter **Einstellungen → Prüfpunkte** „Automatische Prüfpunkte verwenden“ abschalten.
+
+### Linux-VM hat nach dem Umzug die falsche IP
+- **Symptom:** Die Karte heißt `ens18` und hat eine DHCP-Adresse statt der festen IP.
+- **Ursache:** Die Netplan-Datei des Ubuntu-Installers spricht die Karte über `match: macaddress` an. Proxmox vergibt eine neue MAC.
+- **Lösung:** In `/etc/netplan/00-installer-config.yaml` nur `macaddress:` auf die neue MAC ändern (steht unter **Hardware → Network Device**), `sudo netplan apply`. Durch `set-name: eth0` heißt die Karte wieder `eth0`.
+
+### Windows-Server nach dem Umzug nicht per RDP erreichbar, Ping zum DC geht
+- **Symptom:** In der VM klappt `ping dc01.lab.test`, vom Arbeits-PC aus `Test-NetConnection … -Port 3389` aber nicht.
+- **Ursache:** Beim Eintragen der festen IP an der neuen Karte wurde das **Standardgateway** vergessen. Die VM erreicht das Lab-Netz, kann aber nicht ins Heimnetz antworten.
+- **Lösung:** Gateway `10.0.0.1` nachtragen.
+
+### Name zeigt auf die alte IP
+- **Symptom:** `ping client01.lab.test` vom Arbeits-PC geht an die alte Adresse, pve01 antwortet *Zielhost nicht erreichbar*.
+- **Ursache:** Der DNS-Cache des Arbeits-PCs. DC01 kennt die neue Adresse schon (`nslookup client01.lab.test 10.0.0.10`).
+- **Lösung:** `ipconfig /flushdns` am Arbeits-PC.
+- **Gelernt:** `nslookup` ohne Server fragt immer den Router und ignoriert die NRPT-Regel für `lab.test`. Zum Testen `ping` oder `nslookup <name> 10.0.0.10`.
+
+### SSH zur Hyper-V-VM geht nicht mehr
+- **Ursache:** Die Route `10.0.0.0/24` über pve01 hat Vorrang vor dem wieder eingeschalteten Adapter vEthernet (LAB).
+- **Lösung:** Für die letzten Arbeiten in Hyper-V die Konsole nehmen, nicht zwischen den Netzen hin- und herschalten.
+
+### Paket-Download in der umgezogenen VM: `404 Not Found`
+- **Ursache:** Die Paketliste ist veraltet, die Version liegt nicht mehr auf dem Spiegel.
+- **Lösung:** Erst `sudo apt update`, dann installieren.
+
+### Einfügen ins Terminal beginnt mit `^[[200~`
+- **Ursache:** „Bracketed Paste“: Beim Einfügen mehrerer Zeilen schickt das Terminal Steuerzeichen mit, der erste Befehl wird zu `^[[200~sudo`.
+- **Lösung:** Befehle einzeln einfügen oder die Zeichen vor Enter löschen.
+
+### Strg+W schließt die Proxmox-Konsole
+- **Ursache:** Die Konsole läuft im Browser, Strg+W schließt den Tab, statt in nano zu suchen.
+- **Lösung:** „Auf Seite bleiben“, mit den Pfeiltasten navigieren. Strg+O und Strg+X funktionieren.
+
 ## Linux und Docker
 
 ### NetBox nach Neustart offline
