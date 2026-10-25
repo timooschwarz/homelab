@@ -125,28 +125,26 @@ Docker auf dem Pi läuft über das Compose-Plugin von OpenMediaVault:
 
 **RAID-Wächter:** Beszel sieht CPU, RAM und Temperatur des Pi, aber nicht, ob das RAID *degraded* ist. Fällt eine SSD aus, läuft RAID 5 still weiter, bis die zweite auch stirbt. Ein kleines Skript meldet jede Zustandsänderung von `md0` per ntfy (nur bei Änderung, kein Dauer-Spam):
 
+`sudo nano /usr/local/bin/raid-check.sh`:
+
 ```bash
-# /usr/local/bin/raid-check.sh  (chmod 700)
 #!/bin/bash
-TOPIC="https://ntfy.sh/<thema>"
-STATE_FILE=/var/tmp/raid-state
-DETAIL=$(mdadm --detail /dev/md0 2>/dev/null)
-NOW=$(echo "$DETAIL" | awk -F' : ' '/^ *State :/ {print $2}')
-FAILED=$(echo "$DETAIL" | awk -F' : ' '/Failed Devices/ {print $2}')
-[ -z "$NOW" ] && NOW="md0 nicht gefunden"
-OLD=$(cat "$STATE_FILE" 2>/dev/null)
-if [ "$NOW" != "$OLD" ]; then
-  echo "$NOW" > "$STATE_FILE"
-  if echo "$NOW" | grep -qiE "degraded|fail|inactive|nicht gefunden" || [ "${FAILED:-0}" != "0" ]; then
-    curl -s -H "Title: RAID pi-nas: $NOW" -H "Priority: high" -H "Tags: warning" \
-      -d "md0: $NOW, Failed Devices: ${FAILED:-?}. OMV -> Storage -> Multiple Device pruefen." "$TOPIC" >/dev/null
-  elif [ -n "$OLD" ]; then
-    curl -s -H "Title: RAID pi-nas: $NOW" -H "Tags: white_check_mark" -d "md0 meldet: $NOW" "$TOPIC" >/dev/null
-  fi
-fi
+T="https://ntfy.sh/<thema>"
+F=/var/tmp/raid-state
+NOW=$(mdadm --detail /dev/md0 | awk -F' : ' '/ State :/{print $2}')
+[ -z "$NOW" ] && NOW="md0 fehlt"
+[ "$NOW" = "$(cat $F 2>/dev/null)" ] && exit 0
+echo "$NOW" > $F
+P=default
+echo "$NOW" | grep -qiE "degraded|fail|inactive|fehlt" && P=high
+curl -s -H "Title: RAID pi-nas: $NOW" -H "Priority: $P" -d "md0: $NOW" "$T" >/dev/null
 ```
 
-Die `#!/bin/bash`-Zeile muss in der Datei ganz oben stehen, der Kommentar darüber ist nur zur Orientierung. Test: Skript einmal starten (merkt sich den Zustand), dann `echo test | sudo tee /var/tmp/raid-state` und nochmal starten, jetzt muss „RAID pi-nas: clean“ aufs Handy kommen. Automatisch: OMV **System → Scheduled Tasks → Create**, alle 15 Minuten, User `root`, Command `/usr/local/bin/raid-check.sh` → **Save → Apply**. Nicht per `crontab -e`, OMV verwaltet die Cron-Dateien selbst.
+Vor dem Speichern ganz nach unten scrollen: Beim Einfügen in nano wurde bei mir eine längere Version abgeschnitten (`unexpected EOF while looking for matching '"'`). Dann `sudo chmod 700 /usr/local/bin/raid-check.sh`.
+
+**Test:** `sudo rm -f /var/tmp/raid-state` und das Skript starten. Ohne gespeicherten Zustand meldet es sofort „RAID pi-nas: clean“ aufs Handy, danach nur noch bei Änderungen.
+
+**Automatisch:** OMV **System → Scheduled Tasks → Create**, alle 15 Minuten, User `root`, Command `/usr/local/bin/raid-check.sh` → **Save → Apply**. Nicht per `crontab -e`, OMV verwaltet die Cron-Dateien selbst.
 
 ## Schritt 4 · Startseite mit Homepage (TOOLS01)
 
