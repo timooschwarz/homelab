@@ -215,7 +215,7 @@ Fehler, die beim Aufbau aufgetreten sind, jeweils mit Ursache und Lösung.
 - **Gelernt:** Benachrichtigungen nach dem Einrichten immer mit **Test** prüfen.
 
 ### Pi-hole startet nicht: `address already in use` auf Port 53
-- **Ursache:** Auf Raspberry Pi OS lauscht `systemd-resolved` auf `127.0.0.53:53` und `127.0.0.54:53`. Ein Container mit `"53:53"` will auf allen Adressen lauschen.
+- **Ursache:** Auf dem Pi (OpenMediaVault nutzt systemd-networkd/-resolved) lauscht `systemd-resolved` auf `127.0.0.53:53` und `127.0.0.54:53`. Ein Container mit `"53:53"` will auf allen Adressen lauschen.
 - **Lösung:** Port nur an die LAN-Adresse binden: `"192.168.2.234:53:53/tcp"` und `/udp`. Dafür braucht der Pi eine feste IP im Router.
 
 ### Homepage: `Host validation failed`

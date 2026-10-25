@@ -202,7 +202,7 @@ services:
       - ./etc-pihole:/etc/pihole
 ```
 
-Port 53 nur an die LAN-Adresse binden: Auf Raspberry Pi OS lauscht `systemd-resolved` schon auf `127.0.0.53:53`, mit `"53:53"` startet der Container mit *address already in use*. Port 8080, weil 80 und 443 die OMV-Oberfläche belegt. Weboberfläche: `http://192.168.2.234:8080/admin`.
+Port 53 nur an die LAN-Adresse binden: Auf dem Pi mit OpenMediaVault lauscht `systemd-resolved` schon auf `127.0.0.53:53`, mit `"53:53"` startet der Container mit *address already in use*. Port 8080, weil 80 und 443 die OMV-Oberfläche belegt. Weboberfläche: `http://192.168.2.234:8080/admin`.
 
 **Erst einzelne Geräte, dann das ganze Haus.** Am PC DNS manuell auf `192.168.2.234` (und IPv6 aus, sonst fragt Windows am Pi-hole vorbei), am iPhone unter *WLAN → (i) → DNS konfigurieren → Manuell* (Privat-Relay und rotierende WLAN-Adresse aus). Fürs ganze Haus müsste beim Speedport Smart der DHCP-Server aus und Pi-hole ihn übernehmen, weil der Speedport keinen eigenen DNS-Server verteilen kann. Dann hängt das Internet aller im Haus am Pi, also nur nach Absprache und einer stabilen Testphase.
 
@@ -214,8 +214,12 @@ Läuft Tailscale nur auf pve01 und der hängt, ist das Heimnetz von unterwegs ni
 
 ```
 curl -fsSL https://tailscale.com/install.sh | sh
+echo 'net.ipv4.ip_forward = 1' | sudo tee -a /etc/sysctl.d/99-tailscale.conf
+sudo sysctl -p /etc/sysctl.d/99-tailscale.conf
 sudo tailscale up --advertise-routes=192.168.2.0/24 --accept-dns=false
 ```
+
+Ohne IP-Forwarding wird die Route im Admin zwar freigegeben, es fließt aber kein Verkehr darüber ([Tailscale-Doku](https://tailscale.com/kb/1019/subnets)). Bei mir fiel das erst beim Gegenlesen auf. Testen: am Handy WLAN aus, in der Tailscale-App bei pve01 kurz die Route abschalten bzw. pve01 herunterfahren und `192.168.2.234` aufrufen.
 
 `--accept-dns=false` ist wichtig: Sonst stellt Tailscale den DNS des Pi auf `100.100.100.100` um, mit denselben Folgen wie bei beszel in Schritt 1, nur dass hier Pi-hole und alle Container betroffen wären. Im Tailscale-Admin bei pi-nas **Edit route settings** → `192.168.2.0/24` freigeben und **Disable key expiry**. Mit zwei Subnet Routern für dasselbe Netz übernimmt Tailscale automatisch den erreichbaren.
 
