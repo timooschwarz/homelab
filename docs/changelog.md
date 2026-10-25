@@ -11,6 +11,7 @@
 - Pi-NAS: omv-extras und Compose-Plugin (Docker), Pi-hole als Container (Weboberfläche Port 8080, DNS nur an die LAN-IP gebunden, weil `systemd-resolved` auf `127.0.0.53:53` lauscht)
 - Pi-NAS: zweites Uptime Kuma (Port 3001) als Wächter von außen für pve01, DC01 und TOOLS01. Damit der Pi das Lab erreicht, Route `10.0.0.0/24` über pve01 in eigener Netplan-Datei `/etc/netplan/90-lab-route.yaml` (OMV lässt sie in Ruhe)
 - Beszel-Alarme kamen nie an: LXC-Container erbten Tailscale-DNS (`100.100.100.100`) vom Host. DNS bei beszel und netbox fest auf den Router gesetzt, neuer Fall in der [Fehlerbehebung](fehlerbehebung.md). Push per ntfy jetzt auch vom Uptime Kuma auf dem Pi
+- Pi-NAS als zweiter Tailscale-Subnet-Router für `192.168.2.0/24` (`--accept-dns=false`, damit Pi-hole und Docker ihren DNS behalten). Fällt pve01 aus, bleibt das Heimnetz von unterwegs erreichbar
 - Updates: pve01 (libbrotli1) und Pi-NAS (rpi-eeprom, Bootloader), RAID danach weiter clean
 
 ## 2026-10-24
