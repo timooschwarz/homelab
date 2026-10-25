@@ -5,7 +5,7 @@
 [![Netzwerk](https://img.shields.io/badge/-Netzwerk-1D9E75?style=flat-square)](../README.md#thema-netz) [![Hyper-V](https://img.shields.io/badge/-Hyper--V-5F5E5A?style=flat-square)](../README.md#thema-hyperv)
 
 > **Ziel:** Das Lab läuft dauerhaft auf einem eigenen, sparsamen Mini-PC statt auf dem großen PC. Mini-PC, Switch und NAS sitzen ordentlich verkabelt in einem kleinen 10-Zoll-Rack.
-> **Stand:** 21.10.2026 · Rack aufgebaut, Patchpanel (HE 2), Switch (HE 5), Mini-PC (HE 6) und SBC Shelf (HE 8) eingebaut, alles über das Patchpanel verkabelt. Auf dem Mini-PC läuft Proxmox VE ([Kapitel 15](anleitung/15-proxmox-host.md)). Das NAS läuft seit 22.10. auf dem Tisch ([Kapitel 16](anleitung/16-pi-nas.md)), der Platz im Rack ist noch offen.
+> **Stand:** 25.10.2026 · Alles im Rack. Von oben: HE 1 Blende, **HE 2 Patchpanel**, HE 3 Blende, **HE 4 Mini-PC** (pve01, auf dem Fachboden), **HE 5 Switch**, HE 6–7 gelochte Blenden, **HE 8 SBC Shelf mit dem Pi-NAS** (ragt mit HAT und SSDs hinter die Blenden). Auf dem Mini-PC läuft Proxmox VE ([Kapitel 15](anleitung/15-proxmox-host.md)), das NAS ist in [Kapitel 16](anleitung/16-pi-nas.md) beschrieben.
 
 Die Anleitung (Kapitel 0–14) funktioniert weiterhin auf einem einzigen PC mit Hyper-V. Diese Seite beschreibt Rack, Verkabelung und Switch für den Umzug auf eigene Hardware. Es ist optional. Auf dem Mini-PC läuft **Proxmox VE** statt Hyper-V: Die Windows-Server laufen dort als KVM-VMs, Linux-Dienste können als schlanke LXC-Container laufen.
 
@@ -26,6 +26,8 @@ Die Anleitung (Kapitel 0–14) funktioniert weiterhin auf einem einzigen PC mit 
 > Das Patchpanel sitzt bewusst oben mit Abstand zum Switch. So fallen die kurzen Kabel sauber vor den Blenden nach unten. Die Patchpanel-Nummern sind dadurch um 2 versetzt: Patchpanel 3–10 gehen auf Switch 1–8.
 
 ![Rack-Belegung von vorne](diagramme/rack-belegung-2026-10-21.png)
+
+*Planungsstand 21.10. Inzwischen sitzt der Mini-PC zwischen Patchpanel und Switch, siehe Stand oben. So bleiben die kurzen Kabel vom Patchpanel zum Switch gleich lang und das NAS hat unten genug Platz und Luft.*
 
 Im Dauerbetrieb braucht alles zusammen etwa 30–40 W.
 
