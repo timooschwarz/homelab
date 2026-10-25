@@ -37,6 +37,17 @@ Wie Agents für die Lab-VMs dazukommen (zweite Karte am Hub, Docker-, Binary- un
 
 ![Beszel: Push-Benachrichtigung per ntfy (Adresse und Thema unkenntlich gemacht)](../bilder/betrieb-beszel-ntfy.png)
 
+**Netzwerk-Monitore** (Beszel ab 0.21, Symbol mit den drei Kästchen oben): Ein Agent prüft ein Ziel per ICMP, TCP, HTTP oder DNS und zeigt Antwortzeit und Paketverlust. Bei mir nur Strecken, die Uptime Kuma nicht abdeckt:
+
+| System | Ziel | Protokoll | Wofür |
+|---|---|---|---|
+| pve01 | `1.1.1.1` | ICMP | Qualität der Internetleitung |
+| pi-nas | `192.168.2.20` | ICMP | Strecke der nächtlichen Backups |
+| TOOLS01 | `10.0.0.10` | ICMP | Lab-Netz auf vmbr1 |
+| TOOLS01 | `192.168.2.20:8006` | TCP | Proxmox-Weboberfläche |
+
+HTTP auf `https://192.168.2.20:8006` bleibt rot (100 % Verlust), obwohl das Zertifikat angezeigt wird: Das selbstsignierte Proxmox-Zertifikat wird nicht akzeptiert. TCP auf Port 8006 reicht.
+
 > [!WARNING]
 > **Test URL meldet `Client.Timeout exceeded`?** Bei mir lag es nicht an ntfy, sondern am DNS des Containers. Tailscale auf pve01 stellt den Host-DNS auf `100.100.100.100` um, und Container mit *use host settings* übernehmen diese Adresse, die sie nicht erreichen. Lösung: **100 (beszel) → DNS → DNS server** fest auf den Router (`192.168.2.1`), dann **Reboot**. Prüfen mit `pct exec 100 -- cat /etc/resolv.conf`. Gleiches gilt für jeden anderen Container.
 
