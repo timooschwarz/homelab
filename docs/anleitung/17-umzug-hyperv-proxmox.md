@@ -1,6 +1,6 @@
 # Kapitel 17 · Umzug der VMs von Hyper-V auf Proxmox
 
-[← Kapitel 16](16-pi-nas.md) · [Übersicht](../../README.md#inhaltsverzeichnis) · [Fehlerbehebung](../fehlerbehebung.md#umzug-hyper-v--proxmox)
+[← Kapitel 16](16-pi-nas.md) · [Übersicht](../../README.md#inhaltsverzeichnis) · [Fehlerbehebung](../fehlerbehebung.md#umzug-hyper-v--proxmox) · [Kapitel 18 →](18-betrieb.md)
 
 [![Proxmox](https://img.shields.io/badge/-Proxmox-E57000?style=flat-square)](../../README.md#thema-proxmox) [![Hyper-V](https://img.shields.io/badge/-Hyper--V-5F5E5A?style=flat-square)](../../README.md#thema-hyperv) [![Active Directory](https://img.shields.io/badge/-Active%20Directory-378ADD?style=flat-square)](../../README.md#thema-ad) [![Linux & Docker](https://img.shields.io/badge/-Linux%20%26%20Docker-E95420?style=flat-square)](../../README.md#thema-linux) [![Netzwerk](https://img.shields.io/badge/-Netzwerk-1D9E75?style=flat-square)](../../README.md#thema-netz)
 
@@ -238,4 +238,4 @@ pve01 hat 32 GB. Dauerhaft laufen DC01, FS01 (je 4 GB mit Ballooning), TOOLS01, 
 
 Alle Fälle mit Ursache und Lösung: [Fehlerbehebung → Umzug Hyper-V → Proxmox](../fehlerbehebung.md#umzug-hyper-v--proxmox)
 
-Wie es weitergeht: MECM-Server umziehen, Homelable aus der Behelfs-VM holen, Hyper-V nur noch für Testclients. [Roadmap](../roadmap.md)
+Wie es weitergeht: Monitoring, Alarme und Startseite für den Dauerbetrieb in [Kapitel 18](18-betrieb.md). [Roadmap](../roadmap.md)

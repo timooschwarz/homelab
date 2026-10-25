@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-25 (abends)
+- Neues [Kapitel 18 · Betrieb](anleitung/18-betrieb.md): Alarme und Backup-Berichte per ntfy, zweites Uptime Kuma und Pi-hole auf dem Pi, Homepage mit Proxmox-Widget, Namen über den Proxy, Tailscale als Notzugang, Checkliste für Updates und Restore-Tests
+- Neue Grafiken: [Netzwerk Stand 25.10.](diagramme/netzwerk-2026-10-25.png) und Startreihenfolge auf pve01
+- [Aufbau](aufbau.md) auf den Stand nach dem Umzug gebracht (VM-IDs, Heimnetz-Geräte, CNAMEs, Dienste auf TOOLS01), vier neue Fälle in der [Fehlerbehebung](fehlerbehebung.md#betrieb-kapitel-18)
+
 ## 2026-10-25
 - CM01 (MECM mit SQL) als VM 120 auf pve01 umgezogen, damit sind alle Server aus Hyper-V raus. Läuft nur bei Bedarf, Hinweise zum ersten Start in [Kapitel 17](anleitung/17-umzug-hyperv-proxmox.md#mecm-nach-dem-umzug)
 - Backup-Benachrichtigungen von Proxmox per ntfy (Notification Target Webhook + Matcher auf `type = vzdump`)

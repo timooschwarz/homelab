@@ -7,7 +7,7 @@ Jede Stufe baut auf der vorherigen auf: Vorlagen vor neuen Servern, Backup vor r
 | # | Ausbaustufe | Neue VM | Status |
 |---|---|---|---|
 | 0 | Umzug auf Mini-PC im 10-Zoll-Rack | – | Rack, Switch und Proxmox auf dem Mini-PC ✅ ([Kapitel 15](anleitung/15-proxmox-host.md)), Pi-NAS ✅ ([Kapitel 16](anleitung/16-pi-nas.md)), VM-Umzug ✅ ([Kapitel 17](anleitung/17-umzug-hyperv-proxmox.md)), MECM folgt |
-| 1 | Monitoring (Uptime Kuma, Netdata, Beszel) | – | ✅ (Beszel seit 21.10.) |
+| 1 | Monitoring (Uptime Kuma, Beszel, Alarme per Push) | – | ✅ ([Kapitel 18](anleitung/18-betrieb.md)) |
 | 2 | Reverse Proxy und DNS-Namen | – | ✅ |
 | 3 | Infisical für Kennwörter | – | wieder entfernt, KeePassXC reicht |
 | 4 | Quick Wins (AD-Papierkorb, Lizenzdaten, Monitore) | – | teilweise |
@@ -26,7 +26,7 @@ Jede Stufe baut auf der vorherigen auf: Vorlagen vor neuen Servern, Backup vor r
 
 ## Hardware
 
-Das Lab zieht auf einen eigenen Mini-PC in einem 10-Zoll-Rack um. Rack und Switch stehen seit dem 19.10.2026, auf dem Mini-PC läuft seit dem 21.10.2026 Proxmox VE. Seit dem 24.10.2026 laufen DC01, FS01, TOOLS01 und LOG01 dort, MECM folgt. Belegung, Verkabelung und Switch-Einrichtung: [Hardware](hardware.md). So reicht der Arbeitsspeicher auf dem Mini-PC, wenn die VMs umgezogen sind:
+Das Lab zieht auf einen eigenen Mini-PC in einem 10-Zoll-Rack um. Rack und Switch stehen seit dem 19.10.2026, auf dem Mini-PC läuft seit dem 21.10.2026 Proxmox VE. Seit dem 25.10.2026 laufen alle Server dort, Hyper-V bleibt nur für Testclients. Belegung, Verkabelung und Switch-Einrichtung: [Hardware](hardware.md). So reicht der Arbeitsspeicher auf dem Mini-PC, wenn die VMs umgezogen sind:
 
 ![RAM-Budget](diagramme/ram-budget.png)
 

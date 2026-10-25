@@ -206,11 +206,31 @@ Fehler, die beim Aufbau aufgetreten sind, jeweils mit Ursache und Lösung.
 - **Ursache:** AltGr wird im Konsolenfenster nicht durchgereicht, *Zwischenablage → Text eingeben* half auch nicht.
 - **Lösung:** Im Proxmox-Installer kurz das Tastaturlayout **U.S. English** wählen (`@` = Shift + 2). Kennwort nur aus Buchstaben ohne y/z und Ziffern, dann ist das Layout egal. Später im Webinterface ändern.
 
+## Betrieb (Kapitel 18)
+
 ### LXC-Container kann keine Namen auflösen, seit Tailscale auf dem Host läuft
 - **Symptom:** Beszel meldet beim Test der ntfy-URL `Client.Timeout exceeded`, im Container `curl: (6) Could not resolve host`. Ping auf `192.168.2.1` geht.
 - **Ursache:** Tailscale stellt den DNS des Proxmox-Hosts auf MagicDNS (`100.100.100.100`) um. Container mit *DNS server: use host settings* übernehmen diese Adresse, erreichen sie aber nicht. Die Alarme sind seitdem nie angekommen.
 - **Lösung:** Im Container **DNS → DNS server** fest auf `192.168.2.1`, danach **Reboot** (orange heißt: noch nicht aktiv). Bei allen Containern prüfen: `pct exec <ID> -- cat /etc/resolv.conf`.
 - **Gelernt:** Benachrichtigungen nach dem Einrichten immer mit **Test** prüfen.
+
+### Pi-hole startet nicht: `address already in use` auf Port 53
+- **Ursache:** Auf Raspberry Pi OS lauscht `systemd-resolved` auf `127.0.0.53:53` und `127.0.0.54:53`. Ein Container mit `"53:53"` will auf allen Adressen lauschen.
+- **Lösung:** Port nur an die LAN-Adresse binden: `"192.168.2.234:53:53/tcp"` und `/udp`. Dafür braucht der Pi eine feste IP im Router.
+
+### Homepage: `Host validation failed`
+- **Ursache:** Die Adresse, unter der die Seite aufgerufen wird (z. B. `home.lab.test` über den Proxy), fehlt in `HOMEPAGE_ALLOWED_HOSTS`.
+- **Lösung:** Eintragen, `docker compose up -d`.
+
+### Monitore auf dem Pi für das Lab-Netz bleiben rot
+- **Ursache:** Der Pi schickt `10.0.0.x` an den Router, der das Lab-Netz hinter pve01 nicht kennt.
+- **Lösung:** Statische Route in eigener Netplan-Datei `/etc/netplan/90-lab-route.yaml` (`to: 10.0.0.0/24`, `via: 192.168.2.20`), `netplan apply`.
+
+### Ein `.lab.test`-Name geht nicht, alle anderen schon
+- **Symptom:** *Server Not Found*. `nslookup name 10.0.0.10` liefert nur `Name:` ohne Adresse.
+- **Ursache:** Der CNAME existiert, sein Ziel ist vertippt.
+- **Lösung:** CNAME löschen, neu anlegen und das Ziel per **Browse…** auswählen. Am Arbeits-PC `ipconfig /flushdns`.
+
 
 ## Umzug Hyper-V → Proxmox
 

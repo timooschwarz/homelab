@@ -9,12 +9,12 @@
 ![Ubuntu](https://img.shields.io/badge/Ubuntu-Docker-E95420?logo=ubuntu&logoColor=white)
 ![Proxmox VE](https://img.shields.io/badge/Proxmox%20VE-9.2-E57000?logo=proxmox&logoColor=white)
 ![Raspberry Pi](https://img.shields.io/badge/Raspberry%20Pi%205-NAS-A22846?logo=raspberrypi&logoColor=white)
-![Kapitel](https://img.shields.io/badge/Kapitel-18-555555)
+![Kapitel](https://img.shields.io/badge/Kapitel-19-555555)
 
-![Netzwerk des Labs](docs/diagramme/netzwerk-2026-10-22.png)
+![Netzwerk des Labs](docs/diagramme/netzwerk-2026-10-25.png)
 
 > [!NOTE]
-> **Stand 25.10.2026:** Alle Server (DC01, FS01, TOOLS01, CM01, LOG01) sind aus Hyper-V auf den Mini-PC `pve01` mit Proxmox umgezogen ([Kapitel 17](docs/anleitung/17-umzug-hyperv-proxmox.md)). Das Pi-NAS sichert jede Nacht alle VMs und Container. Hyper-V auf dem Arbeits-PC bleibt nur noch für Testclients. Was wann dazukam: [Changelog](docs/changelog.md)
+> **Stand 25.10.2026:** Alle Server (DC01, FS01, TOOLS01, CM01, LOG01) sind aus Hyper-V auf den Mini-PC `pve01` mit Proxmox umgezogen ([Kapitel 17](docs/anleitung/17-umzug-hyperv-proxmox.md)). Das Pi-NAS sichert jede Nacht alle VMs und Container. Hyper-V auf dem Arbeits-PC bleibt nur noch für Testclients. Beszel, zwei Uptime Kumas und Proxmox melden Ausfälle und Backup-Ergebnisse per Push aufs Handy ([Kapitel 18](docs/anleitung/18-betrieb.md)). Was wann dazukam: [Changelog](docs/changelog.md)
 
 ---
 
@@ -27,7 +27,7 @@
   - [Teil 3 · Client, Dateiserver und Gruppenrichtlinien](#teil-3--client-dateiserver-und-gruppenrichtlinien): [6 · Client](docs/anleitung/06-client.md) · [7 · Dateiserver](docs/anleitung/07-dateiserver.md) · [8 · Gruppenrichtlinien](docs/anleitung/08-gruppenrichtlinien.md)
   - [Teil 4 · Testen](#teil-4--testen): [9 · Testen](docs/anleitung/09-testen.md)
   - [Teil 5 · Erweiterungen: Linux, MECM und Sicherheit](#teil-5--erweiterungen-linux-mecm-und-sicherheit): [10 · Linux-Dienste](docs/anleitung/10-linux-dienste.md) · [11 · MECM](docs/anleitung/11-mecm.md) · [12 · Software verteilen](docs/anleitung/12-softwareverteilung.md) · [13 · Wazuh](docs/anleitung/13-wazuh.md) · [14 · Homelable](docs/anleitung/14-homelable.md)
-  - [Teil 6 · Eigene Hardware: Proxmox, Rack und NAS](#teil-6--eigene-hardware-proxmox-rack-und-nas): [15 · Proxmox auf dem Mini-PC](docs/anleitung/15-proxmox-host.md) · [16 · NAS mit Raspberry Pi](docs/anleitung/16-pi-nas.md) · [17 · Umzug von Hyper-V](docs/anleitung/17-umzug-hyperv-proxmox.md) · [Hardware und Rack](docs/hardware.md)
+  - [Teil 6 · Eigene Hardware: Proxmox, Rack und NAS](#teil-6--eigene-hardware-proxmox-rack-und-nas): [15 · Proxmox auf dem Mini-PC](docs/anleitung/15-proxmox-host.md) · [16 · NAS mit Raspberry Pi](docs/anleitung/16-pi-nas.md) · [17 · Umzug von Hyper-V](docs/anleitung/17-umzug-hyperv-proxmox.md) · [18 · Betrieb](docs/anleitung/18-betrieb.md) · [Hardware und Rack](docs/hardware.md)
 - [Nach Thema](#nach-thema)
 - [Betrieb: Starten, Stoppen, Sichern](#betrieb-starten-stoppen-sichern)
 - [Fehler, aus denen ich am meisten gelernt habe](#fehler-aus-denen-ich-am-meisten-gelernt-habe)
@@ -52,7 +52,8 @@ Ich habe dieses Lab als Junior Admin aufgebaut, um Alltagsaufgaben aus der Firma
 | Sicherheit | RDP nur für bestimmte Abteilungen, Windows LAPS, getrennte Admin-Konten, Wazuh meldet Fehlanmeldungen und neue Konten |
 | Softwareverteilung | MECM mit Client-Push, Anwendungen im Softwarecenter und als Pflicht-Installation |
 | Betrieb | Uptime Kuma, Beszel, Nginx Proxy Manager, NetBox, Homepage als Startseite (Netdata, Warpgate und Homelable waren eine Zeit lang dabei, ihre Kapitel bleiben als Anleitung) |
-| Eigene Hardware | Mini-PC mit Proxmox im 10-Zoll-Rack, Monitoring mit Beszel und Push aufs Handy, Fernzugriff über Tailscale, Pi-NAS mit RAID 5 für nächtliche Backups |
+| Eigene Hardware | Mini-PC mit Proxmox im 10-Zoll-Rack, alle Server dorthin umgezogen, Pi-NAS mit RAID 5 für nächtliche Backups, Pi-hole, Fernzugriff über Tailscale |
+| Dauerbetrieb | Alarme und Backup-Berichte per Push aufs Handy, zweiter Wächter auf dem Pi, Startseite mit allen Diensten |
 
 **So sind die Kapitel aufgebaut:** Ziel und Dauer · nummerierte Schritte mit Angabe, auf welchem Rechner du gerade bist · Prüfen · häufige Fehler. Rund 80 Screenshots und Fotos stammen direkt aus dem Lab. Gearbeitet wird überwiegend mit der Oberfläche, Befehle nur dort, wo es deutlich schneller ist.
 
@@ -182,6 +183,7 @@ Damit das Lab rund um die Uhr läuft, ohne dass der große PC an sein muss: ein 
 | [15 · Proxmox auf dem Mini-PC](docs/anleitung/15-proxmox-host.md) | Mini-PC aufrüsten, Proxmox installieren, Speicher, Monitoring mit Beszel, Fernzugriff mit Tailscale | 3 Std. |
 | [16 · NAS mit Raspberry Pi](docs/anleitung/16-pi-nas.md) | Pi 5 mit Penta SATA HAT, OpenMediaVault, RAID 5, NFS, nächtliche Proxmox-Backups, Alarme aufs Handy | 3 Std. |
 | [17 · Umzug von Hyper-V auf Proxmox](docs/anleitung/17-umzug-hyperv-proxmox.md) | VHDX übernehmen, Linux-Treiber nachrüsten, Netzwerk und Guest Agent, Arbeits-PC umstellen | 3–4 Std. |
+| [18 · Betrieb: Monitoring, Alarme, Startseite](docs/anleitung/18-betrieb.md) | Alarme aufs Handy, Backup-Berichte, zweiter Wächter und Pi-hole auf dem Pi, Homepage, Namen über den Proxy, Notzugang | 3 Std. |
 | [Hardware und Rack](docs/hardware.md) | Rack-Belegung, Patchpanel, Verkabelung, Managed Switch | – |
 
 ```mermaid
@@ -209,9 +211,9 @@ Jedes Kapitel hat oben Tags. Ein Klick auf einen Tag führt hierher, zu allen Ka
 | Thema | Kapitel |
 |---|---|
 | <a id="thema-ad"></a>![Active Directory](https://img.shields.io/badge/-Active%20Directory-378ADD?style=flat-square) | [2 · Domain Controller](docs/anleitung/02-domain-controller.md) · [3 · DNS und DHCP](docs/anleitung/03-dns-dhcp.md) · [4 · AD-Struktur](docs/anleitung/04-ad-struktur.md) · [5 · Benutzer per Skript](docs/anleitung/05-benutzer-per-skript.md) · [6 · Client](docs/anleitung/06-client.md) · [11 · MECM](docs/anleitung/11-mecm.md) · [17 · Umzug](docs/anleitung/17-umzug-hyperv-proxmox.md) |
-| <a id="thema-dns"></a>![DNS](https://img.shields.io/badge/-DNS-1D9E75?style=flat-square) | [2 · Domain Controller](docs/anleitung/02-domain-controller.md) · [3 · DNS und DHCP](docs/anleitung/03-dns-dhcp.md) · [10 · Linux-Dienste](docs/anleitung/10-linux-dienste.md) |
+| <a id="thema-dns"></a>![DNS](https://img.shields.io/badge/-DNS-1D9E75?style=flat-square) | [2 · Domain Controller](docs/anleitung/02-domain-controller.md) · [3 · DNS und DHCP](docs/anleitung/03-dns-dhcp.md) · [10 · Linux-Dienste](docs/anleitung/10-linux-dienste.md) · [18 · Betrieb](docs/anleitung/18-betrieb.md) |
 | <a id="thema-dhcp"></a>![DHCP](https://img.shields.io/badge/-DHCP-1D9E75?style=flat-square) | [3 · DNS und DHCP](docs/anleitung/03-dns-dhcp.md) |
-| <a id="thema-netz"></a>![Netzwerk](https://img.shields.io/badge/-Netzwerk-1D9E75?style=flat-square) | [1 · Netzwerk](docs/anleitung/01-netzwerk.md) · [10 · Linux-Dienste](docs/anleitung/10-linux-dienste.md) · [14 · Homelable](docs/anleitung/14-homelable.md) · [15 · Proxmox-Host](docs/anleitung/15-proxmox-host.md) · [16 · Pi-NAS](docs/anleitung/16-pi-nas.md) · [Hardware](docs/hardware.md) · [17 · Umzug](docs/anleitung/17-umzug-hyperv-proxmox.md) |
+| <a id="thema-netz"></a>![Netzwerk](https://img.shields.io/badge/-Netzwerk-1D9E75?style=flat-square) | [1 · Netzwerk](docs/anleitung/01-netzwerk.md) · [10 · Linux-Dienste](docs/anleitung/10-linux-dienste.md) · [14 · Homelable](docs/anleitung/14-homelable.md) · [15 · Proxmox-Host](docs/anleitung/15-proxmox-host.md) · [16 · Pi-NAS](docs/anleitung/16-pi-nas.md) · [Hardware](docs/hardware.md) · [17 · Umzug](docs/anleitung/17-umzug-hyperv-proxmox.md) · [18 · Betrieb](docs/anleitung/18-betrieb.md) |
 | <a id="thema-gpo"></a>![Gruppenrichtlinien](https://img.shields.io/badge/-Gruppenrichtlinien-7F77DD?style=flat-square) | [8 · Gruppenrichtlinien](docs/anleitung/08-gruppenrichtlinien.md) · [9 · Testen](docs/anleitung/09-testen.md) · [11 · MECM](docs/anleitung/11-mecm.md) · [14 · Homelable](docs/anleitung/14-homelable.md) |
 | <a id="thema-file"></a>![Dateiserver](https://img.shields.io/badge/-Dateiserver-0F766E?style=flat-square) | [7 · Dateiserver](docs/anleitung/07-dateiserver.md) · [8 · Gruppenrichtlinien](docs/anleitung/08-gruppenrichtlinien.md) · [9 · Testen](docs/anleitung/09-testen.md) · [16 · Pi-NAS](docs/anleitung/16-pi-nas.md) |
 | <a id="thema-sec"></a>![Sicherheit](https://img.shields.io/badge/-Sicherheit-EF9F27?style=flat-square) | [4 · AD-Struktur](docs/anleitung/04-ad-struktur.md) · [7 · Dateiserver](docs/anleitung/07-dateiserver.md) · [8 · Gruppenrichtlinien](docs/anleitung/08-gruppenrichtlinien.md) · [13 · Wazuh](docs/anleitung/13-wazuh.md) · [15 · Proxmox-Host](docs/anleitung/15-proxmox-host.md) |
@@ -219,8 +221,8 @@ Jedes Kapitel hat oben Tags. Ein Klick auf einen Tag führt hierher, zu allen Ka
 | <a id="thema-ps"></a>![PowerShell](https://img.shields.io/badge/-PowerShell-5391FE?style=flat-square) | [1 · Netzwerk](docs/anleitung/01-netzwerk.md) · [5 · Benutzer per Skript](docs/anleitung/05-benutzer-per-skript.md) |
 | <a id="thema-hyperv"></a>![Hyper-V](https://img.shields.io/badge/-Hyper--V-5F5E5A?style=flat-square) | [0 · Voraussetzungen](docs/anleitung/00-voraussetzungen.md) · [1 · Netzwerk](docs/anleitung/01-netzwerk.md) · [14 · Homelable](docs/anleitung/14-homelable.md) · [17 · Umzug](docs/anleitung/17-umzug-hyperv-proxmox.md) |
 | <a id="thema-test"></a>![Testen](https://img.shields.io/badge/-Testen-D4537E?style=flat-square) | [9 · Testen](docs/anleitung/09-testen.md) · [12 · Software verteilen](docs/anleitung/12-softwareverteilung.md) · [13 · Wazuh](docs/anleitung/13-wazuh.md) |
-| <a id="thema-linux"></a>![Linux & Docker](https://img.shields.io/badge/-Linux%20%26%20Docker-E95420?style=flat-square) | [10 · Linux-Dienste](docs/anleitung/10-linux-dienste.md) · [13 · Wazuh](docs/anleitung/13-wazuh.md) · [14 · Homelable](docs/anleitung/14-homelable.md) · [15 · Proxmox-Host](docs/anleitung/15-proxmox-host.md) · [16 · Pi-NAS](docs/anleitung/16-pi-nas.md) · [17 · Umzug](docs/anleitung/17-umzug-hyperv-proxmox.md) |
-| <a id="thema-proxmox"></a>![Proxmox](https://img.shields.io/badge/-Proxmox-E57000?style=flat-square) | [14 · Homelable](docs/anleitung/14-homelable.md) · [15 · Proxmox-Host](docs/anleitung/15-proxmox-host.md) · [16 · Pi-NAS](docs/anleitung/16-pi-nas.md) · [17 · Umzug](docs/anleitung/17-umzug-hyperv-proxmox.md) |
+| <a id="thema-linux"></a>![Linux & Docker](https://img.shields.io/badge/-Linux%20%26%20Docker-E95420?style=flat-square) | [10 · Linux-Dienste](docs/anleitung/10-linux-dienste.md) · [13 · Wazuh](docs/anleitung/13-wazuh.md) · [14 · Homelable](docs/anleitung/14-homelable.md) · [15 · Proxmox-Host](docs/anleitung/15-proxmox-host.md) · [16 · Pi-NAS](docs/anleitung/16-pi-nas.md) · [17 · Umzug](docs/anleitung/17-umzug-hyperv-proxmox.md) · [18 · Betrieb](docs/anleitung/18-betrieb.md) |
+| <a id="thema-proxmox"></a>![Proxmox](https://img.shields.io/badge/-Proxmox-E57000?style=flat-square) | [14 · Homelable](docs/anleitung/14-homelable.md) · [15 · Proxmox-Host](docs/anleitung/15-proxmox-host.md) · [16 · Pi-NAS](docs/anleitung/16-pi-nas.md) · [17 · Umzug](docs/anleitung/17-umzug-hyperv-proxmox.md) · [18 · Betrieb](docs/anleitung/18-betrieb.md) |
 | <a id="thema-mecm"></a>![MECM](https://img.shields.io/badge/-MECM-107C10?style=flat-square) | [11 · MECM](docs/anleitung/11-mecm.md) · [12 · Software verteilen](docs/anleitung/12-softwareverteilung.md) |
 
 ---
@@ -233,9 +235,10 @@ DC01 startet immer zuerst und fährt zuletzt herunter. Ohne DC01 gibt es kein DN
 
 | Was | Wie |
 |---|---|
-| Sicherung | Proxmox sichert jede Nacht um 03:30 alle VMs und Container per NFS aufs Pi-NAS, aufbewahrt werden 7 Tage, 4 Wochen und 3 Monate ([Kapitel 16](docs/anleitung/16-pi-nas.md)) |
-| Überwachung | Beszel für pve01 und das NAS mit Push aufs Handy, Uptime Kuma und Netdata für die Lab-VMs |
-| Fernzugriff | Tailscale auf pve01, kein offener Port im Router |
+| Sicherung | Proxmox sichert jede Nacht um 01:30 lokal und um 03:30 per NFS aufs Pi-NAS (7 Tage, 4 Wochen, 3 Monate), Ergebnis per Push. Bedarfs-VMs von Hand ([Kapitel 16](docs/anleitung/16-pi-nas.md), [18](docs/anleitung/18-betrieb.md#schritt-2--backup-ergebnis-aufs-handy-pve01-browser)) |
+| Überwachung | Beszel für alle Server, Uptime Kuma auf TOOLS01 für die Dienste, ein zweites Uptime Kuma auf dem Pi für pve01 selbst, alles mit Push aufs Handy ([Kapitel 18](docs/anleitung/18-betrieb.md)) |
+| Fernzugriff | Tailscale auf pve01 und als Ersatz auf dem Pi, kein offener Port im Router |
+| Startseite | Homepage unter `home.lab.test` mit allen Diensten, Namen über Nginx Proxy Manager |
 
 Alle Server, GPOs und Rechte im fertigen Lab: [Aufbau](docs/aufbau.md)
 
@@ -254,7 +257,7 @@ Alle Server, GPOs und Rechte im fertigen Lab: [Aufbau](docs/aufbau.md)
 | RAID auf dem Pi-NAS synchronisiert mit 0,5 MB/s, Timeouts auf mehreren SSDs | SATA-Controller JMB585 und Kernel 6.18 | `dtoverlay=pcie-32bit-dma-pi5` in der `config.txt` |
 | Danach keine Fehler mehr, aber eine SSD liest fast nichts | Alte Samsung 840 EVO lesen lange liegende Daten extrem langsam | Alle SSDs komplett trimmen, RAID neu anlegen |
 
-Alle 42 Fälle: [Fehlerbehebung](docs/fehlerbehebung.md)
+Alle Fälle: [Fehlerbehebung](docs/fehlerbehebung.md)
 
 ---
 
@@ -277,7 +280,7 @@ Alle 42 Fälle: [Fehlerbehebung](docs/fehlerbehebung.md)
 
 ![Roadmap: Ausbaustufen](docs/diagramme/roadmap.png)
 
-Als Nächstes: Lab-Netz als zweite Bridge auf pve01, dann ziehen die VMs aus Hyper-V um, DC01 zuerst.
+Der Umzug auf eigene Hardware ist abgeschlossen. Als Nächstes: Testclient in Hyper-V an das neue Lab-Netz anbinden, dann Gitea und Mailpit, eine eigene CA und die Firewall.
 
 Details: [Roadmap](docs/roadmap.md) · Eigene Hardware im 10-Zoll-Rack: [Hardware](docs/hardware.md) · Warum etwas so gebaut ist: [Entscheidungen](docs/entscheidungen.md) · Was wann dazukam: [Changelog](docs/changelog.md)
 
@@ -287,7 +290,7 @@ Details: [Roadmap](docs/roadmap.md) · Eigene Hardware im 10-Zoll-Rack: [Hardwar
 
 ```
 docs/
-  anleitung/          Schritt-für-Schritt-Anleitung, Kapitel 0–17
+  anleitung/          Schritt-für-Schritt-Anleitung, Kapitel 0–18
   bilder/             Screenshots und Fotos aus dem Lab
   diagramme/          Übersichtsgrafiken
   aufbau.md           Referenz des fertigen Labs
