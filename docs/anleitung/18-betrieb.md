@@ -48,6 +48,15 @@ Wie Agents für die Lab-VMs dazukommen (zweite Karte am Hub, Docker-, Binary- un
 
 HTTP auf `https://192.168.2.20:8006` bleibt rot (100 % Verlust), obwohl das Zertifikat angezeigt wird: Das selbstsignierte Proxmox-Zertifikat wird nicht akzeptiert. TCP auf Port 8006 reicht.
 
+**RAID als eigene Platte:** Beszel zeigt bei *Festplatte* nur das Systemlaufwerk (beim Pi die microSD). Das RAID kommt per `EXTRA_FILESYSTEMS` dazu ([Beszel-Doku](https://beszel.dev/guide/additional-disks)). Auf pi-nas den Kernel-Namen mit `lsblk -o NAME,KNAME,SIZE,TYPE,MOUNTPOINT` prüfen (`md0`), dann `sudo systemctl edit beszel-agent`:
+
+```
+[Service]
+Environment="EXTRA_FILESYSTEMS=md0__RAID"
+```
+
+`sudo systemctl restart beszel-agent`. Danach zeigt pi-nas *RAID Nutzung* und *RAID E/A*, und unter **S.M.A.R.T.** erscheint `/dev/md0` mit Status *PASSED*. `systemctl edit` legt eine eigene Override-Datei an, die ein Agent-Update nicht überschreibt. Auf pve01 genauso mit `/mnt/pve/backup__Backup` für den lokalen Backup-Speicher.
+
 > [!WARNING]
 > **Test URL meldet `Client.Timeout exceeded`?** Bei mir lag es nicht an ntfy, sondern am DNS des Containers. Tailscale auf pve01 stellt den Host-DNS auf `100.100.100.100` um, und Container mit *use host settings* übernehmen diese Adresse, die sie nicht erreichen. Lösung: **100 (beszel) → DNS → DNS server** fest auf den Router (`192.168.2.1`), dann **Reboot**. Prüfen mit `pct exec 100 -- cat /etc/resolv.conf`. Gleiches gilt für jeden anderen Container.
 
