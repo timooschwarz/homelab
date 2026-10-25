@@ -1,6 +1,8 @@
 # Changelog
 
 ## 2026-10-25
+- CM01 (MECM mit SQL) als VM 120 auf pve01 umgezogen, damit sind alle Server aus Hyper-V raus. Läuft nur bei Bedarf, Hinweise zum ersten Start in [Kapitel 17](anleitung/17-umzug-hyperv-proxmox.md#mecm-nach-dem-umzug)
+- Backup-Benachrichtigungen von Proxmox per ntfy (Notification Target Webhook + Matcher auf `type = vzdump`)
 - Beszel überwacht jetzt alle Lab-Server: TOOLS01 (Docker-Agent mit Container-Werten), LOG01 sowie DC01 und FS01 (Windows-Agent als Dienst): Hub mit zweiter Karte im Lab-Netz `vmbr1`, Anleitung in [Kapitel 15](anleitung/15-proxmox-host.md#vms-im-lab-netz-überwachen-nach-dem-umzug-kapitel-17)
 - Beszel-Alarme global für alle Systeme (Status, RAM, Disk, CPU, Temperatur)
 - Homepage (gethomepage.dev) als Startseite auf TOOLS01 (`http://10.0.0.50:3000`): Kacheln mit Ping-Status für alle Dienste, Proxmox-Widget mit Nur-Lese-API-Token (`homepage@pve`, Rolle PVEAuditor, Secret per `.env` statt in der YAML)

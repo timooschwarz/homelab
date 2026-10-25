@@ -13,6 +13,7 @@
 | DC01 | 110 | Windows Server 2025 | 2 Kerne / 2 GB | Intel E1000E |
 | FS01 | 140 | Windows Server 2025, zweite Platte E: | 2 Kerne / 2 GB | Intel E1000E |
 | TOOLS01 | 150 | Ubuntu 26.04 mit Docker | 4 Kerne / 6 GB | VirtIO |
+| CM01 | 120 | Windows Server 2025 mit MECM und SQL | 4 Kerne / 8 GB fest | Intel E1000E |
 | LOG01 | 170 | Ubuntu 26.04 mit Wazuh | 4 Kerne / 6 GB | VirtIO |
 | CLIENT01 | 900 | Windows 11 | 2 Kerne / 4 GB | Intel E1000E |
 
@@ -223,7 +224,15 @@ Für RDP und SSH ab jetzt einen Verbindungsmanager (z. B. Remote Desktop Manager
 
 ## RAM-Planung
 
-pve01 hat 32 GB. Dauerhaft laufen DC01, FS01, TOOLS01, LOG01, NetBox und Beszel mit zusammen gut 18 GB. CLIENT01 und die MECM-VM kommen nur zum Üben dazu. Wazuh mit 6 GB statt 8 GB reicht für eine Handvoll Agents, wenn der Heap angepasst ist.
+pve01 hat 32 GB. Dauerhaft laufen DC01, FS01 (je 4 GB mit Ballooning), TOOLS01, NetBox und Beszel, zusammen ca. 14 GB. **Nur bei Bedarf** (Options → *Start at boot: No*): CM01 (8 GB fest, SQL mag kein Ballooning) und LOG01. Die beiden sind auch aus den nächtlichen Backup-Jobs ausgenommen und werden nach größeren Änderungen von Hand gesichert (**Backup now**, als *Protected* markieren). Der Testclient läuft wieder in Hyper-V auf dem Arbeits-PC.
+
+**Startreihenfolge** (Options → *Start/Shutdown order*): DC01 = 1 mit 60 s Verzögerung, dann FS01, dann TOOLS01.
+
+## MECM nach dem Umzug
+
+- **Erster Start dauert:** SQL Server lag bei rund 70 % CPU, die Console hing minutenlang bei *Connecting to Site Database*. MECM holt nach längerer Pause Wartungsaufgaben nach. Nach ca. 30 Minuten war Ruhe. Bei einer Bedarfs-VM deshalb 10–15 Minuten vor dem Üben starten, und immer erst nach DC01.
+- **Prüfen:** `Get-Service MSSQLSERVER, SMS_EXECUTIVE, SMS_SITE_COMPONENT_MANAGER` (alle *Running*) und `Get-CimInstance -Namespace root\sms -ClassName SMS_ProviderLocation` (Site Code erscheint).
+- **„insufficient permissions to read information from the site database“:** Console mit *Als Administrator ausführen* starten, und das eigene Admin-Konto unter **Administration → Security → Administrative Users** als *Full Administrator* eintragen.
 
 ## Häufige Fehler
 

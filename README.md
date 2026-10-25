@@ -14,7 +14,7 @@
 ![Netzwerk des Labs](docs/diagramme/netzwerk-2026-10-22.png)
 
 > [!NOTE]
-> **Stand 24.10.2026:** DC01, FS01, TOOLS01, LOG01 und der Testclient sind aus Hyper-V auf den Mini-PC `pve01` mit Proxmox umgezogen ([Kapitel 17](docs/anleitung/17-umzug-hyperv-proxmox.md)). Das Pi-NAS sichert jede Nacht alle VMs und Container. Als Nächstes folgt der MECM-Server. Was wann dazukam: [Changelog](docs/changelog.md)
+> **Stand 25.10.2026:** Alle Server (DC01, FS01, TOOLS01, CM01, LOG01) sind aus Hyper-V auf den Mini-PC `pve01` mit Proxmox umgezogen ([Kapitel 17](docs/anleitung/17-umzug-hyperv-proxmox.md)). Das Pi-NAS sichert jede Nacht alle VMs und Container. Hyper-V auf dem Arbeits-PC bleibt nur noch für Testclients. Was wann dazukam: [Changelog](docs/changelog.md)
 
 ---
 
