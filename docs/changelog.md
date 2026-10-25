@@ -3,7 +3,7 @@
 ## 2026-10-25
 - Beszel überwacht jetzt alle Lab-Server: TOOLS01 (Docker-Agent mit Container-Werten), LOG01 sowie DC01 und FS01 (Windows-Agent als Dienst): Hub mit zweiter Karte im Lab-Netz `vmbr1`, Anleitung in [Kapitel 15](anleitung/15-proxmox-host.md#vms-im-lab-netz-überwachen-nach-dem-umzug-kapitel-17)
 - Beszel-Alarme global für alle Systeme (Status, RAM, Disk, CPU, Temperatur)
-- Netdata auf TOOLS01 abgeschaltet, Beszel übernimmt die Systemwerte
+- Netdata und Warpgate auf TOOLS01 abgeschaltet: Beszel übernimmt die Systemwerte, Zugriff läuft direkt per RDP/SSH über die Route zu pve01 bzw. Tailscale
 - Uptime Kuma aufgeräumt: Monitore für Netdata, Infisical und NETBOX01 entfernt, NetBox prüft jetzt den LXC unter `https://192.168.2.22` (TLS-Fehler ignorieren wegen selbstsigniertem Zertifikat), CLIENT01 und CM01 pausiert
 - DC01 und FS01 von 2 auf 4 GB RAM (Ballooning, min. 2 GB), weil Beszel zeigte, dass 2 GB nicht reichen
 - Temperaturen nach dem Umzug eingeordnet (CPU ca. 58 °C, VM-SSD-Controller ca. 66 °C)
