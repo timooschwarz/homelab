@@ -12,7 +12,7 @@
 |---|---|---|---|---|
 | DC01 | 110 | Windows Server 2025 | 2 Kerne / 2 GB | Intel E1000E |
 | FS01 | 140 | Windows Server 2025, zweite Platte E: | 2 Kerne / 2 GB | Intel E1000E |
-| TOOLS01 | 150 | Ubuntu 26.04 mit Docker | 4 Kerne / 6 GB | VirtIO |
+| TOOLS01 | 150 | Ubuntu 26.04 mit Docker | 4 Kerne / 6 GB (danach 3 GB) | VirtIO |
 | CM01 | 120 | Windows Server 2025 mit MECM und SQL | 4 Kerne / 8 GB fest | Intel E1000E |
 | LOG01 | 170 | Ubuntu 26.04 mit Wazuh | 4 Kerne / 6 GB | VirtIO |
 | CLIENT01 | 900 | Windows 11 | 2 Kerne / 4 GB | Intel E1000E |
@@ -239,7 +239,7 @@ Gibt es beim Booten **INACCESSIBLE_BOOT_DEVICE**, war der Treiber noch nicht akt
 
 ## RAM-Planung
 
-pve01 hat 32 GB. Dauerhaft laufen DC01, FS01 (je 4 GB mit Ballooning), TOOLS01, NetBox und Beszel, zusammen ca. 14 GB. **Nur bei Bedarf** (Options → *Start at boot: No*): CM01 (8 GB fest, SQL mag kein Ballooning) und LOG01. Die beiden sind auch aus den nächtlichen Backup-Jobs ausgenommen und werden nach größeren Änderungen von Hand gesichert (**Backup now**, als *Protected* markieren). Der Testclient läuft wieder in Hyper-V auf dem Arbeits-PC.
+pve01 hat 32 GB. Dauerhaft laufen DC01, FS01 (je 4 GB mit Ballooning), TOOLS01 (3 GB, die Container brauchen unter 1 GB), NetBox und Beszel, zusammen ca. 11 GB. **Nur bei Bedarf** (Options → *Start at boot: No*): CM01 (8 GB fest, SQL mag kein Ballooning) und LOG01. Die beiden sind auch aus den nächtlichen Backup-Jobs ausgenommen und werden nach größeren Änderungen von Hand gesichert (**Backup now**, als *Protected* markieren). Der Testclient läuft wieder in Hyper-V auf dem Arbeits-PC.
 
 **Startreihenfolge** (Options → *Start/Shutdown order*): DC01 = 1 mit 60 s Verzögerung, dann FS01, dann TOOLS01.
 
