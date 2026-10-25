@@ -8,6 +8,7 @@
 - Uptime Kuma aufgeräumt: Monitore für Netdata, Infisical und NETBOX01 entfernt, NetBox prüft jetzt den LXC unter `https://192.168.2.22` (TLS-Fehler ignorieren wegen selbstsigniertem Zertifikat), CLIENT01 und CM01 pausiert
 - DC01 und FS01 von 2 auf 4 GB RAM (Ballooning, min. 2 GB), weil Beszel zeigte, dass 2 GB nicht reichen
 - Temperaturen nach dem Umzug eingeordnet (CPU ca. 58 °C, VM-SSD-Controller ca. 66 °C)
+- Pi-NAS: omv-extras und Compose-Plugin (Docker), Pi-hole als Container (Weboberfläche Port 8080, DNS nur an die LAN-IP gebunden, weil `systemd-resolved` auf `127.0.0.53:53` lauscht)
 - Updates: pve01 (libbrotli1) und Pi-NAS (rpi-eeprom, Bootloader), RAID danach weiter clean
 
 ## 2026-10-24
