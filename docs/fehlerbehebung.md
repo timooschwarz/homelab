@@ -239,6 +239,7 @@ Fehler, die beim Aufbau aufgetreten sind, jeweils mit Ursache und Lösung.
 - **Symptom:** In der VM klappt `ping dc01.lab.test`, vom Arbeits-PC aus `Test-NetConnection … -Port 3389` aber nicht.
 - **Ursache:** Beim Eintragen der festen IP an der neuen Karte wurde das **Standardgateway** vergessen. Die VM erreicht das Lab-Netz, kann aber nicht ins Heimnetz antworten.
 - **Lösung:** Gateway `10.0.0.1` nachtragen.
+- **Gelernt:** Passierte bei FS01 und CM01 gleich. Nach dem Speichern der festen IP (vor allem nach der Frage, ob die alte Konfiguration des verschwundenen Adapters entfernt werden soll) das Gateway in `ipconfig` kontrollieren. Schneller Test: Ping von pve01 geht, vom Arbeits-PC nicht.
 
 ### Name zeigt auf die alte IP
 - **Symptom:** `ping client01.lab.test` vom Arbeits-PC geht an die alte Adresse, pve01 antwortet *Zielhost nicht erreichbar*.

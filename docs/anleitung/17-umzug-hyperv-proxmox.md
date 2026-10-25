@@ -153,6 +153,9 @@ Gigabit schafft etwa 100 MB/s, eine 44-GB-Platte dauert also rund 7 Minuten.
    | DNS | `127.0.0.1` | `10.0.0.10` |
 
    Meldet Windows, dass die IP schon einem anderen Adapter gehört: **Ja**, alte Konfiguration entfernen.
+
+   > [!WARNING]
+   > Danach mit `ipconfig` prüfen, ob das **Standardgateway** wirklich drinsteht. Bei mir fehlte es bei FS01 und CM01. Ohne Gateway antwortet der Server nur im Lab-Netz, RDP vom Arbeits-PC geht nicht.
 5. **Prüfen DC01:** `ping 1.1.1.1` (Internet über NAT von vmbr1), `dcdiag /q`. Direkt nach dem Umzug meldet `SystemLog` noch Fehler vom ersten Start, das ist normal. Im DHCP-Manager unter **IPv4 → Eigenschaften → Erweitert → Bindungen** muss die neue Verbindung mit `10.0.0.10` angehakt sein.
 6. **Prüfen FS01:** Laufwerk **E:** da, `fsmgmt.msc` zeigt die Freigabe `Abteilungen`, `nltest /sc_verify:lab.test` endet mit `NERR_Success`.
 7. **Proxmox → Summary:** Bei *IPs* steht die Adresse, der Guest Agent läuft also.
