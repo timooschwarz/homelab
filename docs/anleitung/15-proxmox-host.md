@@ -218,6 +218,8 @@ Der Beszel-Container hängt im Heimnetz, die Lab-VMs liegen hinter dem NAT von `
 
 Mit fünf VMs auf pve01 liegen die Werte natürlich höher als im Leerlauf oben: bei mir RAM knapp 70 %, CPU (`k10temp_tctl`) im Schnitt ca. 58 °C, der Controller-Sensor der VM-SSD (`nvme_sensor_2`) um 66 °C mit Spitzen bis knapp 80 °C. Die Übersicht in Beszel zeigt immer den **heißesten** Sensor, für die Bewertung lohnt der Blick in den Verlauf.
 
+**Alarme für alle Systeme auf einmal:** Bei einem beliebigen System auf die **Glocke** → Reiter **Alle Systeme**. Bei mir: Status an, Arbeitsspeicher über 90 % für 10 Minuten, Festplatte über 85 %, CPU über 90 % für 15 Minuten, Temperatur über 85 °C (greift nur bei Geräten mit Sensoren). Systemlast bewusst ohne Alarm, die schlägt bei Windows-Servern ständig an. Achtung: Die globale Einstellung überschreibt vorher gesetzte Alarme einzelner Systeme.
+
 Beszel deckt nebenbei Fehlplanungen auf: DC01 und FS01 brauchten mit Oberfläche, AD bzw. Dateidienst und Agent schon über 2 GB (FS01 stand im Task-Manager bei 90 %). Beide haben jetzt **4096 MB mit Ballooning, Minimum 2048 MB** (**Hardware → Memory → Advanced**). Die Änderung greift erst nach **Shutdown → Start** in Proxmox, ein Neustart in Windows reicht nicht. Die *Systemlast* ist unter Windows weniger aussagekräftig als unter Linux, dort lieber auf die CPU-Prozent schauen.
 
 ## Schritt 7 · Zugriff von unterwegs mit Tailscale (Shell, Browser, Handy)

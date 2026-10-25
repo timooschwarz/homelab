@@ -2,6 +2,7 @@
 
 ## 2026-10-25
 - Beszel überwacht jetzt alle Lab-Server: TOOLS01 (Docker-Agent mit Container-Werten), LOG01 sowie DC01 und FS01 (Windows-Agent als Dienst): Hub mit zweiter Karte im Lab-Netz `vmbr1`, Anleitung in [Kapitel 15](anleitung/15-proxmox-host.md#vms-im-lab-netz-überwachen-nach-dem-umzug-kapitel-17)
+- Beszel-Alarme global für alle Systeme (Status, RAM, Disk, CPU, Temperatur)
 - DC01 und FS01 von 2 auf 4 GB RAM (Ballooning, min. 2 GB), weil Beszel zeigte, dass 2 GB nicht reichen
 - Temperaturen nach dem Umzug eingeordnet (CPU ca. 58 °C, VM-SSD-Controller ca. 66 °C)
 - Updates: pve01 (libbrotli1) und Pi-NAS (rpi-eeprom, Bootloader), RAID danach weiter clean
