@@ -1,5 +1,8 @@
 # Changelog
 
+## 2026-10-25 (später Abend)
+- CM01 auf VirtIO (SCSI-Platte und Netzwerk) und 6 Kerne umgestellt, Anleitung in [Kapitel 17](anleitung/17-umzug-hyperv-proxmox.md#windows-nachträglich-auf-virtio-umstellen), dazu ein neuer Fall in der [Fehlerbehebung](fehlerbehebung.md#systemplatte-nach-dem-umstellen-auf-virtio-verschwunden)
+
 ## 2026-10-25 (abends)
 - Neues [Kapitel 18 · Betrieb](anleitung/18-betrieb.md): Alarme und Backup-Berichte per ntfy, zweites Uptime Kuma und Pi-hole auf dem Pi, Homepage mit Proxmox-Widget, Namen über den Proxy, Tailscale als Notzugang, Checkliste für Updates und Restore-Tests
 - Neue Grafiken: [Netzwerk Stand 25.10.](diagramme/netzwerk-2026-10-25.png) und Startreihenfolge auf pve01

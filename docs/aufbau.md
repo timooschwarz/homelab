@@ -26,7 +26,7 @@
 | VM | ID | IP | OS | Aufgabe | Betrieb |
 |---|---|---|---|---|---|
 | DC01 | 110 | 10.0.0.10 | Windows Server 2025 | AD DS, DNS, DHCP, PDC-Emulator / Zeitquelle | immer an, startet zuerst |
-| CM01 | 120 | 10.0.0.20 | Windows Server 2025 | MECM (Site `LAB`), SQL Server, 8 GB fest | bei Bedarf |
+| CM01 | 120 | 10.0.0.20 | Windows Server 2025 | MECM (Site `LAB`), SQL Server, 6 Kerne, 8 GB fest, VirtIO | bei Bedarf |
 | FS01 | 140 | 10.0.0.40 | Windows Server 2025 | Dateiserver, Datenplatte E: | immer an |
 | TOOLS01 | 150 | 10.0.0.50 | Ubuntu Server | Docker-Dienste (unten) | immer an |
 | LOG01 | 170 | 10.0.0.70 | Ubuntu Server | Wazuh 4.14 (SIEM) | bei Bedarf |

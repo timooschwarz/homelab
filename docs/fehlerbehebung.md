@@ -283,6 +283,10 @@ Fehler, die beim Aufbau aufgetreten sind, jeweils mit Ursache und Lösung.
 - **Ursache:** Die Konsole läuft im Browser, Strg+W schließt den Tab, statt in nano zu suchen.
 - **Lösung:** „Auf Seite bleiben“, mit den Pfeiltasten navigieren. Strg+O und Strg+X funktionieren.
 
+### Systemplatte nach dem Umstellen auf VirtIO verschwunden
+- **Ursache:** Die Platte wurde bei laufender VM abgehängt. Proxmox merkt sich das nur als „pending“ (orange durchgestrichen); beim anschließenden Hin und Her wurde das Volume gelöscht. `lvs | grep vm-120` zeigte nur noch EFI- und Hilfsplatte, `qm rescan --vmid 120` fand nichts.
+- **Lösung:** Die Original-`.vhdx` neu importieren (`qm disk import 120 /mnt/pve/backup/import/CM01.vhdx vmdata`), erst als SATA starten, Treiber prüfen, dann umstellen wie in [Kapitel 17](anleitung/17-umzug-hyperv-proxmox.md#windows-nachträglich-auf-virtio-umstellen). Merke: Import-Dateien erst löschen, wenn ein Proxmox-Backup existiert, und Hardware nur bei ausgeschalteter VM umbauen.
+
 ## Linux und Docker
 
 ### NetBox nach Neustart offline

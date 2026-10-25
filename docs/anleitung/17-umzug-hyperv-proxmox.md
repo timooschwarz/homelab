@@ -222,6 +222,21 @@ Für RDP und SSH ab jetzt einen Verbindungsmanager (z. B. Remote Desktop Manager
 | NetBox | Cluster der VMs von Hyper-V auf pve01, vCPUs nachtragen |
 | Backup-Jobs | der Testclient ist bei mir ausgeschlossen (**Selection Mode → Exclude selected VMs**) |
 
+## Windows nachträglich auf VirtIO umstellen
+
+SATA und E1000E sind für den ersten Start bequem, aber langsam. Bei CM01 (SQL + MECM) war das deutlich zu spüren. Umstellen geht in einer Viertelstunde, aber **nur bei ausgeschalteter VM** und **nach einem Backup**.
+
+> [!CAUTION]
+> Wer Platten bei laufender VM abhängt, bekommt nur eine orange durchgestrichene „pending“-Änderung. Wird dann weitergeklickt (Revert, Remove …), ist die Systemplatte schnell gelöscht. Mir ist genau das bei CM01 passiert, gerettet hat mich die `.vhdx` unter `/mnt/pve/backup/import/`. Erst herunterfahren, dann umbauen.
+
+1. **Treiber vorbereiten:** **Hardware → Add → Hard Disk**, Bus **SCSI**, 1 GB (Controller **VirtIO SCSI single**). Netzwerkkarte auf Model **VirtIO** ändern. VM starten, `virtio-win-guest-tools.exe` ausführen. Im Geräte-Manager muss unter *Disk drives* ein **QEMU HARDDISK SCSI Disk Device** stehen, dann lädt Windows den SCSI-Treiber beim Booten. Herunterfahren.
+2. **Systemplatte umhängen:** `sata0` → **Detach** → die Unused Disk (die große!) doppelklicken → Bus **SCSI**, Discard, SSD emulation, IO thread → **Add**.
+3. **Hilfsplatte weg:** `scsi0` (1 GB) → Detach → nur die Unused Disk mit **1 GB** → **Remove**.
+4. **Options → Boot Order:** die Systemplatte anhaken und nach oben.
+5. Starten, IP/Gateway/DNS auf dem neuen **Red Hat VirtIO Ethernet Adapter** eintragen, mit `ipconfig /all` das Gateway kontrollieren.
+
+Gibt es beim Booten **INACCESSIBLE_BOOT_DEVICE**, war der Treiber noch nicht aktiv: Platte zurück auf SATA, Schritt 1 wiederholen.
+
 ## RAM-Planung
 
 pve01 hat 32 GB. Dauerhaft laufen DC01, FS01 (je 4 GB mit Ballooning), TOOLS01, NetBox und Beszel, zusammen ca. 14 GB. **Nur bei Bedarf** (Options → *Start at boot: No*): CM01 (8 GB fest, SQL mag kein Ballooning) und LOG01. Die beiden sind auch aus den nächtlichen Backup-Jobs ausgenommen und werden nach größeren Änderungen von Hand gesichert (**Backup now**, als *Protected* markieren). Der Testclient läuft wieder in Hyper-V auf dem Arbeits-PC.
