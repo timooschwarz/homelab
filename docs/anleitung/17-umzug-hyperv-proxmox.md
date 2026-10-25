@@ -52,6 +52,9 @@ Windows und Linux unterscheiden sich nur im letzten Schritt. Linux braucht vor d
    ```
 
    Die beiden Befehle **einzeln** ausführen, sonst verschluckt PowerShell die zweite Tabelle.
+
+   ![Bestandsaufnahme: welche .vhdx zu welcher VM gehört](../bilder/umzug-bestandsaufnahme.png)
+
 2. **Generation 2** heißt in Proxmox **BIOS: OVMF (UEFI)**, Generation 1 heißt SeaBIOS.
 3. Herunterfahren in der Reihenfolge **TOOLS01 → FS01 → DC01**, DC01 zuletzt.
 4. **Prüfpunkte zusammenführen:** Bei jeder VM im Bereich *Prüfpunkte* den obersten Eintrag rechtsklicken → **Prüfpunktunterstruktur löschen** und warten, bis die VM wieder nur **Aus** zeigt.
@@ -64,6 +67,8 @@ Windows und Linux unterscheiden sich nur im letzten Schritt. Linux braucht vor d
 ## Schritt 3 · Nur Linux: Treiber für Proxmox nachrüsten (Hyper-V-Konsole)
 
 Ubuntu baut seine Startumgebung (initramfs) standardmäßig nur mit den Treibern, die es gerade braucht, also mit den Hyper-V-Treibern. Auf Proxmox findet der Kernel dann seine eigene Platte nicht und bleibt mit `A start job is running for /dev/disk/by-uuid/…` hängen, nach ein paar Minuten im **Emergency Mode**.
+
+![So sieht es aus, wenn die Treiber fehlen: dracut wartet auf die Platte und landet im Emergency Mode](../bilder/umzug-emergency-mode.png)
 
 Deshalb **vor** dem Kopieren in Hyper-V starten, anmelden und:
 
@@ -81,6 +86,9 @@ Deshalb **vor** dem Kopieren in Hyper-V starten, anmelden und:
    ```
 
    Speichern mit **Strg+O → Enter → Strg+X**.
+
+   ![Die fertige dracut-Datei in der Hyper-V-Konsole](../bilder/umzug-dracut-konfig.png)
+
 2. Startumgebung für den laufenden Kernel neu bauen:
 
    ```
@@ -133,7 +141,13 @@ Gigabit schafft etwa 100 MB/s, eine 44-GB-Platte dauert also rund 7 Minuten.
    ```
 
    Am Ende steht `Successfully imported disk as 'unused0:…'`. Die angezeigte Größe ist die **maximale** Größe der dynamischen VHDX (Hyper-V-Standard: 127 GB). Belegt wird auf `vmdata` (LVM-Thin) nur, was wirklich Daten enthält.
+
+   ![qm disk import zeigt den Fortschritt, 127 GiB ist die Maximalgröße der dynamischen VHDX](../bilder/umzug-qm-disk-import.png)
+
 2. VM → **Hardware → Unused Disk 0** doppelklicken → Bus **SATA**, Nummer **0**, **Discard** und **SSD emulation** an → **Add**.
+
+   ![Unused Disk als SATA 0 einbinden (Discard und SSD emulation noch anhaken)](../bilder/umzug-unused-disk-sata.png)
+
 3. Bei zwei Platten (FS01) zählt die Reihenfolge der Imports: `disk-1` = System → **SATA 0**, `disk-2` = Daten → **SATA 1**. Sicher geht's unter **vmdata → VM Disks** anhand der Größe.
 4. **Options → Boot Order:** bei **sata0** den Haken in der Spalte *Enabled* setzen, nach oben ziehen. `net0` abhaken.
 5. Nur Windows: **Hardware → CD/DVD Drive (ide2)** → **Use CD/DVD disc image file**, ISO **virtio-win.iso**.
@@ -158,6 +172,9 @@ Gigabit schafft etwa 100 MB/s, eine 44-GB-Platte dauert also rund 7 Minuten.
    > [!WARNING]
    > Danach mit `ipconfig` prüfen, ob das **Standardgateway** wirklich drinsteht. Bei mir fehlte es bei FS01 und CM01. Ohne Gateway antwortet der Server nur im Lab-Netz, RDP vom Arbeits-PC geht nicht.
 5. **Prüfen DC01:** `ping 1.1.1.1` (Internet über NAT von vmbr1), `dcdiag /q`. Direkt nach dem Umzug meldet `SystemLog` noch Fehler vom ersten Start, das ist normal. Im DHCP-Manager unter **IPv4 → Eigenschaften → Erweitert → Bindungen** muss die neue Verbindung mit `10.0.0.10` angehakt sein.
+
+   ![DHCP auf DC01: die neue Netzwerkkarte muss in den Bindungen angehakt sein](../bilder/umzug-dhcp-bindungen.png)
+
 6. **Prüfen FS01:** Laufwerk **E:** da, `fsmgmt.msc` zeigt die Freigabe `Abteilungen`, `nltest /sc_verify:lab.test` endet mit `NERR_Success`.
 7. **Proxmox → Summary:** Bei *IPs* steht die Adresse, der Guest Agent läuft also.
 
@@ -171,6 +188,9 @@ Gigabit schafft etwa 100 MB/s, eine 44-GB-Platte dauert also rund 7 Minuten.
    ```
 
    Nur die Zeile `macaddress:` auf die neue MAC ändern, alles andere bleibt. Durch `set-name: eth0` heißt die Karte danach wieder `eth0` wie unter Hyper-V.
+
+   ![Netplan auf LOG01: nur macaddress ändern](../bilder/umzug-netplan-mac.png)
+
 
    ```
    sudo netplan apply
@@ -230,6 +250,9 @@ SATA und E1000E sind für den ersten Start bequem, aber langsam. Bei CM01 (SQL +
 > Wer Platten bei laufender VM abhängt, bekommt nur eine orange durchgestrichene „pending“-Änderung. Wird dann weitergeklickt (Revert, Remove …), ist die Systemplatte schnell gelöscht. Mir ist genau das bei CM01 passiert, gerettet hat mich die `.vhdx` unter `/mnt/pve/backup/import/`. Erst herunterfahren, dann umbauen.
 
 1. **Treiber vorbereiten:** **Hardware → Add → Hard Disk**, Bus **SCSI**, 1 GB (Controller **VirtIO SCSI single**). Netzwerkkarte auf Model **VirtIO** ändern. VM starten, `virtio-win-guest-tools.exe` ausführen. Im Geräte-Manager muss unter *Disk drives* ein **QEMU HARDDISK SCSI Disk Device** stehen, dann lädt Windows den SCSI-Treiber beim Booten. Herunterfahren.
+
+   ![CM01 bootet noch von SATA (QEMU HARDDISK), die 1-GB-Hilfsplatte erscheint als SCSI Disk Device: der Treiber ist aktiv](../bilder/virtio-geraetemanager.png)
+
 2. **Systemplatte umhängen:** `sata0` → **Detach** → die Unused Disk (die große!) doppelklicken → Bus **SCSI**, Discard, SSD emulation, IO thread → **Add**.
 3. **Hilfsplatte weg:** `scsi0` (1 GB) → Detach → nur die Unused Disk mit **1 GB** → **Remove**.
 4. **Options → Boot Order:** die Systemplatte anhaken und nach oben.

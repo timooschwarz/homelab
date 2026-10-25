@@ -33,6 +33,10 @@ Wie Agents für die Lab-VMs dazukommen (zweite Karte am Hub, Docker-, Binary- un
 2. **Alarme für alle auf einmal:** Glocke bei einem beliebigen System → Reiter **Alle Systeme**: Status an, Arbeitsspeicher > 90 % für 10 Minuten, Festplatte > 85 %, CPU > 90 % für 15 Minuten, Temperatur > 85 °C. Systemlast ohne Alarm, die schlägt bei Windows ständig an.
 3. **Bedarfs-VMs pausieren:** Ist eine VM bewusst aus (CM01, LOG01), bei ihr **⋯ → Pause**, sonst kommt ein „down“-Alarm.
 
+![Beszel: alle Lab-Server, pi-nas und pve01 in einer Liste](../bilder/betrieb-beszel-alle-systeme.png)
+
+![Beszel: Push-Benachrichtigung per ntfy (Adresse und Thema unkenntlich gemacht)](../bilder/betrieb-beszel-ntfy.png)
+
 > [!WARNING]
 > **Test URL meldet `Client.Timeout exceeded`?** Bei mir lag es nicht an ntfy, sondern am DNS des Containers. Tailscale auf pve01 stellt den Host-DNS auf `100.100.100.100` um, und Container mit *use host settings* übernehmen diese Adresse, die sie nicht erreichen. Lösung: **100 (beszel) → DNS → DNS server** fest auf den Router (`192.168.2.1`), dann **Reboot**. Prüfen mit `pct exec 100 -- cat /etc/resolv.conf`. Gleiches gilt für jeden anderen Container.
 
@@ -55,6 +59,17 @@ Proxmox schreibt nach jedem Backup-Job einen Bericht mit OK/Fehler, Dauer und Gr
 Den vollständigen Bericht zeigt **Tasks → Backup Job** (Doppelklick). Der Button **Show: Guests Without Backup Job** zeigt, was von keinem Job erfasst wird.
 
 **Bedarfs-VMs** (CM01 mit 78 GB, LOG01) sind bei mir aus beiden Jobs ausgenommen (**Selection Mode → Exclude selected VMs**), weil sie meist aus sind und sich nicht ändern. Nach größeren Änderungen: VM herunterfahren → **Backup → Backup now** auf `nas`, Mode *Stop*, danach das Backup unter **Edit Notes / Change Protection** auf *Protected*, damit die Aufbewahrung es nie löscht.
+
+![Backups auf dem Pi-NAS: nächtliche Jobs plus manuelles, geschütztes CM01-Backup (Schild-Symbol)](../bilder/betrieb-proxmox-backups-nas.png)
+
+**Restore-Test** (dauert ca. 15 Minuten, ohne das Original zu stören):
+
+1. **nas (pve01) → Backups** → Backup markieren → **Restore** → Storage `vmdata`, VM-ID **999**, **Unique** an (neue MAC), *Start after restore* aus.
+2. **999 → Hardware → Network Device → Disconnect** an, sonst streitet sich die Kopie mit dem Original um die IP. **Options → Start at boot** auf *No*, das wird aus dem Original übernommen.
+3. Starten, über die Konsole anmelden, prüfen (`docker ps -a`, Dateien da?).
+4. **Shutdown → More → Remove** mit *Purge from job configurations* und *Destroy unreferenced disks*.
+
+Erst nach einem erfolgreichen Restore-Test die alten Hyper-V-VMs und `.vhdx`-Dateien löschen.
 
 ## Schritt 3 · Zweites Uptime Kuma auf dem Pi (OpenMediaVault)
 
@@ -105,6 +120,8 @@ Docker auf dem Pi läuft über das Compose-Plugin von OpenMediaVault:
    Vorher mit `ls /etc/netplan` prüfen, dass dort die Dateien von OMV liegen.
 7. Monitore nur für das Wichtigste: **pve01** (Ping `192.168.2.20`), **DC01** (Ping `10.0.0.10`), **Uptime Kuma auf TOOLS01** (HTTP `http://10.0.0.50:3001`). Typ *Ping* will nur eine IP, für URLs *HTTP(s)* wählen.
 8. **Settings → Notifications → Setup Notification:** ntfy, Server `https://ntfy.sh`, Topic, Priority 3, DOWN-Events 5, **Default enabled** und **Apply on all existing monitors** an → **Test**. Dasselbe im Uptime Kuma auf TOOLS01.
+
+![Uptime Kuma: Ping-Monitor auf DC01](../bilder/betrieb-uptime-kuma-dc01.png)
 
 ## Schritt 4 · Startseite mit Homepage (TOOLS01)
 
@@ -158,6 +175,8 @@ Beim ersten `docker compose up -d` legt Homepage Beispieldateien in `config/` an
 
 YAML verzeiht keine falsche Einrückung. Meldet Homepage `Failed to load services.yaml` mit Zeilennummer, die Datei lieber komplett neu einfügen als Leerzeichen zu zählen. **Tipp fürs Handy:** Seite in Safari öffnen → *Teilen → Zum Home-Bildschirm*.
 
+![Homepage auf home.lab.test mit Proxmox-Widget (VMs, LXC, CPU, RAM)](../bilder/betrieb-homepage.png)
+
 ## Schritt 5 · Namen statt IP und Port (Nginx Proxy Manager, DC01)
 
 | Name | Ziel | Hinweis |
@@ -203,6 +222,8 @@ services:
 ```
 
 Port 53 nur an die LAN-Adresse binden: Auf dem Pi mit OpenMediaVault lauscht `systemd-resolved` schon auf `127.0.0.53:53`, mit `"53:53"` startet der Container mit *address already in use*. Port 8080, weil 80 und 443 die OMV-Oberfläche belegt. Weboberfläche: `http://192.168.2.234:8080/admin`.
+
+![Pi-hole direkt nach der Installation, noch ohne Clients](../bilder/betrieb-pihole.png)
 
 **Erst einzelne Geräte, dann das ganze Haus.** Am PC DNS manuell auf `192.168.2.234` (und IPv6 aus, sonst fragt Windows am Pi-hole vorbei), am iPhone unter *WLAN → (i) → DNS konfigurieren → Manuell* (Privat-Relay und rotierende WLAN-Adresse aus). Fürs ganze Haus müsste beim Speedport Smart der DHCP-Server aus und Pi-hole ihn übernehmen, weil der Speedport keinen eigenen DNS-Server verteilen kann. Dann hängt das Internet aller im Haus am Pi, also nur nach Absprache und einer stabilen Testphase.
 
