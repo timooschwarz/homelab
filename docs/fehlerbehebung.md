@@ -206,6 +206,12 @@ Fehler, die beim Aufbau aufgetreten sind, jeweils mit Ursache und Lösung.
 - **Ursache:** AltGr wird im Konsolenfenster nicht durchgereicht, *Zwischenablage → Text eingeben* half auch nicht.
 - **Lösung:** Im Proxmox-Installer kurz das Tastaturlayout **U.S. English** wählen (`@` = Shift + 2). Kennwort nur aus Buchstaben ohne y/z und Ziffern, dann ist das Layout egal. Später im Webinterface ändern.
 
+### LXC-Container kann keine Namen auflösen, seit Tailscale auf dem Host läuft
+- **Symptom:** Beszel meldet beim Test der ntfy-URL `Client.Timeout exceeded`, im Container `curl: (6) Could not resolve host`. Ping auf `192.168.2.1` geht.
+- **Ursache:** Tailscale stellt den DNS des Proxmox-Hosts auf MagicDNS (`100.100.100.100`) um. Container mit *DNS server: use host settings* übernehmen diese Adresse, erreichen sie aber nicht. Die Alarme sind seitdem nie angekommen.
+- **Lösung:** Im Container **DNS → DNS server** fest auf `192.168.2.1`, danach **Reboot** (orange heißt: noch nicht aktiv). Bei allen Containern prüfen: `pct exec <ID> -- cat /etc/resolv.conf`.
+- **Gelernt:** Benachrichtigungen nach dem Einrichten immer mit **Test** prüfen.
+
 ## Umzug Hyper-V → Proxmox
 
 ### Linux-VM bleibt beim Start hängen, danach Emergency Mode
