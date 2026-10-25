@@ -123,6 +123,31 @@ Docker auf dem Pi läuft über das Compose-Plugin von OpenMediaVault:
 
 ![Uptime Kuma: Ping-Monitor auf DC01](../bilder/betrieb-uptime-kuma-dc01.png)
 
+**RAID-Wächter:** Beszel sieht CPU, RAM und Temperatur des Pi, aber nicht, ob das RAID *degraded* ist. Fällt eine SSD aus, läuft RAID 5 still weiter, bis die zweite auch stirbt. Ein kleines Skript meldet jede Zustandsänderung von `md0` per ntfy (nur bei Änderung, kein Dauer-Spam):
+
+```bash
+# /usr/local/bin/raid-check.sh  (chmod 700)
+#!/bin/bash
+TOPIC="https://ntfy.sh/<thema>"
+STATE_FILE=/var/tmp/raid-state
+DETAIL=$(mdadm --detail /dev/md0 2>/dev/null)
+NOW=$(echo "$DETAIL" | awk -F' : ' '/^ *State :/ {print $2}')
+FAILED=$(echo "$DETAIL" | awk -F' : ' '/Failed Devices/ {print $2}')
+[ -z "$NOW" ] && NOW="md0 nicht gefunden"
+OLD=$(cat "$STATE_FILE" 2>/dev/null)
+if [ "$NOW" != "$OLD" ]; then
+  echo "$NOW" > "$STATE_FILE"
+  if echo "$NOW" | grep -qiE "degraded|fail|inactive|nicht gefunden" || [ "${FAILED:-0}" != "0" ]; then
+    curl -s -H "Title: RAID pi-nas: $NOW" -H "Priority: high" -H "Tags: warning" \
+      -d "md0: $NOW, Failed Devices: ${FAILED:-?}. OMV -> Storage -> Multiple Device pruefen." "$TOPIC" >/dev/null
+  elif [ -n "$OLD" ]; then
+    curl -s -H "Title: RAID pi-nas: $NOW" -H "Tags: white_check_mark" -d "md0 meldet: $NOW" "$TOPIC" >/dev/null
+  fi
+fi
+```
+
+Die `#!/bin/bash`-Zeile muss in der Datei ganz oben stehen, der Kommentar darüber ist nur zur Orientierung. Test: Skript einmal starten (merkt sich den Zustand), dann `echo test | sudo tee /var/tmp/raid-state` und nochmal starten, jetzt muss „RAID pi-nas: clean“ aufs Handy kommen. Automatisch: OMV **System → Scheduled Tasks → Create**, alle 15 Minuten, User `root`, Command `/usr/local/bin/raid-check.sh` → **Save → Apply**. Nicht per `crontab -e`, OMV verwaltet die Cron-Dateien selbst.
+
 ## Schritt 4 · Startseite mit Homepage (TOOLS01)
 
 [Homepage](https://gethomepage.dev) zeigt alle Dienste als Kacheln mit Erreichbarkeit und Live-Werten.
@@ -224,6 +249,8 @@ services:
 Port 53 nur an die LAN-Adresse binden: Auf dem Pi mit OpenMediaVault lauscht `systemd-resolved` schon auf `127.0.0.53:53`, mit `"53:53"` startet der Container mit *address already in use*. Port 8080, weil 80 und 443 die OMV-Oberfläche belegt. Weboberfläche: `http://192.168.2.234:8080/admin`.
 
 ![Pi-hole direkt nach der Installation, noch ohne Clients](../bilder/betrieb-pihole.png)
+
+**Überwachen:** Ist der Pi grün, heißt das noch nicht, dass Pi-hole antwortet. Im Uptime Kuma auf TOOLS01 einen Monitor Typ **DNS** anlegen: Hostname `google.com`, Resolver `192.168.2.234`, Port 53, Record `A`. Fällt Pi-hole aus, kommen PC und Handy nicht mehr ins Internet, deshalb lohnt sich der Alarm.
 
 **Erst einzelne Geräte, dann das ganze Haus.** Am PC DNS manuell auf `192.168.2.234` (und IPv6 aus, sonst fragt Windows am Pi-hole vorbei), am iPhone unter *WLAN → (i) → DNS konfigurieren → Manuell* (Privat-Relay und rotierende WLAN-Adresse aus). Fürs ganze Haus müsste beim Speedport Smart der DHCP-Server aus und Pi-hole ihn übernehmen, weil der Speedport keinen eigenen DNS-Server verteilen kann. Dann hängt das Internet aller im Haus am Pi, also nur nach Absprache und einer stabilen Testphase.
 

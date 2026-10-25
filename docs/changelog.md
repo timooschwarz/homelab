@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-10-25 (später Abend)
+- Kapitel 18: RAID-Wächter für das Pi-NAS (ntfy bei *degraded*) und DNS-Monitor für Pi-hole
 - 14 Screenshots in [Kapitel 17](anleitung/17-umzug-hyperv-proxmox.md) und [Kapitel 18](anleitung/18-betrieb.md) (Emergency Mode, dracut, Import, Netplan, VirtIO, Beszel, Uptime Kuma, Homepage, Pi-hole, Backups), persönliche Daten unkenntlich gemacht; Restore-Test als Anleitung in Kapitel 18
 - CM01 auf VirtIO (SCSI-Platte und Netzwerk) und 6 Kerne umgestellt, Anleitung in [Kapitel 17](anleitung/17-umzug-hyperv-proxmox.md#windows-nachträglich-auf-virtio-umstellen), dazu ein neuer Fall in der [Fehlerbehebung](fehlerbehebung.md#systemplatte-nach-dem-umstellen-auf-virtio-verschwunden)
 
