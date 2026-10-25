@@ -201,6 +201,20 @@ Nach der ersten Nacht lohnt ein Blick in die Verlaufsgrafiken (auf `pve01` klick
 | CPU-Temperatur (`k10temp_tctl`) | ca. 36 °C | Kritisch erst ab ca. 90 °C |
 | NVMe-Temperaturen | 37–42 °C | Kritisch erst ab ca. 70 °C |
 
+### VMs im Lab-Netz überwachen (nach dem Umzug, [Kapitel 17](17-umzug-hyperv-proxmox.md))
+
+Der Beszel-Container hängt im Heimnetz, die Lab-VMs liegen hinter dem NAT von `vmbr1`. Damit der Hub die Agents dort erreicht, bekommt er eine zweite Karte:
+
+1. **100 (beszel) → Network → Add:** Name `eth1`, Bridge **vmbr1**, IPv4 static `10.0.0.21/24`, **Gateway leer lassen**. Das Standard-Gateway bleibt eth0 (Heimnetz), sonst klappen Internet und Push nicht mehr.
+2. **Linux mit Docker (TOOLS01):** **Add System** → Host `10.0.0.50` → Reiter **Docker** → **Copy docker compose**. Auf TOOLS01 `~/tools/beszel-agent/docker-compose.yml` anlegen, Inhalt **in nano** einfügen (nicht direkt in die Shell), `docker compose up -d`. Durch den eingebundenen Docker-Socket zeigt Beszel auch jeden Container einzeln.
+3. **Linux ohne Docker (LOG01):** **Add System** → Host `10.0.0.70` → Reiter **Binary** → Linux-Befehl kopieren und auf der VM ausführen, automatische Updates mit **y** bestätigen.
+4. **Add System** erst klicken, wenn der Agent läuft.
+
+> [!TIP]
+> Fügt das SSH-Terminal beim Einfügen `^[[200~` vor den Befehl (Bracketed Paste), einmal pro Server `echo 'set enable-bracketed-paste off' >> ~/.inputrc` ausführen.
+
+Mit fünf VMs auf pve01 liegen die Werte natürlich höher als im Leerlauf oben: bei mir RAM knapp 70 %, CPU (`k10temp_tctl`) im Schnitt ca. 58 °C, der Controller-Sensor der VM-SSD (`nvme_sensor_2`) um 66 °C mit Spitzen bis knapp 80 °C. Die Übersicht in Beszel zeigt immer den **heißesten** Sensor, für die Bewertung lohnt der Blick in den Verlauf.
+
 ## Schritt 7 · Zugriff von unterwegs mit Tailscale (Shell, Browser, Handy)
 
 Statt im Router Ports freizugeben, läuft [Tailscale](https://tailscale.com) direkt auf pve01 als **Subnet Router**. Das Handy baut einen verschlüsselten WireGuard-Tunnel zu pve01 auf und erreicht darüber das ganze Heimnetz: Proxmox, Beszel, den Switch. Aus dem Internet ist nichts offen. Der kostenlose Tarif reicht.

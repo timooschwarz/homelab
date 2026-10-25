@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-25
+- Beszel überwacht jetzt auch TOOLS01 (Docker-Agent mit Container-Werten) und LOG01: Hub mit zweiter Karte im Lab-Netz `vmbr1`, Anleitung in [Kapitel 15](anleitung/15-proxmox-host.md#vms-im-lab-netz-überwachen-nach-dem-umzug-kapitel-17)
+- Temperaturen nach dem Umzug eingeordnet (CPU ca. 58 °C, VM-SSD-Controller ca. 66 °C)
+- Updates: pve01 (libbrotli1) und Pi-NAS (rpi-eeprom, Bootloader), RAID danach weiter clean
+
 ## 2026-10-24
 - Neues [Kapitel 17 · Umzug von Hyper-V auf Proxmox](anleitung/17-umzug-hyperv-proxmox.md): DC01 (VM 110), FS01 (140), TOOLS01 (150), LOG01 (170) und CLIENT01 (900) laufen auf pve01 im Lab-Netz `vmbr1`, IPs und Domäne unverändert
 - Linux-VMs: initramfs per dracut mit allen Treibern neu gebaut, Netplan auf die neue MAC umgestellt, QEMU Guest Agent überall
