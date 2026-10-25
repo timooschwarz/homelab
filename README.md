@@ -14,7 +14,7 @@
 ![Netzwerk des Labs](docs/diagramme/netzwerk-2026-10-22.png)
 
 > [!NOTE]
-> **Stand 24.10.2026:** DC01, FS01, TOOLS01, LOG01 und der Testclient sind aus Hyper-V auf den Mini-PC `pve01` mit Proxmox umgezogen ([Kapitel 17](docs/anleitung/17-umzug-hyperv-proxmox.md)). Das Pi-NAS sichert jede Nacht alle VMs und Container. Als Nächstes folgen der MECM-Server und Homelable. Was wann dazukam: [Changelog](docs/changelog.md)
+> **Stand 24.10.2026:** DC01, FS01, TOOLS01, LOG01 und der Testclient sind aus Hyper-V auf den Mini-PC `pve01` mit Proxmox umgezogen ([Kapitel 17](docs/anleitung/17-umzug-hyperv-proxmox.md)). Das Pi-NAS sichert jede Nacht alle VMs und Container. Als Nächstes folgt der MECM-Server. Was wann dazukam: [Changelog](docs/changelog.md)
 
 ---
 
@@ -51,7 +51,7 @@ Ich habe dieses Lab als Junior Admin aufgebaut, um Alltagsaufgaben aus der Firma
 | Dateiserver | Freigabe `\\fs01\Abteilungen`, jeder sieht nur seinen Abteilungsordner, Laufwerk **S:** automatisch je nach Abteilung |
 | Sicherheit | RDP nur für bestimmte Abteilungen, Windows LAPS, getrennte Admin-Konten, Wazuh meldet Fehlanmeldungen und neue Konten |
 | Softwareverteilung | MECM mit Client-Push, Anwendungen im Softwarecenter und als Pflicht-Installation |
-| Betrieb | Uptime Kuma, Netdata, Nginx Proxy Manager, NetBox, Warpgate, Netzwerkkarte mit Live-Status (Homelable) |
+| Betrieb | Uptime Kuma, Beszel, Nginx Proxy Manager, NetBox, Homepage als Startseite (Netdata, Warpgate und Homelable waren eine Zeit lang dabei, ihre Kapitel bleiben als Anleitung) |
 | Eigene Hardware | Mini-PC mit Proxmox im 10-Zoll-Rack, Monitoring mit Beszel und Push aufs Handy, Fernzugriff über Tailscale, Pi-NAS mit RAID 5 für nächtliche Backups |
 
 **So sind die Kapitel aufgebaut:** Ziel und Dauer · nummerierte Schritte mit Angabe, auf welchem Rechner du gerade bist · Prüfen · häufige Fehler. Rund 80 Screenshots und Fotos stammen direkt aus dem Lab. Gearbeitet wird überwiegend mit der Oberfläche, Befehle nur dort, wo es deutlich schneller ist.

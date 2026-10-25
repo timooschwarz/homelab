@@ -6,7 +6,7 @@ Jede Stufe baut auf der vorherigen auf: Vorlagen vor neuen Servern, Backup vor r
 
 | # | Ausbaustufe | Neue VM | Status |
 |---|---|---|---|
-| 0 | Umzug auf Mini-PC im 10-Zoll-Rack | – | Rack, Switch und Proxmox auf dem Mini-PC ✅ ([Kapitel 15](anleitung/15-proxmox-host.md)), Pi-NAS ✅ ([Kapitel 16](anleitung/16-pi-nas.md)), VM-Umzug ✅ ([Kapitel 17](anleitung/17-umzug-hyperv-proxmox.md)), MECM und Homelable folgen |
+| 0 | Umzug auf Mini-PC im 10-Zoll-Rack | – | Rack, Switch und Proxmox auf dem Mini-PC ✅ ([Kapitel 15](anleitung/15-proxmox-host.md)), Pi-NAS ✅ ([Kapitel 16](anleitung/16-pi-nas.md)), VM-Umzug ✅ ([Kapitel 17](anleitung/17-umzug-hyperv-proxmox.md)), MECM folgt |
 | 1 | Monitoring (Uptime Kuma, Netdata, Beszel) | – | ✅ (Beszel seit 21.10.) |
 | 2 | Reverse Proxy und DNS-Namen | – | ✅ |
 | 3 | Infisical für Kennwörter | – | wieder entfernt, KeePassXC reicht |
@@ -22,11 +22,11 @@ Jede Stufe baut auf der vorherigen auf: Vorlagen vor neuen Servern, Backup vor r
 | 13 | Ticketsystem und Inventar (GLPI) | – | geplant |
 | 14 | Entra ID und Intune, Co-Management | CLIENT02 | geplant |
 | 15 | Zweiter Domain Controller (Replikation, FSMO) | DC02 | Idee |
-| – | Netzwerkkarte mit Live-Status ([Kapitel 14](anleitung/14-homelable.md)) | PVE01 | ✅ |
+| – | Netzwerkkarte mit Live-Status ([Kapitel 14](anleitung/14-homelable.md)) | PVE01 | ✅, seit 25.10. nicht mehr in Betrieb |
 
 ## Hardware
 
-Das Lab zieht auf einen eigenen Mini-PC in einem 10-Zoll-Rack um. Rack und Switch stehen seit dem 19.10.2026, auf dem Mini-PC läuft seit dem 21.10.2026 Proxmox VE. Seit dem 24.10.2026 laufen DC01, FS01, TOOLS01 und LOG01 dort, MECM und Homelable folgen. Belegung, Verkabelung und Switch-Einrichtung: [Hardware](hardware.md). So reicht der Arbeitsspeicher auf dem Mini-PC, wenn die VMs umgezogen sind:
+Das Lab zieht auf einen eigenen Mini-PC in einem 10-Zoll-Rack um. Rack und Switch stehen seit dem 19.10.2026, auf dem Mini-PC läuft seit dem 21.10.2026 Proxmox VE. Seit dem 24.10.2026 laufen DC01, FS01, TOOLS01 und LOG01 dort, MECM folgt. Belegung, Verkabelung und Switch-Einrichtung: [Hardware](hardware.md). So reicht der Arbeitsspeicher auf dem Mini-PC, wenn die VMs umgezogen sind:
 
 ![RAM-Budget](diagramme/ram-budget.png)
 

@@ -14,6 +14,7 @@
 - Pi-NAS als zweiter Tailscale-Subnet-Router für `192.168.2.0/24` (`--accept-dns=false`, damit Pi-hole und Docker ihren DNS behalten). Fällt pve01 aus, bleibt das Heimnetz von unterwegs erreichbar
 - Nginx Proxy Manager: neue Namen `home`, `netbox`, `beszel`, `wazuh`, `pve`, `pihole` (`.lab.test`), je ein CNAME auf `tools01.lab.test` in der DNS-Zone auf DC01. Homepage braucht den Namen zusätzlich in `HOMEPAGE_ALLOWED_HOSTS`, Proxmox und Beszel brauchen *Websockets Support*
 - LOG01 (Wazuh) und der Testclient laufen nur noch bei Bedarf: pve01 sinkt von 80 % auf ca. 45 % RAM. Wazuh-Pakete per `apt-mark hold` von normalen Updates ausgenommen
+- Homelable wird nicht mehr betrieben, die Behelfs-VM PVE01 in Hyper-V entfällt. [Kapitel 14](anleitung/14-homelable.md) bleibt als Anleitung
 - Updates: pve01 (libbrotli1) und Pi-NAS (rpi-eeprom, Bootloader), RAID danach weiter clean
 
 ## 2026-10-24
