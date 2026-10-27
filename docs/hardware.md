@@ -39,11 +39,13 @@ Im Dauerbetrieb braucht alles zusammen etwa 30–40 W.
 
 | Switch-Port | Patchpanel | Gerät | Hinweis |
 |---|---|---|---|
-| 1 | 3 | Mini-PC (Proxmox-Host) | Später Trunk: Heimnetz untagged, Lab-VLANs tagged |
-| 2 | 4 | NAS | Bleibt im Heimnetz |
-| 3–6 | 5–8 | frei | Für VLAN-Übungen |
-| 7 | 9 | Arbeits-PC | |
+| 1–4, 6 | 3–6, 8 | NAS und weitere Geräte bzw. frei | Heimnetz (VLAN 1 untagged), freie Ports für VLAN-Übungen |
+| 5 | 7 | Mini-PC (Proxmox-Host) | Trunk: VLAN 1 untagged, VLAN 10 (Lab) tagged ([Kapitel 19](anleitung/19-vlan-testclient.md)) |
+| 7 | 9 | Arbeits-PC | Trunk: VLAN 1 untagged, VLAN 10 (Lab) tagged, für Testclients in Hyper-V |
 | 8 | 10 | Uplink zur LAN-Dose | Immer untagged in VLAN 1, sonst ist die Verwaltung des Switches weg |
+
+> [!IMPORTANT]
+> Nach dem Rack-Umbau am 25.10. steckt der Mini-PC in **Port 5**, nicht mehr in Port 1 wie ursprünglich geplant. Vor jeder VLAN-Änderung prüfen, welches Gerät wirklich an welchem Port hängt: **Monitoring → Port Statistics → Clear**, auf dem Gerät Verkehr erzeugen (z. B. `ping -f -c 5000 192.168.2.1` auf pve01), **Refresh**.
 
 **Keystones einsetzen:** Beim DeskPi-Panel werden die Keystone-Kupplungen **von hinten** eingesetzt, mit der **Federlasche nach oben**. Von vorne passen sie nicht durch, der vordere Rand dient als Anschlag. Erst unten einhaken, dann oben eindrücken, bis es klickt.
 

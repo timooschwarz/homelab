@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-27
+- Neues [Kapitel 19 · Lab-Netz als VLAN 10](anleitung/19-vlan-testclient.md): VLAN 10 „LAB“ auf dem TL-SG108E (Mini-PC und Arbeits-PC tagged), `vmbr1` auf pve01 über `nic0.10` am Switch, externer Hyper-V-Switch `Extern` auf dem Arbeits-PC
+- Neuer Testclient CLIENT02 (Windows 11 Pro) in Hyper-V auf dem Arbeits-PC, bekommt seine IP per DHCP von DC01, in der Domäne und in *Lab/Computer*
+- [Hardware](hardware.md): Mini-PC steckt seit dem Rack-Umbau in Switch-Port 5, Port-Tabelle und Prüfweg ergänzt
+- Drei neue Fälle in der [Fehlerbehebung](fehlerbehebung.md#vlan-kapitel-19), darunter die Fehlersuche mit `pktmon`, `tcpdump` und `ip -s link` (RX 0 / TX hoch = falscher Switch-Port)
+
 ## 2026-10-25 (später Abend)
 - Kapitel 18: RAID-Wächter für das Pi-NAS (ntfy bei *degraded*) und DNS-Monitor für Pi-hole
 - 14 Screenshots in [Kapitel 17](anleitung/17-umzug-hyperv-proxmox.md) und [Kapitel 18](anleitung/18-betrieb.md) (Emergency Mode, dracut, Import, Netplan, VirtIO, Beszel, Uptime Kuma, Homepage, Pi-hole, Backups), persönliche Daten unkenntlich gemacht; Restore-Test als Anleitung in Kapitel 18

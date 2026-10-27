@@ -30,7 +30,8 @@
 | FS01 | 140 | 10.0.0.40 | Windows Server 2025 | Dateiserver, Datenplatte E: | immer an |
 | TOOLS01 | 150 | 10.0.0.50 | Ubuntu Server | Docker-Dienste (unten) | immer an |
 | LOG01 | 170 | 10.0.0.70 | Ubuntu Server | Wazuh 4.14 (SIEM) | bei Bedarf |
-| CLIENT01 | – | DHCP | Windows 11 Pro | Testclient, in Hyper-V auf dem Arbeits-PC | bei Bedarf |
+| CLIENT01 | 900 | DHCP | Windows 11 Pro | alter Testclient auf pve01, wird abgelöst | aus |
+| CLIENT02 | – | DHCP | Windows 11 Pro | Testclient in Hyper-V auf dem Arbeits-PC, über VLAN 10 im Lab ([Kapitel 19](anleitung/19-vlan-testclient.md)) | bei Bedarf |
 
 **Heimnetz** ([Kapitel 15](anleitung/15-proxmox-host.md), [16](anleitung/16-pi-nas.md), [18](anleitung/18-betrieb.md)):
 

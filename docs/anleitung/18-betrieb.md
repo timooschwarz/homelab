@@ -339,3 +339,5 @@ Eingestellt in Proxmox pro Gast unter **Options**: *Start at boot* (Yes/No) und 
 Weitere Fälle: [Fehlerbehebung](../fehlerbehebung.md)
 
 Wie es weitergeht: [Roadmap](../roadmap.md)
+
+Weiter: [Kapitel 19 · Lab-Netz als VLAN 10](19-vlan-testclient.md)

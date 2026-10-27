@@ -287,6 +287,24 @@ Fehler, die beim Aufbau aufgetreten sind, jeweils mit Ursache und Lösung.
 - **Ursache:** Die Platte wurde bei laufender VM abgehängt. Proxmox merkt sich das nur als „pending“ (orange durchgestrichen); beim anschließenden Hin und Her wurde das Volume gelöscht. `lvs | grep vm-120` zeigte nur noch EFI- und Hilfsplatte, `qm rescan --vmid 120` fand nichts.
 - **Lösung:** Die Original-`.vhdx` neu importieren (`qm disk import 120 /mnt/pve/backup/import/CM01.vhdx vmdata`), erst als SATA starten, Treiber prüfen, dann umstellen wie in [Kapitel 17](anleitung/17-umzug-hyperv-proxmox.md#windows-nachträglich-auf-virtio-umstellen). Merke: Import-Dateien erst löschen, wenn ein Proxmox-Backup existiert, und Hardware nur bei ausgeschalteter VM umbauen.
 
+## VLAN (Kapitel 19)
+
+### Testclient bekommt mit VLAN-ID 10 nur 169.254.x.x
+- **Symptom:** CLIENT02 in Hyper-V mit VLAN-ID 10 bekommt keine Adresse von DC01. Ohne VLAN-ID gibt es sofort eine Heimnetz-Adresse.
+- **Fehlersuche:** `pktmon` am Arbeits-PC zeigte, dass die DHCP-Anfrage bis zum Treiber der Netzwerkkarte kommt. `tcpdump -eni nic0 vlan 10 and port 67` auf pve01 sah nichts. Ein Treiber-Update der Intel I226-V und Abschalten von `rx-vlan-offload` auf pve01 änderten nichts. Entscheidend war `ip -s link show nic0.10`: **TX** über 6000 Pakete, **RX 0**.
+- **Ursache:** VLAN 10 war auf Switch-Port 1 und 7 eingerichtet. Der Mini-PC steckt nach dem Rack-Umbau aber in **Port 5**. Seine getaggten Pakete warf der Switch weg, die des Clients gingen ans falsche Gerät.
+- **Lösung:** VLAN 10 mit Port 5 und 7 tagged neu gespeichert. Sofort danach zählte RX hoch und der Client bekam `10.0.0.108`.
+- **Gelernt:** Port-Belegung vor VLAN-Arbeit mit *Monitoring → Port Statistics* bestätigen, nicht aus dem Plan übernehmen. **RX 0 / TX hoch** am VLAN-Interface heißt: Es kommt nichts zurück, zuerst Switch-Ports prüfen.
+
+### Nach PC-Neustart: Hyper-V-Switch „Netzwerkkabel wurde entfernt“
+- **Symptom:** Nach einem Neustart hat der PC zwar Internet, aber direkt über **Ethernet**. **vEthernet (Extern)** und die VM melden *Medium getrennt*.
+- **Ursache:** Nach einer Änderung an den erweiterten Treibereinstellungen (*Paketpriorität und VLAN*) hat sich der externe Hyper-V-Switch von der Karte gelöst.
+- **Lösung:** Switch `Extern` im Manager für virtuelle Switches entfernen, neu anlegen (*Gemeinsames Verwenden* an), VM wieder anhängen und VLAN-ID prüfen.
+
+### PC ohne Netz nach Umstellen von „Paketpriorität und VLAN“
+- **Ursache:** Der Intel-Treiber kam mit dem externen Hyper-V-Switch nach dem Umstellen nicht mehr klar.
+- **Lösung:** Einstellung zurück auf *aktiviert*, PC neu starten. Bei der I226-V muss man daran nichts ändern.
+
 ## Linux und Docker
 
 ### NetBox nach Neustart offline

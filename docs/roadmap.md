@@ -17,7 +17,7 @@ Jede Stufe baut auf der vorherigen auf: Vorlagen vor neuen Servern, Backup vor r
 | 8 | Eigene CA und HTTPS (auch für MECM) | CA01 | geplant |
 | 9 | Gitea und Mailpit | – | geplant |
 | 10 | Logging / SIEM (Wazuh) | LOG01 | ✅ |
-| 11 | Firewall (OPNsense) und getrenntes Clientnetz | FW01 | geplant |
+| 11 | Firewall (OPNsense) und getrenntes Clientnetz | FW01 | Grundlage ✅: Lab-Netz als VLAN 10 über den Switch ([Kapitel 19](anleitung/19-vlan-testclient.md)), Firewall geplant |
 | 12 | Drucken (virtuelle Drucker, Point and Print) | – | geplant |
 | 13 | Ticketsystem und Inventar (GLPI) | – | geplant |
 | 14 | Entra ID und Intune, Co-Management | CLIENT02 | geplant |
