@@ -1,5 +1,8 @@
 # Changelog
 
+## 2026-10-28
+- Übersichtsseiten auf den Stand nach Kapitel 19 gebracht: README (Stand, Themen-Index, nächste Schritte), [Aufbau](aufbau.md) (VLAN 10, CLIENT02), [Roadmap](roadmap.md) (MECM-Umzug erledigt), [Entscheidungen](entscheidungen.md) (Tailscale statt NetBird, neue Entscheidung zum Lab-VLAN)
+
 ## 2026-10-27
 - Neues [Kapitel 19 · Lab-Netz als VLAN 10](anleitung/19-vlan-testclient.md): VLAN 10 „LAB“ auf dem TL-SG108E (Mini-PC und Arbeits-PC tagged), `vmbr1` auf pve01 über `nic0.10` am Switch, externer Hyper-V-Switch `Extern` auf dem Arbeits-PC
 - Neuer Testclient CLIENT02 (Windows 11 Pro) in Hyper-V auf dem Arbeits-PC, bekommt seine IP per DHCP von DC01, in der Domäne und in *Lab/Computer*

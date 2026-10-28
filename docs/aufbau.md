@@ -6,7 +6,7 @@
 
 | Was | Wert |
 |---|---|
-| Netz | `10.0.0.0/24`, Bridge `vmbr1` auf pve01 mit NAT |
+| Netz | `10.0.0.0/24`, Bridge `vmbr1` auf pve01 mit NAT, über `nic0.10` als VLAN 10 „LAB“ am Switch ([Kapitel 19](anleitung/19-vlan-testclient.md)) |
 | Gateway | `10.0.0.1` (pve01) |
 | DNS | `10.0.0.10` (DC01), Weiterleiter ins Internet |
 | DHCP | `10.0.0.100` – `10.0.0.200` auf DC01 |
@@ -59,7 +59,7 @@ lab.test
 └── Lab
     ├── Benutzer         → Laufwerk S:
     │   └── IT, Buchhaltung, Vertrieb, Personal, Leitung
-    ├── Computer         → CLIENT01 · RDP, lokale Admins, LAPS, Ping, Design
+    ├── Computer         → CLIENT01, CLIENT02 · RDP, lokale Admins, LAPS, Ping, Design
     ├── Server           → FS01, CM01 · LAPS, Ping
     ├── Gruppen          → GG-IT, GG-Buchhaltung, GG-Vertrieb, GG-Personal, GG-Leitung
     └── Dienstkonten     → svc_cm_push, svc_cm_naa

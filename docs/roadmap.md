@@ -6,7 +6,7 @@ Jede Stufe baut auf der vorherigen auf: Vorlagen vor neuen Servern, Backup vor r
 
 | # | Ausbaustufe | Neue VM | Status |
 |---|---|---|---|
-| 0 | Umzug auf Mini-PC im 10-Zoll-Rack | – | Rack, Switch und Proxmox auf dem Mini-PC ✅ ([Kapitel 15](anleitung/15-proxmox-host.md)), Pi-NAS ✅ ([Kapitel 16](anleitung/16-pi-nas.md)), VM-Umzug ✅ ([Kapitel 17](anleitung/17-umzug-hyperv-proxmox.md)), MECM folgt |
+| 0 | Umzug auf Mini-PC im 10-Zoll-Rack | – | Rack, Switch und Proxmox auf dem Mini-PC ✅ ([Kapitel 15](anleitung/15-proxmox-host.md)), Pi-NAS ✅ ([Kapitel 16](anleitung/16-pi-nas.md)), VM-Umzug inkl. MECM ✅ ([Kapitel 17](anleitung/17-umzug-hyperv-proxmox.md)), Testclients über VLAN 10 ✅ ([Kapitel 19](anleitung/19-vlan-testclient.md)) |
 | 1 | Monitoring (Uptime Kuma, Beszel, Alarme per Push) | – | ✅ ([Kapitel 18](anleitung/18-betrieb.md)) |
 | 2 | Reverse Proxy und DNS-Namen | – | ✅ |
 | 3 | Infisical für Kennwörter | – | wieder entfernt, KeePassXC reicht |

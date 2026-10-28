@@ -14,7 +14,7 @@
 ![Netzwerk des Labs](docs/diagramme/netzwerk-2026-10-25.png)
 
 > [!NOTE]
-> **Stand 25.10.2026:** Alle Server (DC01, FS01, TOOLS01, CM01, LOG01) sind aus Hyper-V auf den Mini-PC `pve01` mit Proxmox umgezogen ([Kapitel 17](docs/anleitung/17-umzug-hyperv-proxmox.md)). Das Pi-NAS sichert jede Nacht alle VMs und Container. Hyper-V auf dem Arbeits-PC bleibt nur noch für Testclients. Beszel, zwei Uptime Kumas und Proxmox melden Ausfälle und Backup-Ergebnisse per Push aufs Handy ([Kapitel 18](docs/anleitung/18-betrieb.md)). Was wann dazukam: [Changelog](docs/changelog.md)
+> **Stand 27.10.2026:** Alle Server (DC01, FS01, TOOLS01, CM01, LOG01) sind aus Hyper-V auf den Mini-PC `pve01` mit Proxmox umgezogen ([Kapitel 17](docs/anleitung/17-umzug-hyperv-proxmox.md)). Das Pi-NAS sichert jede Nacht alle VMs und Container. Hyper-V auf dem Arbeits-PC bleibt nur noch für Testclients, die seit dem 27.10. über VLAN 10 direkt im Lab-Netz hängen ([Kapitel 19](docs/anleitung/19-vlan-testclient.md)). Beszel, zwei Uptime Kumas und Proxmox melden Ausfälle und Backup-Ergebnisse per Push aufs Handy ([Kapitel 18](docs/anleitung/18-betrieb.md)). Was wann dazukam: [Changelog](docs/changelog.md)
 
 ---
 
@@ -218,9 +218,9 @@ Jedes Kapitel hat oben Tags. Ein Klick auf einen Tag führt hierher, zu allen Ka
 | <a id="thema-gpo"></a>![Gruppenrichtlinien](https://img.shields.io/badge/-Gruppenrichtlinien-7F77DD?style=flat-square) | [8 · Gruppenrichtlinien](docs/anleitung/08-gruppenrichtlinien.md) · [9 · Testen](docs/anleitung/09-testen.md) · [11 · MECM](docs/anleitung/11-mecm.md) · [14 · Homelable](docs/anleitung/14-homelable.md) |
 | <a id="thema-file"></a>![Dateiserver](https://img.shields.io/badge/-Dateiserver-0F766E?style=flat-square) | [7 · Dateiserver](docs/anleitung/07-dateiserver.md) · [8 · Gruppenrichtlinien](docs/anleitung/08-gruppenrichtlinien.md) · [9 · Testen](docs/anleitung/09-testen.md) · [16 · Pi-NAS](docs/anleitung/16-pi-nas.md) |
 | <a id="thema-sec"></a>![Sicherheit](https://img.shields.io/badge/-Sicherheit-EF9F27?style=flat-square) | [4 · AD-Struktur](docs/anleitung/04-ad-struktur.md) · [7 · Dateiserver](docs/anleitung/07-dateiserver.md) · [8 · Gruppenrichtlinien](docs/anleitung/08-gruppenrichtlinien.md) · [13 · Wazuh](docs/anleitung/13-wazuh.md) · [15 · Proxmox-Host](docs/anleitung/15-proxmox-host.md) |
-| <a id="thema-client"></a>![Windows 11](https://img.shields.io/badge/-Windows%2011-0078D4?style=flat-square) | [6 · Client](docs/anleitung/06-client.md) · [12 · Software verteilen](docs/anleitung/12-softwareverteilung.md) |
+| <a id="thema-client"></a>![Windows 11](https://img.shields.io/badge/-Windows%2011-0078D4?style=flat-square) | [6 · Client](docs/anleitung/06-client.md) · [12 · Software verteilen](docs/anleitung/12-softwareverteilung.md) · [19 · VLAN und Testclient](docs/anleitung/19-vlan-testclient.md) |
 | <a id="thema-ps"></a>![PowerShell](https://img.shields.io/badge/-PowerShell-5391FE?style=flat-square) | [1 · Netzwerk](docs/anleitung/01-netzwerk.md) · [5 · Benutzer per Skript](docs/anleitung/05-benutzer-per-skript.md) |
-| <a id="thema-hyperv"></a>![Hyper-V](https://img.shields.io/badge/-Hyper--V-5F5E5A?style=flat-square) | [0 · Voraussetzungen](docs/anleitung/00-voraussetzungen.md) · [1 · Netzwerk](docs/anleitung/01-netzwerk.md) · [14 · Homelable](docs/anleitung/14-homelable.md) · [17 · Umzug](docs/anleitung/17-umzug-hyperv-proxmox.md) |
+| <a id="thema-hyperv"></a>![Hyper-V](https://img.shields.io/badge/-Hyper--V-5F5E5A?style=flat-square) | [0 · Voraussetzungen](docs/anleitung/00-voraussetzungen.md) · [1 · Netzwerk](docs/anleitung/01-netzwerk.md) · [14 · Homelable](docs/anleitung/14-homelable.md) · [17 · Umzug](docs/anleitung/17-umzug-hyperv-proxmox.md) · [19 · VLAN](docs/anleitung/19-vlan-testclient.md) |
 | <a id="thema-test"></a>![Testen](https://img.shields.io/badge/-Testen-D4537E?style=flat-square) | [9 · Testen](docs/anleitung/09-testen.md) · [12 · Software verteilen](docs/anleitung/12-softwareverteilung.md) · [13 · Wazuh](docs/anleitung/13-wazuh.md) |
 | <a id="thema-linux"></a>![Linux & Docker](https://img.shields.io/badge/-Linux%20%26%20Docker-E95420?style=flat-square) | [10 · Linux-Dienste](docs/anleitung/10-linux-dienste.md) · [13 · Wazuh](docs/anleitung/13-wazuh.md) · [14 · Homelable](docs/anleitung/14-homelable.md) · [15 · Proxmox-Host](docs/anleitung/15-proxmox-host.md) · [16 · Pi-NAS](docs/anleitung/16-pi-nas.md) · [17 · Umzug](docs/anleitung/17-umzug-hyperv-proxmox.md) · [18 · Betrieb](docs/anleitung/18-betrieb.md) |
 | <a id="thema-proxmox"></a>![Proxmox](https://img.shields.io/badge/-Proxmox-E57000?style=flat-square) | [14 · Homelable](docs/anleitung/14-homelable.md) · [15 · Proxmox-Host](docs/anleitung/15-proxmox-host.md) · [16 · Pi-NAS](docs/anleitung/16-pi-nas.md) · [17 · Umzug](docs/anleitung/17-umzug-hyperv-proxmox.md) · [18 · Betrieb](docs/anleitung/18-betrieb.md) |
@@ -282,7 +282,7 @@ Alle Fälle: [Fehlerbehebung](docs/fehlerbehebung.md)
 
 ![Roadmap: Ausbaustufen](docs/diagramme/roadmap.png)
 
-Der Umzug auf eigene Hardware ist abgeschlossen. Als Nächstes: Testclient in Hyper-V an das neue Lab-Netz anbinden, dann Gitea und Mailpit, eine eigene CA und die Firewall.
+Der Umzug auf eigene Hardware ist abgeschlossen, und Testclients auf dem Arbeits-PC hängen über VLAN 10 im Lab. Als Nächstes: Gitea und Mailpit, eine eigene CA und die Firewall.
 
 Details: [Roadmap](docs/roadmap.md) · Eigene Hardware im 10-Zoll-Rack: [Hardware](docs/hardware.md) · Warum etwas so gebaut ist: [Entscheidungen](docs/entscheidungen.md) · Was wann dazukam: [Changelog](docs/changelog.md)
 
@@ -292,7 +292,7 @@ Details: [Roadmap](docs/roadmap.md) · Eigene Hardware im 10-Zoll-Rack: [Hardwar
 
 ```
 docs/
-  anleitung/          Schritt-für-Schritt-Anleitung, Kapitel 0–18
+  anleitung/          Schritt-für-Schritt-Anleitung, Kapitel 0–19
   bilder/             Screenshots und Fotos aus dem Lab
   diagramme/          Übersichtsgrafiken
   aufbau.md           Referenz des fertigen Labs
