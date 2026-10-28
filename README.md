@@ -1,6 +1,6 @@
 # Homelab `lab.test`
 
-**Ein Windows-Firmennetz zum Nachbauen, Schritt für Schritt.** Von der ersten VM in Hyper-V über Active Directory, Gruppenrichtlinien und MECM bis zum eigenen 10-Zoll-Rack mit Proxmox-Mini-PC und Raspberry-Pi-NAS.
+**Ein Windows-Firmennetz zum Nachbauen, Schritt für Schritt.** Von der ersten VM in Hyper-V über Active Directory, Gruppenrichtlinien und MECM bis zum eigenen 10-Zoll-Rack mit Proxmox-Mini-PC, Raspberry-Pi-NAS und eigenem Lab-VLAN.
 
 ![Windows Server 2025](https://img.shields.io/badge/Windows%20Server-2025-0078D4?logo=windows&logoColor=white)
 ![Windows 11](https://img.shields.io/badge/Client-Windows%2011-0078D4?logo=windows11&logoColor=white)
@@ -9,9 +9,10 @@
 ![Ubuntu](https://img.shields.io/badge/Ubuntu-Docker-E95420?logo=ubuntu&logoColor=white)
 ![Proxmox VE](https://img.shields.io/badge/Proxmox%20VE-9.2-E57000?logo=proxmox&logoColor=white)
 ![Raspberry Pi](https://img.shields.io/badge/Raspberry%20Pi%205-NAS-A22846?logo=raspberrypi&logoColor=white)
+![VLAN](https://img.shields.io/badge/Netz-VLAN%2010%20(802.1Q)-1D9E75)
 ![Kapitel](https://img.shields.io/badge/Kapitel-20-555555)
 
-![Netzwerk des Labs](docs/diagramme/netzwerk-2026-10-25.png)
+![Netzwerk des Labs](docs/diagramme/netzwerk-2026-10-27.png)
 
 > [!NOTE]
 > **Stand 27.10.2026:** Alle Server (DC01, FS01, TOOLS01, CM01, LOG01) sind aus Hyper-V auf den Mini-PC `pve01` mit Proxmox umgezogen ([Kapitel 17](docs/anleitung/17-umzug-hyperv-proxmox.md)). Das Pi-NAS sichert jede Nacht alle VMs und Container. Hyper-V auf dem Arbeits-PC bleibt nur noch für Testclients, die seit dem 27.10. über VLAN 10 direkt im Lab-Netz hängen ([Kapitel 19](docs/anleitung/19-vlan-testclient.md)). Beszel, zwei Uptime Kumas und Proxmox melden Ausfälle und Backup-Ergebnisse per Push aufs Handy ([Kapitel 18](docs/anleitung/18-betrieb.md)). Was wann dazukam: [Changelog](docs/changelog.md)
@@ -53,6 +54,7 @@ Ich habe dieses Lab als Junior Admin aufgebaut, um Alltagsaufgaben aus der Firma
 | Softwareverteilung | MECM mit Client-Push, Anwendungen im Softwarecenter und als Pflicht-Installation |
 | Betrieb | Uptime Kuma, Beszel, Nginx Proxy Manager, NetBox, Homepage als Startseite (Netdata, Warpgate und Homelable waren eine Zeit lang dabei, ihre Kapitel bleiben als Anleitung) |
 | Eigene Hardware | Mini-PC mit Proxmox im 10-Zoll-Rack, alle Server dorthin umgezogen, Pi-NAS mit RAID 5 für nächtliche Backups, Pi-hole, Fernzugriff über Tailscale |
+| Netzwerk | Lab-Netz als VLAN 10 über einen Managed Switch, Testclients auf dem Arbeits-PC hängen über dasselbe Kabel im Lab, das Heimnetz bleibt unberührt |
 | Dauerbetrieb | Alarme und Backup-Berichte per Push aufs Handy, zweiter Wächter auf dem Pi, Startseite mit allen Diensten |
 
 **So sind die Kapitel aufgebaut:** Ziel und Dauer · nummerierte Schritte mit Angabe, auf welchem Rechner du gerade bist · Prüfen · häufige Fehler. Rund 80 Screenshots und Fotos stammen direkt aus dem Lab. Gearbeitet wird überwiegend mit der Oberfläche, Befehle nur dort, wo es deutlich schneller ist.
@@ -82,6 +84,7 @@ Stand Oktober 2026.
 | Proxmox | Proxmox VE 9.2 · Homelable 3.6 · Beszel 0.21 · Tailscale 1.104 |
 | Mini-PC (Kapitel 15) | HP EliteDesk 805 G6 Mini, Ryzen 5 PRO 4650GE, 32 GB |
 | NAS (Kapitel 16) | Raspberry Pi 5 (4 GB), Radxa Penta SATA HAT, Raspberry Pi OS Lite (Trixie), OpenMediaVault 8 |
+| Switch (Kapitel 19) | TP-Link TL-SG108E V2, 802.1Q-VLAN |
 
 ---
 
@@ -194,6 +197,7 @@ flowchart LR
     Beszel["Beszel"] -.->|überwacht| pve01
     Beszel -.->|überwacht| NAS
     Beszel -->|Push| Handy["Handy<br/>ntfy · Tailscale"]
+    PC["Arbeits-PC<br/>CLIENT02 in Hyper-V"] -->|"VLAN 10<br/>über den Switch"| pve01
 ```
 
 <p align="center">

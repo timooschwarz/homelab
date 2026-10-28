@@ -1,6 +1,8 @@
 # Changelog
 
 ## 2026-10-28
+- Neue Grafik [Netzwerk Stand 27.10.](diagramme/netzwerk-2026-10-27.png) mit VLAN 10, Switch-Ports und CLIENT02, jetzt oben im README und im [Aufbau](aufbau.md)
+- README: Bereich Netzwerk in „Was am Ende läuft“, Switch in „Getestet mit“, Arbeits-PC im Diagramm von Teil 6
 - Übersichtsseiten auf den Stand nach Kapitel 19 gebracht: README (Stand, Themen-Index, nächste Schritte), [Aufbau](aufbau.md) (VLAN 10, CLIENT02), [Roadmap](roadmap.md) (MECM-Umzug erledigt), [Entscheidungen](entscheidungen.md) (Tailscale statt NetBird, neue Entscheidung zum Lab-VLAN)
 
 ## 2026-10-27
