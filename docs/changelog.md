@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-10-28
+- [Roadmap-Grafik](diagramme/roadmap.png) auf Stand 28.10. (VLAN 10 läuft, Gitea/Mailpit und CA01 vorbereitet, CLIENT03)
 - [Roadmap](roadmap.md): Entra-/Intune-Client heißt jetzt CLIENT03, weil CLIENT02 der VLAN-Testclient ist
 - Neue Grafik [Netzwerk Stand 27.10.](diagramme/netzwerk-2026-10-27.png) mit VLAN 10, Switch-Ports und CLIENT02, jetzt oben im README und im [Aufbau](aufbau.md)
 - README: Bereich Netzwerk in „Was am Ende läuft“, Switch in „Getestet mit“, Arbeits-PC im Diagramm von Teil 6

@@ -14,7 +14,7 @@ Jede Stufe baut auf der vorherigen auf: Vorlagen vor neuen Servern, Backup vor r
 | 5 | VM-Vorlagen | – | geplant |
 | 6 | Backup und Restore | BKP01 | Proxmox-Backups jede Nacht aufs Pi-NAS ✅ ([Kapitel 16](anleitung/16-pi-nas.md)), Veeam für Windows-Restores geplant |
 | 7 | Patch-Management über MECM | – | geplant |
-| 8 | Eigene CA und HTTPS (auch für MECM) | CA01 | geplant |
+| 8 | Eigene CA und HTTPS (auch für MECM) | CA01 | geplant, Anleitung vorbereitet |
 | 9 | Gitea und Mailpit | – | geplant, Anleitung vorbereitet |
 | 10 | Logging / SIEM (Wazuh) | LOG01 | ✅ |
 | 11 | Firewall (OPNsense) und getrenntes Clientnetz | FW01 | Grundlage ✅: Lab-Netz als VLAN 10 über den Switch ([Kapitel 19](anleitung/19-vlan-testclient.md)), Firewall geplant |
