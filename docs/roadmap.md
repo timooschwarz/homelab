@@ -15,12 +15,12 @@ Jede Stufe baut auf der vorherigen auf: Vorlagen vor neuen Servern, Backup vor r
 | 6 | Backup und Restore | BKP01 | Proxmox-Backups jede Nacht aufs Pi-NAS ✅ ([Kapitel 16](anleitung/16-pi-nas.md)), Veeam für Windows-Restores geplant |
 | 7 | Patch-Management über MECM | – | geplant |
 | 8 | Eigene CA und HTTPS (auch für MECM) | CA01 | geplant |
-| 9 | Gitea und Mailpit | – | geplant |
+| 9 | Gitea und Mailpit | – | geplant, Anleitung vorbereitet |
 | 10 | Logging / SIEM (Wazuh) | LOG01 | ✅ |
 | 11 | Firewall (OPNsense) und getrenntes Clientnetz | FW01 | Grundlage ✅: Lab-Netz als VLAN 10 über den Switch ([Kapitel 19](anleitung/19-vlan-testclient.md)), Firewall geplant |
 | 12 | Drucken (virtuelle Drucker, Point and Print) | – | geplant |
 | 13 | Ticketsystem und Inventar (GLPI) | – | geplant |
-| 14 | Entra ID und Intune, Co-Management | CLIENT02 | geplant |
+| 14 | Entra ID und Intune, Co-Management | CLIENT03 | geplant |
 | 15 | Zweiter Domain Controller (Replikation, FSMO) | DC02 | Idee |
 | – | Netzwerkkarte mit Live-Status ([Kapitel 14](anleitung/14-homelable.md)) | PVE01 | ✅, seit 25.10. nicht mehr in Betrieb |
 
