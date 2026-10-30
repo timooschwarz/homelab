@@ -1,5 +1,8 @@
 # Changelog
 
+## 2026-10-30
+- [Hardware](hardware.md): Mini-PC sitzt jetzt in einer 3D-gedruckten Frontblende (HE 4), Rack-Display oben in HE 1–2, Pi-NAS auf dem Fachboden in HE 8. Neue Belegung, Montage-Tipp zum Umbau
+
 ## 2026-10-28
 - [Roadmap-Grafik](diagramme/roadmap.png) auf Stand 28.10. (VLAN 10 läuft, Gitea/Mailpit und CA01 vorbereitet, CLIENT03)
 - [Roadmap](roadmap.md): Entra-/Intune-Client heißt jetzt CLIENT03, weil CLIENT02 der VLAN-Testclient ist

@@ -5,7 +5,7 @@
 [![Netzwerk](https://img.shields.io/badge/-Netzwerk-1D9E75?style=flat-square)](../README.md#thema-netz) [![Hyper-V](https://img.shields.io/badge/-Hyper--V-5F5E5A?style=flat-square)](../README.md#thema-hyperv)
 
 > **Ziel:** Das Lab läuft dauerhaft auf einem eigenen, sparsamen Mini-PC statt auf dem großen PC. Mini-PC, Switch und NAS sitzen ordentlich verkabelt in einem kleinen 10-Zoll-Rack.
-> **Stand:** 25.10.2026 · Alles im Rack. Von oben: HE 1 Blende, **HE 2 Patchpanel**, HE 3 Blende, **HE 4 Mini-PC** (pve01, auf dem Fachboden), **HE 5 Switch**, HE 6–7 gelochte Blenden, **HE 8 SBC Shelf für das Pi-NAS** (ragt mit HAT und SSDs hinter die Blenden, Einbau folgt). Auf dem Mini-PC läuft Proxmox VE ([Kapitel 15](anleitung/15-proxmox-host.md)), das NAS ist in [Kapitel 16](anleitung/16-pi-nas.md) beschrieben.
+> **Stand:** 30.10.2026 · Alles im Rack. Von oben: **HE 1–2 Rack-Display** (7,84 Zoll, Strom-Dashboard vom Pi), **HE 3 Patchpanel**, **HE 4 Mini-PC** (pve01, in einer 3D-gedruckten Frontblende), **HE 5 Switch**, HE 6 Blindblende, HE 7 gelochte Blende, **HE 8 Pi-NAS auf dem Fachboden**. Auf dem Mini-PC läuft Proxmox VE ([Kapitel 15](anleitung/15-proxmox-host.md)), das NAS ist in [Kapitel 16](anleitung/16-pi-nas.md) beschrieben.
 
 Die Anleitung (Kapitel 0–14) funktioniert weiterhin auf einem einzigen PC mit Hyper-V. Diese Seite beschreibt Rack, Verkabelung und Switch für den Umzug auf eigene Hardware. Es ist optional. Auf dem Mini-PC läuft **Proxmox VE** statt Hyper-V: Die Windows-Server laufen dort als KVM-VMs, Linux-Dienste können als schlanke LXC-Container laufen.
 
@@ -14,20 +14,19 @@ Die Anleitung (Kapitel 0–14) funktioniert weiterhin auf einem einzigen PC mit 
 | Teil | Aufgabe | Position (von oben) |
 |---|---|---|
 | DeskPi RackMate T1 Plus | 10-Zoll-Rack, 8 HE, 260 mm tief | – |
-| Blindblende 1 HE | Abschluss oben | 1 |
-| Keystone-Patchpanel, 12 Ports | Geräte hinten anstecken, vorne kurze Kabel zum Switch | 2 |
-| Blindblende + gelochte Blende | Abstand, die Patchkabel laufen davor nach unten | 3–4 |
+| Rack-Display 7,84 Zoll (GeeekPi) | Zeigt den Stromverbrauch des Racks, hängt per HDMI am Pi-NAS | 1–2 |
+| Keystone-Patchpanel, 12 Ports | Geräte hinten anstecken, vorne kurze Kabel zum Switch | 3 |
+| HP EliteDesk 805 G6 Mini in 3D-gedruckter Frontblende | Proxmox-Host `pve01`: Ryzen 5 PRO 4650GE (6 Kerne, 12 Threads), 32 GB DDR4, 2× NVMe + 1× SATA-SSD. Links in der Blende ist Platz für einen JetKVM | 4 |
 | TP-Link TL-SG108E (V2) | Managed Switch mit 802.1Q-VLANs, in einer 3D-gedruckten 10-Zoll-Halterung | 5 |
-| HP EliteDesk 805 G6 Mini auf Fachboden | Proxmox-Host `pve01`: Ryzen 5 PRO 4650GE (6 Kerne, 12 Threads), 32 GB DDR4, 2× NVMe + 1× SATA-SSD | 6 |
-| frei bzw. Belüftungsblende | Platz für HAT, Kühler und SSDs des NAS | 7 |
-| Raspberry Pi 5 + Radxa Penta SATA HAT auf SBC Shelf | NAS mit OpenMediaVault, 4× 1 TB SSD, Backup-Ziel | 8 |
+| Blindblende + gelochte Blende | Verdecken das NAS, die gelochte Blende lässt Luft durch | 6–7 |
+| Raspberry Pi 5 + Radxa Penta SATA HAT auf dem Fachboden | NAS mit OpenMediaVault, 4× 1 TB SSD, Backup-Ziel | 8 |
 
 > [!NOTE]
-> Das Patchpanel sitzt bewusst oben mit Abstand zum Switch. So fallen die kurzen Kabel sauber vor den Blenden nach unten. Die Patchpanel-Nummern sind dadurch um 2 versetzt: Patchpanel 3–10 gehen auf Switch 1–8.
+> Die kurzen Kabel laufen vom Patchpanel vor dem Mini-PC nach unten zum Switch. Die Patchpanel-Nummern sind um 2 versetzt: Patchpanel 3–10 gehen auf Switch 1–8.
 
 ![Rack-Belegung von vorne](diagramme/rack-belegung-2026-10-21.png)
 
-*Planungsstand 21.10. Inzwischen sitzt der Mini-PC zwischen Patchpanel und Switch, siehe Stand oben. So bleiben die kurzen Kabel vom Patchpanel zum Switch gleich lang und das NAS hat unten genug Platz und Luft.*
+*Planungsstand 21.10. Inzwischen sieht die Belegung anders aus, siehe Stand und Tabelle oben.*
 
 Im Dauerbetrieb braucht alles zusammen etwa 30–40 W.
 
@@ -91,7 +90,8 @@ Aufrüsten, Proxmox installieren, Speicher, Monitoring mit Beszel und Fernzugrif
 - Das NAS ragt mit HAT, Kühler und SSDs über 1 HE hinaus. Deshalb liegt es ganz unten und die HE darüber bleibt frei bzw. bekommt eine Belüftungsblende.
 - Das DeskPi SBC Shelf hat zwei Pi-Plätze mit kleinen Adapterplatinen (KL-P24), die USB-C und HDMI nach vorne führen. Fürs NAS werden sie nicht gebraucht: Der Pi bekommt Strom über das 12-V-Netzteil am Penta HAT. Dann **nicht zusätzlich** per USB-C einspeisen.
 - Den Pi am besten auf dem Tisch aufs Shelf schrauben und das Shelf danach einbauen.
-- **Nachgemessen:** Mit HAT, Kühler und stehenden SSDs passt das NAS bei mir nicht in die 2 HE unter dem Fachboden des Mini-PCs. Lösung ohne alles umzubauen: gelochte Blende aus HE 4 raus, Switch nach HE 4, Fachboden mit Mini-PC nach HE 5. Dann sind HE 6–8 frei (ca. 13 cm).
+- **Frontblende für den Mini-PC:** Seit 30.10. sitzt der HP in einer 3D-gedruckten 10-Zoll-Blende statt auf dem Fachboden. Dafür wird die Bodenplatte des HP gegen die Platte der Blende getauscht. Vorher pve01 sauber herunterfahren (Proxmox: Knoten auswählen → **Bulk Actions → Bulk Shutdown**, dann **Shutdown**). Bei mir saßen die Löcher links nicht genau auf den Rack-Löchern und mussten nachgefeilt werden. Druckmodelle vorher an die Schiene halten. Den frei gewordenen Fachboden nutzt jetzt das NAS in HE 8.
+- **Nachgemessen:** Mit HAT, Kühler und stehenden SSDs passt das NAS nicht in 1 HE. Bei mir steht es auf dem Fachboden in HE 8, davor sitzen in HE 6–7 eine Blindblende und eine gelochte Blende.
 
 ## Häufige Fehler
 
