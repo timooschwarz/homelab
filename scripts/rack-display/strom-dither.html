@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="de"><head><meta charset="utf-8"><title>Rack Strom · Dither</title><style>
+  html,body{margin:0;height:100%;background:#050008;overflow:hidden;cursor:none}
+  canvas{width:100vw;height:100vh;display:block;image-rendering:pixelated}
+</style></head><body>
+<canvas id="c"></canvas>
+<script>
+  // ---- Einstellungen ----
+  const QUELLE   = "/shelly/rpc/Switch.GetStatus?id=0";
+  const FENSTER  = 300;    // Sekunden im Graphen (300 = 5 Minuten)
+  const PREIS    = 0.35;   // € pro kWh
+  const NACHT_AB = 22, NACHT_BIS = 10;
+  const PIXEL    = 3;      // Größe eines Dither-Pixels (2 = feiner, 4 = gröber)
+  // Farbpalette von dunkel nach hell (schwarz-grauer Dither-Look; lila: ["#06000c","#2a0659","#6a12c4","#b13cff","#ffc8ff"])
+  const PALETTE  = ["#000000","#1a1a1a","#3a3a3a","#707070","#e6e6e6"];
+  // -----------------------
+  const cv = document.getElementById("c"), out = cv.getContext("2d");
+  let BW, BH, buf, b, txt, t;
+  const PAL = PALETTE.map(h => [1,3,5].map(i => parseInt(h.substr(i,2),16)));
+  const BAYER = [[0,32,8,40,2,34,10,42],[48,16,56,24,50,18,58,26],[12,44,4,36,14,46,6,38],[60,28,52,20,62,30,54,22],
+                 [3,35,11,43,1,33,9,41],[51,19,59,27,49,17,57,25],[15,47,7,39,13,45,5,37],[63,31,55,23,61,29,53,21]]
+                 .map(r => r.map(v => (v + .5) / 64 - .5));
+  const daten = [];
+  let fehler = false, trend = "", stats = null;
+
+  function groesse() {
+    BW = Math.ceil(innerWidth / PIXEL); BH = Math.ceil(innerHeight / PIXEL);
+    cv.width = BW; cv.height = BH;
+    buf = document.createElement("canvas"); buf.width = BW; buf.height = BH; b = buf.getContext("2d", {willReadFrequently: true});
+    txt = document.createElement("canvas"); txt.width = BW; txt.height = BH; t = txt.getContext("2d", {willReadFrequently: true});
+  }
+  const grau = v => { const c = Math.round(v * 255); return `rgb(${c},${c},${c})`; };
+  const fmt = w => (Math.round(w * 10) / 10).toLocaleString("de-DE", {minimumFractionDigits: 1, maximumFractionDigits: 1});
+  function nacht() { const h = new Date().getHours(); return h >= NACHT_AB || h < NACHT_BIS; }
+
+  function neu(w) {
+    const jetzt = Date.now();
+    daten.push({t: jetzt, w});
+    while (daten.length && daten[0].t < jetzt - FENSTER * 1000) daten.shift();
+    const ws = daten.map(d => d.w);
+    const avg = ws.reduce((a, c) => a + c, 0) / ws.length;
+    stats = {w, min: Math.min(...ws), max: Math.max(...ws), avg};
+    if (daten.length > 10) {
+      const d = w - daten[Math.max(0, daten.length - 31)].w;
+      trend = Math.abs(d) < .5 ? "> STABIL" : (d > 0 ? "^ +" : "v -") + fmt(Math.abs(d)) + " W / 30 S";
+    }
+  }
+
+  function szene(zeit) {
+    // Hintergrund: langsam wandernde Lichtflecken (werden zu Dither-Mustern)
+    b.fillStyle = grau(.08); b.fillRect(0, 0, BW, BH);
+    const fx = BW * (.55 + .25 * Math.sin(zeit / 9000)), fy = BH * (.4 + .3 * Math.cos(zeit / 7000));
+    let g = b.createRadialGradient(fx, fy, 0, fx, fy, BW * .6);
+    g.addColorStop(0, grau(.42)); g.addColorStop(1, grau(.06));
+    b.fillStyle = g; b.fillRect(0, 0, BW, BH);
+    const gx = BW * (.15 + .1 * Math.cos(zeit / 11000)), gy = BH * .8;
+    g = b.createRadialGradient(gx, gy, 0, gx, gy, BW * .3);
+    g.addColorStop(0, "rgba(255,255,255,.18)"); g.addColorStop(1, "rgba(255,255,255,0)");
+    b.fillStyle = g; b.fillRect(0, 0, BW, BH);
+
+    // Graph-Bereich
+    const L = Math.round(BW * .36), R = BW - 6, T = 8, U = BH - 14, pw = R - L, ph = U - T;
+    b.fillStyle = "rgba(0,0,0,.55)"; b.fillRect(L, T, pw, ph);
+    if (!daten.length) return {L, R, T, U};
+    const ws = daten.map(d => d.w);
+    let lo = Math.min(...ws), hi = Math.max(...ws);
+    const schritt = (hi - lo) > 40 ? 20 : (hi - lo) > 15 ? 10 : 5;
+    lo = Math.max(0, Math.floor((lo - 2) / schritt) * schritt);
+    hi = Math.ceil((hi + 2) / schritt) * schritt;
+    if (hi - lo < schritt * 2) hi = lo + schritt * 2;
+    const y = w => U - (w - lo) / (hi - lo) * ph;
+    const jetzt = Date.now(), x = tt => R - (jetzt - tt) / (FENSTER * 1000) * pw;
+    // Raster (gepunktet)
+    b.fillStyle = grau(.5);
+    for (let v = lo; v <= hi + .01; v += schritt) { const yy = Math.round(y(v)); for (let xx = L; xx < R; xx += 3) b.fillRect(xx, yy, 1, 1); }
+    // Fläche mit Verlauf -> wird zum typischen Dither-Verlauf
+    b.save(); b.beginPath(); b.rect(L, T, pw, ph); b.clip();
+    g = b.createLinearGradient(0, T, 0, U); g.addColorStop(0, grau(.85)); g.addColorStop(1, grau(.12));
+    b.beginPath(); daten.forEach((d, i) => i ? b.lineTo(x(d.t), y(d.w)) : b.moveTo(x(d.t), y(d.w)));
+    b.lineTo(x(daten[daten.length - 1].t), U); b.lineTo(x(daten[0].t), U); b.closePath(); b.fillStyle = g; b.fill();
+    b.restore();
+    return {L, R, T, U, lo, hi, schritt, y, x};
+  }
+
+  function texte(g) {
+    t.clearRect(0, 0, BW, BH);
+    const schrift = (px, fett) => `${fett ? "bold " : ""}${px}px "DejaVu Sans Mono", monospace`;
+    const schreibe = (s, x, y, px, fett, align = "left") => {
+      t.font = schrift(px, fett); t.textAlign = align; t.textBaseline = "top";
+      if (px >= 30) { t.lineWidth = 3; t.strokeStyle = "#000"; t.strokeText(s, x, y); }
+      t.fillStyle = "#fff"; t.fillText(s, x, y);
+    };
+    const S = BH / 134;  // Skalierung für andere Auflösungen
+    schreibe((fehler ? "x " : "* ") + "RACK // LIVE", 6, 6, Math.round(9 * S), true);
+    if (stats) {
+      t.font = schrift(Math.round(48 * S), true);
+      const zahl = String(Math.round(stats.w)), zb = t.measureText(zahl).width;
+      schreibe(zahl, 5, Math.round(18 * S), Math.round(48 * S), true);
+      schreibe("W", 8 + zb, Math.round(44 * S), Math.round(16 * S), true);
+      schreibe(trend, 6, Math.round(70 * S), Math.round(9 * S), true);
+      const sx = [6, 50, 94].map(v => Math.round(v * S));
+      [["MIN", stats.min], ["AVG", stats.avg], ["MAX", stats.max]].forEach(([l, v], i) => {
+        schreibe(l, sx[i], Math.round(90 * S), Math.round(8 * S), true);
+        schreibe(fmt(v), sx[i], Math.round(100 * S), Math.round(11 * S), true);
+      });
+      const eur = (stats.avg * 24 * 30 / 1000 * PREIS).toLocaleString("de-DE", {minimumFractionDigits: 2, maximumFractionDigits: 2});
+      schreibe("CA. " + eur + " EUR/MONAT", 6, Math.round(120 * S), Math.round(8 * S), true);
+    } else {
+      schreibe("--", 5, Math.round(18 * S), Math.round(48 * S), true);
+    }
+    if (g.y) {
+      for (let v = g.lo; v <= g.hi + .01; v += g.schritt) schreibe(String(v), g.L - 3, Math.round(g.y(v)) - 4, Math.round(8 * S), true, "right");
+      const n = FENSTER / 60;
+      for (let m = n; m >= 0; m--) {
+        const xx = g.R - m * 60 / FENSTER * (g.R - g.L);
+        schreibe(m ? "-" + m + "MIN" : "JETZT", Math.min(Math.max(xx, g.L + 10), g.R - 14), g.U + 3, Math.round(8 * S), true, "center");
+      }
+    }
+  }
+
+  function linie(g) {
+    if (!g.y || !daten.length) return;
+    t.save(); t.beginPath(); t.rect(g.L, g.T, g.R - g.L, g.U - g.T); t.clip();
+    t.beginPath(); daten.forEach((d, i) => i ? t.lineTo(g.x(d.t), g.y(d.w)) : t.moveTo(g.x(d.t), g.y(d.w)));
+    t.lineWidth = 1; t.strokeStyle = "#fff"; t.stroke();
+    t.restore();
+    const l = daten[daten.length - 1];
+    t.fillStyle = "#fff"; t.fillRect(Math.round(g.x(l.t)) - 2, Math.round(g.y(l.w)) - 2, 4, 4);
+  }
+
+  function frame(zeit) {
+    if (nacht()) { out.fillStyle = "#000"; out.fillRect(0, 0, BW, BH); return; }
+    const g = szene(zeit); texte(g); linie(g);
+    const bild = b.getImageData(0, 0, BW, BH), p = bild.data, tx = t.getImageData(0, 0, BW, BH).data;
+    const N = PAL.length - 1, HELL = PAL[N], DUNKEL = PAL[0];
+    for (let yy = 0, i = 0; yy < BH; yy++) for (let xx = 0; xx < BW; xx++, i += 4) {
+      let c;
+      if (tx[i + 3] > 140) c = tx[i] > 128 ? HELL : DUNKEL;          // Text & Linie: scharf, nicht gedithert
+      else {
+        const l = (p[i] * .299 + p[i + 1] * .587 + p[i + 2] * .114) / 255;
+        c = PAL[Math.max(0, Math.min(N, Math.round(l * N + BAYER[yy & 7][xx & 7])))];
+      }
+      p[i] = c[0]; p[i + 1] = c[1]; p[i + 2] = c[2]; p[i + 3] = 255;
+    }
+    out.putImageData(bild, 0, 0);
+  }
+
+  function hole() {
+    if (nacht()) return;
+    fetch(QUELLE, {cache: "no-store"}).then(r => r.json())
+      .then(d => { fehler = false; neu(d.apower); })
+      .catch(() => { fehler = true; });
+  }
+  let letzte = 0;
+  function loop(z) { if (z - letzte > 80) { letzte = z; frame(z); } requestAnimationFrame(loop); }
+  groesse(); addEventListener("resize", groesse);
+  hole(); setInterval(hole, 1000); requestAnimationFrame(loop);
+</script>
+</body></html>

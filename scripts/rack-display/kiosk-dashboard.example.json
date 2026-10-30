@@ -1,0 +1,13 @@
+{
+  "shelly": "http://192.168.2.237",
+  "beszel_url": "http://192.168.2.21:8090",
+  "beszel_user": "kiosk@rack.local",
+  "beszel_password": "HIER-PASSWORT",
+  "pihole_url": "http://127.0.0.1:8080",
+  "pihole_password": "HIER-PIHOLE-APP-PASSWORT",
+  "kuma_url": "http://127.0.0.1:3001",
+  "kuma_slug": "rack",
+  "pve_url": "https://192.168.2.20:8006",
+  "pve_node": "pve01",
+  "pve_token": "root@pam!kiosk=HIER-TOKEN-SECRET"
+}

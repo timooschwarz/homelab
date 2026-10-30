@@ -5,7 +5,7 @@
 [![Netzwerk](https://img.shields.io/badge/-Netzwerk-1D9E75?style=flat-square)](../README.md#thema-netz) [![Hyper-V](https://img.shields.io/badge/-Hyper--V-5F5E5A?style=flat-square)](../README.md#thema-hyperv)
 
 > **Ziel:** Das Lab läuft dauerhaft auf einem eigenen, sparsamen Mini-PC statt auf dem großen PC. Mini-PC, Switch und NAS sitzen ordentlich verkabelt in einem kleinen 10-Zoll-Rack.
-> **Stand:** 30.10.2026 · Alles im Rack. Von oben: **HE 1–2 Rack-Display** (7,84 Zoll, Strom-Dashboard vom Pi), **HE 3 Patchpanel**, **HE 4 Mini-PC** (pve01, in einer 3D-gedruckten Frontblende), **HE 5 Switch**, HE 6 Blindblende, HE 7 gelochte Blende, **HE 8 Pi-NAS auf dem Fachboden**. Auf dem Mini-PC läuft Proxmox VE ([Kapitel 15](anleitung/15-proxmox-host.md)), das NAS ist in [Kapitel 16](anleitung/16-pi-nas.md) beschrieben.
+> **Stand:** 30.10.2026 · Alles im Rack. Von oben: **HE 1–2 Rack-Display** (7,84 Zoll, Dashboard vom Pi, [Kapitel 20](anleitung/20-rack-display.md)), **HE 3 Patchpanel**, **HE 4 Mini-PC** (pve01, in einer 3D-gedruckten Frontblende), **HE 5 Switch**, HE 6 Blindblende, HE 7 gelochte Blende, **HE 8 Pi-NAS auf dem Fachboden**. Auf dem Mini-PC läuft Proxmox VE ([Kapitel 15](anleitung/15-proxmox-host.md)), das NAS ist in [Kapitel 16](anleitung/16-pi-nas.md) beschrieben.
 
 Die Anleitung (Kapitel 0–14) funktioniert weiterhin auf einem einzigen PC mit Hyper-V. Diese Seite beschreibt Rack, Verkabelung und Switch für den Umzug auf eigene Hardware. Es ist optional. Auf dem Mini-PC läuft **Proxmox VE** statt Hyper-V: Die Windows-Server laufen dort als KVM-VMs, Linux-Dienste können als schlanke LXC-Container laufen.
 
@@ -14,7 +14,7 @@ Die Anleitung (Kapitel 0–14) funktioniert weiterhin auf einem einzigen PC mit 
 | Teil | Aufgabe | Position (von oben) |
 |---|---|---|
 | DeskPi RackMate T1 Plus | 10-Zoll-Rack, 8 HE, 260 mm tief | – |
-| Rack-Display 7,84 Zoll (GeeekPi) | Zeigt den Stromverbrauch des Racks, hängt per HDMI am Pi-NAS | 1–2 |
+| Rack-Display 7,84 Zoll (GeeekPi) | Dashboard mit Strom, Servern und Diensten, hängt per HDMI und USB am Pi-NAS ([Kapitel 20](anleitung/20-rack-display.md)) | 1–2 |
 | Keystone-Patchpanel, 12 Ports | Geräte hinten anstecken, vorne kurze Kabel zum Switch | 3 |
 | HP EliteDesk 805 G6 Mini in 3D-gedruckter Frontblende | Proxmox-Host `pve01`: Ryzen 5 PRO 4650GE (6 Kerne, 12 Threads), 32 GB DDR4, 2× NVMe + 1× SATA-SSD. Links in der Blende ist Platz für einen JetKVM | 4 |
 | TP-Link TL-SG108E (V2) | Managed Switch mit 802.1Q-VLANs, in einer 3D-gedruckten 10-Zoll-Halterung | 5 |

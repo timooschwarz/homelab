@@ -1,6 +1,10 @@
 # Changelog
 
 ## 2026-10-30
+- Neues [Kapitel 20 · Rack-Display](anleitung/20-rack-display.md): Touch-Display am Pi-NAS als Kiosk (cage + Chromium), Dashboard im Widget-Stil mit Live-Strom vom Shelly Plug, Beszel-Ringen für alle Server, Pi-hole, Uptime-Kuma-Statusseite und letztem Proxmox-Backup (Nur-Lese-Token `PVEAuditor`), Detailansichten per Antippen, Seiten per Wischen
+- Display nachts per `uhubctl` stromlos (Pi 5 schaltet USB-Strom, der HP nicht), Zeitplan per Cron
+- Dateien in [`scripts/rack-display/`](../scripts/rack-display/), Zugangsdaten nur als Vorlage mit Platzhaltern
+- Neue Fälle in der [Fehlerbehebung](fehlerbehebung.md#rack-display-kapitel-20)
 - [Hardware](hardware.md): Mini-PC sitzt jetzt in einer 3D-gedruckten Frontblende (HE 4), Rack-Display oben in HE 1–2, Pi-NAS auf dem Fachboden in HE 8. Neue Belegung, Montage-Tipp zum Umbau
 
 ## 2026-10-28

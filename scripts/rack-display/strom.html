@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="de"><head><meta charset="utf-8"><title>Rack Strom</title><style>
+  html,body{margin:0;height:100%;background:#0b0f14;color:#e6e9ee;overflow:hidden;cursor:none;
+            font-family:system-ui,"DejaVu Sans",sans-serif}
+  #wrap{display:flex;height:100%;box-sizing:border-box;padding:18px 22px;gap:22px}
+  #links{width:270px;display:flex;flex-direction:column;justify-content:space-between}
+  .titel{font-size:15px;letter-spacing:2px;text-transform:uppercase;color:#8b95a3;display:flex;align-items:center;gap:8px}
+  .punkt{width:9px;height:9px;border-radius:50%;background:#22c55e;box-shadow:0 0 8px #22c55e}
+  .punkt.off{background:#ef4444;box-shadow:0 0 8px #ef4444}
+  #jetzt{font-size:104px;font-weight:700;line-height:1;letter-spacing:-2px;font-variant-numeric:tabular-nums}
+  #jetzt small{font-size:40px;font-weight:600;color:#8b95a3;margin-left:6px;letter-spacing:0}
+  #trend{font-size:16px;color:#8b95a3;margin-top:6px;height:20px}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+  .stat .l{font-size:12px;color:#8b95a3;text-transform:uppercase;letter-spacing:1px}
+  .stat .v{font-size:22px;font-weight:600;font-variant-numeric:tabular-nums}
+  #kosten{font-size:14px;color:#8b95a3}
+  #kosten b{color:#e6e9ee;font-weight:600}
+  #rechts{flex:1;position:relative}
+  canvas{width:100%;height:100%;display:block}
+  #nacht{position:fixed;inset:0;background:#000;display:none;z-index:9}
+</style></head><body>
+<div id="wrap">
+  <div id="links">
+    <div>
+      <div class="titel"><span class="punkt" id="status"></span>Rack · Live</div>
+      <div id="jetzt">–<small>W</small></div>
+      <div id="trend">&nbsp;</div>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="l">Min</div><div class="v" id="min">–</div></div>
+      <div class="stat"><div class="l">Ø</div><div class="v" id="avg">–</div></div>
+      <div class="stat"><div class="l">Max</div><div class="v" id="max">–</div></div>
+    </div>
+    <div id="kosten">≈ <b id="eur">–</b> pro Monat bei diesem Ø</div>
+  </div>
+  <div id="rechts"><canvas id="c"></canvas></div>
+</div>
+<div id="nacht"></div>
+<script>
+  // ---- Einstellungen ----
+  const SHELLY   = "192.168.2.237";
+  const FENSTER  = 300;    // Sekunden im Graphen (300 = 5 Minuten)
+  const PREIS    = 0.35;   // € pro kWh
+  const NACHT_AB = 22, NACHT_BIS = 10;
+  const FARBE    = "#facc15";
+  // -----------------------
+  const daten = [];   // {t, w}
+  const $ = id => document.getElementById(id);
+  const cv = $("c"), ctx = cv.getContext("2d");
+  const fmt = w => (Math.round(w * 10) / 10).toLocaleString("de-DE", {minimumFractionDigits: 1, maximumFractionDigits: 1});
+
+  function nacht() { const h = new Date().getHours(); return h >= NACHT_AB || h < NACHT_BIS; }
+
+  function neu(w) {
+    const t = Date.now();
+    daten.push({t, w});
+    while (daten.length && daten[0].t < t - FENSTER * 1000) daten.shift();
+    const ws = daten.map(d => d.w);
+    const min = Math.min(...ws), max = Math.max(...ws), avg = ws.reduce((a, b) => a + b, 0) / ws.length;
+    $("jetzt").innerHTML = Math.round(w) + "<small>W</small>";
+    $("min").textContent = fmt(min) + " W"; $("avg").textContent = fmt(avg) + " W"; $("max").textContent = fmt(max) + " W";
+    $("eur").textContent = (avg * 24 * 30 / 1000 * PREIS).toLocaleString("de-DE", {style: "currency", currency: "EUR"});
+    if (daten.length > 10) {
+      const alt = daten[Math.max(0, daten.length - 31)].w, d = w - alt;
+      $("trend").textContent = Math.abs(d) < 0.5 ? "→ stabil" : (d > 0 ? "↑ +" : "↓ −") + (Math.abs(d) < 0.5 ? "" : fmt(Math.abs(d)) + " W in 30 s");
+    }
+    zeichne();
+  }
+
+  function zeichne() {
+    const dpr = window.devicePixelRatio || 1, W = cv.clientWidth, H = cv.clientHeight;
+    if (cv.width !== W * dpr) { cv.width = W * dpr; cv.height = H * dpr; }
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+    const L = 44, R = 8, T = 10, B = 26, pw = W - L - R, ph = H - T - B;
+    if (!daten.length) return;
+    const ws = daten.map(d => d.w);
+    let lo = Math.min(...ws), hi = Math.max(...ws);
+    const schritt = (hi - lo) > 40 ? 20 : (hi - lo) > 15 ? 10 : 5;
+    lo = Math.max(0, Math.floor((lo - 2) / schritt) * schritt);
+    hi = Math.ceil((hi + 2) / schritt) * schritt;
+    if (hi - lo < schritt * 2) hi = lo + schritt * 2;
+    const y = w => T + ph - (w - lo) / (hi - lo) * ph;
+    const jetzt = Date.now(), x = t => L + pw - (jetzt - t) / (FENSTER * 1000) * pw;
+
+    // Raster + Y-Beschriftung
+    ctx.font = "13px system-ui, sans-serif"; ctx.textAlign = "right"; ctx.textBaseline = "middle";
+    for (let v = lo; v <= hi + 0.01; v += schritt) {
+      ctx.strokeStyle = "rgba(255,255,255,.07)"; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(L, Math.round(y(v)) + .5); ctx.lineTo(L + pw, Math.round(y(v)) + .5); ctx.stroke();
+      ctx.fillStyle = "#8b95a3"; ctx.fillText(v + " W", L - 8, y(v));
+    }
+    // X-Beschriftung
+    ctx.textAlign = "center"; ctx.textBaseline = "top";
+    const n = FENSTER / 60;
+    for (let m = n; m >= 0; m--) {
+      const xx = L + pw - m * 60 / FENSTER * pw;
+      ctx.fillText(m === 0 ? "jetzt" : "−" + m + " min", Math.min(Math.max(xx, L + 20), L + pw - 16), T + ph + 8);
+    }
+    // Fläche
+    ctx.save(); ctx.beginPath(); ctx.rect(L, T, pw, ph); ctx.clip();
+    const g = ctx.createLinearGradient(0, T, 0, T + ph);
+    g.addColorStop(0, "rgba(250,204,21,.28)"); g.addColorStop(1, "rgba(250,204,21,0)");
+    ctx.beginPath();
+    daten.forEach((d, i) => i ? ctx.lineTo(x(d.t), y(d.w)) : ctx.moveTo(x(d.t), y(d.w)));
+    ctx.lineTo(x(daten[daten.length - 1].t), T + ph); ctx.lineTo(x(daten[0].t), T + ph); ctx.closePath();
+    ctx.fillStyle = g; ctx.fill();
+    // Linie
+    ctx.beginPath();
+    daten.forEach((d, i) => i ? ctx.lineTo(x(d.t), y(d.w)) : ctx.moveTo(x(d.t), y(d.w)));
+    ctx.strokeStyle = FARBE; ctx.lineWidth = 2; ctx.lineJoin = "round"; ctx.stroke();
+    ctx.restore();
+    // aktueller Punkt
+    const last = daten[daten.length - 1];
+    ctx.beginPath(); ctx.arc(x(last.t), y(last.w), 5, 0, 7);
+    ctx.fillStyle = FARBE; ctx.fill(); ctx.lineWidth = 2; ctx.strokeStyle = "#0b0f14"; ctx.stroke();
+  }
+
+  function hole() {
+    if (nacht()) { $("nacht").style.display = "block"; return; }
+    $("nacht").style.display = "none";
+    fetch("/shelly/rpc/Switch.GetStatus?id=0", {cache: "no-store"})
+      .then(r => r.json())
+      .then(d => { $("status").classList.remove("off"); neu(d.apower); })
+      .catch(() => $("status").classList.add("off"));
+  }
+  hole(); setInterval(hole, 1000);
+  window.addEventListener("resize", zeichne);
+</script>
+</body></html>

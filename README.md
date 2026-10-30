@@ -10,12 +10,12 @@
 ![Proxmox VE](https://img.shields.io/badge/Proxmox%20VE-9.2-E57000?logo=proxmox&logoColor=white)
 ![Raspberry Pi](https://img.shields.io/badge/Raspberry%20Pi%205-NAS-A22846?logo=raspberrypi&logoColor=white)
 ![VLAN](https://img.shields.io/badge/Netz-VLAN%2010%20(802.1Q)-1D9E75)
-![Kapitel](https://img.shields.io/badge/Kapitel-20-555555)
+![Kapitel](https://img.shields.io/badge/Kapitel-21-555555)
 
 ![Netzwerk des Labs](docs/diagramme/netzwerk-2026-10-27.png)
 
 > [!NOTE]
-> **Stand 27.10.2026:** Alle Server (DC01, FS01, TOOLS01, CM01, LOG01) sind aus Hyper-V auf den Mini-PC `pve01` mit Proxmox umgezogen ([Kapitel 17](docs/anleitung/17-umzug-hyperv-proxmox.md)). Das Pi-NAS sichert jede Nacht alle VMs und Container. Hyper-V auf dem Arbeits-PC bleibt nur noch für Testclients, die seit dem 27.10. über VLAN 10 direkt im Lab-Netz hängen ([Kapitel 19](docs/anleitung/19-vlan-testclient.md)). Beszel, zwei Uptime Kumas und Proxmox melden Ausfälle und Backup-Ergebnisse per Push aufs Handy ([Kapitel 18](docs/anleitung/18-betrieb.md)). Was wann dazukam: [Changelog](docs/changelog.md)
+> **Stand 27.10.2026:** Alle Server (DC01, FS01, TOOLS01, CM01, LOG01) sind aus Hyper-V auf den Mini-PC `pve01` mit Proxmox umgezogen ([Kapitel 17](docs/anleitung/17-umzug-hyperv-proxmox.md)). Das Pi-NAS sichert jede Nacht alle VMs und Container. Hyper-V auf dem Arbeits-PC bleibt nur noch für Testclients, die seit dem 27.10. über VLAN 10 direkt im Lab-Netz hängen ([Kapitel 19](docs/anleitung/19-vlan-testclient.md)). Beszel, zwei Uptime Kumas und Proxmox melden Ausfälle und Backup-Ergebnisse per Push aufs Handy ([Kapitel 18](docs/anleitung/18-betrieb.md)). Seit 30.10. zeigt ein Touch-Display im Rack Strom, Server, Dienste und Backups auf einen Blick ([Kapitel 20](docs/anleitung/20-rack-display.md)). Was wann dazukam: [Changelog](docs/changelog.md)
 
 ---
 
@@ -28,7 +28,7 @@
   - [Teil 3 · Client, Dateiserver und Gruppenrichtlinien](#teil-3--client-dateiserver-und-gruppenrichtlinien): [6 · Client](docs/anleitung/06-client.md) · [7 · Dateiserver](docs/anleitung/07-dateiserver.md) · [8 · Gruppenrichtlinien](docs/anleitung/08-gruppenrichtlinien.md)
   - [Teil 4 · Testen](#teil-4--testen): [9 · Testen](docs/anleitung/09-testen.md)
   - [Teil 5 · Erweiterungen: Linux, MECM und Sicherheit](#teil-5--erweiterungen-linux-mecm-und-sicherheit): [10 · Linux-Dienste](docs/anleitung/10-linux-dienste.md) · [11 · MECM](docs/anleitung/11-mecm.md) · [12 · Software verteilen](docs/anleitung/12-softwareverteilung.md) · [13 · Wazuh](docs/anleitung/13-wazuh.md) · [14 · Homelable](docs/anleitung/14-homelable.md)
-  - [Teil 6 · Eigene Hardware: Proxmox, Rack und NAS](#teil-6--eigene-hardware-proxmox-rack-und-nas): [15 · Proxmox auf dem Mini-PC](docs/anleitung/15-proxmox-host.md) · [16 · NAS mit Raspberry Pi](docs/anleitung/16-pi-nas.md) · [17 · Umzug von Hyper-V](docs/anleitung/17-umzug-hyperv-proxmox.md) · [18 · Betrieb](docs/anleitung/18-betrieb.md) · [19 · VLAN und Testclient](docs/anleitung/19-vlan-testclient.md) · [Hardware und Rack](docs/hardware.md)
+  - [Teil 6 · Eigene Hardware: Proxmox, Rack und NAS](#teil-6--eigene-hardware-proxmox-rack-und-nas): [15 · Proxmox auf dem Mini-PC](docs/anleitung/15-proxmox-host.md) · [16 · NAS mit Raspberry Pi](docs/anleitung/16-pi-nas.md) · [17 · Umzug von Hyper-V](docs/anleitung/17-umzug-hyperv-proxmox.md) · [18 · Betrieb](docs/anleitung/18-betrieb.md) · [19 · VLAN und Testclient](docs/anleitung/19-vlan-testclient.md) · [20 · Rack-Display](docs/anleitung/20-rack-display.md) · [Hardware und Rack](docs/hardware.md)
 - [Nach Thema](#nach-thema)
 - [Betrieb: Starten, Stoppen, Sichern](#betrieb-starten-stoppen-sichern)
 - [Fehler, aus denen ich am meisten gelernt habe](#fehler-aus-denen-ich-am-meisten-gelernt-habe)
@@ -188,6 +188,7 @@ Damit das Lab rund um die Uhr läuft, ohne dass der große PC an sein muss: ein 
 | [17 · Umzug von Hyper-V auf Proxmox](docs/anleitung/17-umzug-hyperv-proxmox.md) | VHDX übernehmen, Linux-Treiber nachrüsten, Netzwerk und Guest Agent, Arbeits-PC umstellen | 3–4 Std. |
 | [18 · Betrieb: Monitoring, Alarme, Startseite](docs/anleitung/18-betrieb.md) | Alarme aufs Handy, Backup-Berichte, zweiter Wächter und Pi-hole auf dem Pi, Homepage, Namen über den Proxy, Notzugang | 3 Std. |
 | [19 · Lab-Netz als VLAN 10](docs/anleitung/19-vlan-testclient.md) | VLAN auf dem Switch, `vmbr1` auf pve01 als Trunk, externer Hyper-V-Switch, Testclient auf dem Arbeits-PC im Lab, Fehlersuche mit `ip -s link`, `tcpdump` und `pktmon` | 1,5 Std. |
+| [20 · Rack-Display](docs/anleitung/20-rack-display.md) | Touch-Display am Pi als Kiosk: Dashboard mit Strom (Shelly), Beszel, Pi-hole, Uptime Kuma und Proxmox-Backups, nachts per USB-Abschaltung komplett aus | 2–3 Std. |
 | [Hardware und Rack](docs/hardware.md) | Rack-Belegung, Patchpanel, Verkabelung, Managed Switch | – |
 
 ```mermaid
@@ -226,8 +227,8 @@ Jedes Kapitel hat oben Tags. Ein Klick auf einen Tag führt hierher, zu allen Ka
 | <a id="thema-ps"></a>![PowerShell](https://img.shields.io/badge/-PowerShell-5391FE?style=flat-square) | [1 · Netzwerk](docs/anleitung/01-netzwerk.md) · [5 · Benutzer per Skript](docs/anleitung/05-benutzer-per-skript.md) |
 | <a id="thema-hyperv"></a>![Hyper-V](https://img.shields.io/badge/-Hyper--V-5F5E5A?style=flat-square) | [0 · Voraussetzungen](docs/anleitung/00-voraussetzungen.md) · [1 · Netzwerk](docs/anleitung/01-netzwerk.md) · [14 · Homelable](docs/anleitung/14-homelable.md) · [17 · Umzug](docs/anleitung/17-umzug-hyperv-proxmox.md) · [19 · VLAN](docs/anleitung/19-vlan-testclient.md) |
 | <a id="thema-test"></a>![Testen](https://img.shields.io/badge/-Testen-D4537E?style=flat-square) | [9 · Testen](docs/anleitung/09-testen.md) · [12 · Software verteilen](docs/anleitung/12-softwareverteilung.md) · [13 · Wazuh](docs/anleitung/13-wazuh.md) |
-| <a id="thema-linux"></a>![Linux & Docker](https://img.shields.io/badge/-Linux%20%26%20Docker-E95420?style=flat-square) | [10 · Linux-Dienste](docs/anleitung/10-linux-dienste.md) · [13 · Wazuh](docs/anleitung/13-wazuh.md) · [14 · Homelable](docs/anleitung/14-homelable.md) · [15 · Proxmox-Host](docs/anleitung/15-proxmox-host.md) · [16 · Pi-NAS](docs/anleitung/16-pi-nas.md) · [17 · Umzug](docs/anleitung/17-umzug-hyperv-proxmox.md) · [18 · Betrieb](docs/anleitung/18-betrieb.md) |
-| <a id="thema-proxmox"></a>![Proxmox](https://img.shields.io/badge/-Proxmox-E57000?style=flat-square) | [14 · Homelable](docs/anleitung/14-homelable.md) · [15 · Proxmox-Host](docs/anleitung/15-proxmox-host.md) · [16 · Pi-NAS](docs/anleitung/16-pi-nas.md) · [17 · Umzug](docs/anleitung/17-umzug-hyperv-proxmox.md) · [18 · Betrieb](docs/anleitung/18-betrieb.md) |
+| <a id="thema-linux"></a>![Linux & Docker](https://img.shields.io/badge/-Linux%20%26%20Docker-E95420?style=flat-square) | [10 · Linux-Dienste](docs/anleitung/10-linux-dienste.md) · [13 · Wazuh](docs/anleitung/13-wazuh.md) · [14 · Homelable](docs/anleitung/14-homelable.md) · [15 · Proxmox-Host](docs/anleitung/15-proxmox-host.md) · [16 · Pi-NAS](docs/anleitung/16-pi-nas.md) · [17 · Umzug](docs/anleitung/17-umzug-hyperv-proxmox.md) · [18 · Betrieb](docs/anleitung/18-betrieb.md) · [20 · Rack-Display](docs/anleitung/20-rack-display.md) |
+| <a id="thema-proxmox"></a>![Proxmox](https://img.shields.io/badge/-Proxmox-E57000?style=flat-square) | [14 · Homelable](docs/anleitung/14-homelable.md) · [15 · Proxmox-Host](docs/anleitung/15-proxmox-host.md) · [16 · Pi-NAS](docs/anleitung/16-pi-nas.md) · [17 · Umzug](docs/anleitung/17-umzug-hyperv-proxmox.md) · [18 · Betrieb](docs/anleitung/18-betrieb.md) · [20 · Rack-Display](docs/anleitung/20-rack-display.md) |
 | <a id="thema-mecm"></a>![MECM](https://img.shields.io/badge/-MECM-107C10?style=flat-square) | [11 · MECM](docs/anleitung/11-mecm.md) · [12 · Software verteilen](docs/anleitung/12-softwareverteilung.md) |
 
 ---
@@ -296,7 +297,7 @@ Details: [Roadmap](docs/roadmap.md) · Eigene Hardware im 10-Zoll-Rack: [Hardwar
 
 ```
 docs/
-  anleitung/          Schritt-für-Schritt-Anleitung, Kapitel 0–19
+  anleitung/          Schritt-für-Schritt-Anleitung, Kapitel 0–20
   bilder/             Screenshots und Fotos aus dem Lab
   diagramme/          Übersichtsgrafiken
   aufbau.md           Referenz des fertigen Labs
@@ -308,6 +309,7 @@ docs/
 scripts/
   New-LabBulkUsers.ps1   Testbenutzer per CSV anlegen
   benutzer.example.csv   Beispiel-CSV
+  rack-display/          Kiosk-Dashboard fürs Rack-Display (Kapitel 20)
 ```
 
 ---

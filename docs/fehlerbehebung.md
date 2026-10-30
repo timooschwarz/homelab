@@ -305,6 +305,28 @@ Fehler, die beim Aufbau aufgetreten sind, jeweils mit Ursache und Lösung.
 - **Ursache:** Der Intel-Treiber kam mit dem externen Hyper-V-Switch nach dem Umstellen nicht mehr klar.
 - **Lösung:** Einstellung zurück auf *aktiviert*, PC neu starten. Bei der I226-V muss man daran nichts ändern.
 
+## Rack-Display (Kapitel 20)
+
+### Watt-Anzeige bleibt bei „– W“
+**Ursache:** Die Seite war als `file://` geöffnet. Chromium blockt dann Abfragen an den Shelly im Netz (CORS).
+**Lösung:** Seite über den lokalen kiosk-server laden (`http://127.0.0.1:8099/…`), der holt die Daten selbst ab.
+
+### Display nach `ddcutil setvcp d6 4` nicht mehr ansprechbar
+**Ursache:** Der Befehl schaltet das Display hart aus (DPMS-Off). Danach antwortet es nicht mehr per DDC, `ddcutil` meldet *Display not found*.
+**Lösung:** Display kurz vom Strom trennen. Für den Nachtbetrieb stattdessen den USB-Strom per `uhubctl` schalten.
+
+### Nachtmodus per Cron schaltet nicht, von Hand schon
+**Ursache:** Cron startet mit minimalem `PATH`, `uhubctl` liegt in `/usr/sbin` und wird nicht gefunden. Die Fehlermeldung verschwindet in `/dev/null`.
+**Lösung:** `PATH=…` als zweite Zeile ins Skript, testen mit `sudo env -i /usr/local/bin/display-zeitplan`.
+
+### `uhubctl`: *No compatible devices detected* am Mini-PC
+**Ursache:** Die USB-Controller des HP können den Strom einzelner Ports nicht schalten.
+**Lösung:** Display an den Pi 5 hängen, dort schaltet `uhubctl` die Hubs 1–4 (nur gemeinsam).
+
+### Mauszeiger steht mitten im Kiosk-Bild
+**Ursache:** cage zeigt den Zeiger, solange er nicht bewegt wird. Ein leeres Cursor-Theme hilft nicht.
+**Lösung:** `cursor:none` auf der Seite und `wlrctl pointer move 5000 5000` nach dem Start, auf dem Pi zweimal (nach 15 und 45 Sekunden).
+
 ## Linux und Docker
 
 ### NetBox nach Neustart offline

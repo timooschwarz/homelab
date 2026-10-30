@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="de"><head><meta charset="utf-8"><title>Rack</title><style>
+  :root{
+    --bg:#000; --widget:#1c1c1e; --text:#fff; --leise:rgba(235,235,245,.6); --sehrleise:rgba(235,235,245,.3);
+    --rot:#ff453a; --orange:#ff9f0a; --gruen:#30d158; --blau:#0a84ff; --cyan:#64d2ff; --pink:#ff375f; --lila:#bf5af2;
+    --ring1:#fa114f; --ring2:#a6ff00; --ring3:#00f0ff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:var(--bg);color:var(--text);overflow:hidden;cursor:none;
+            font-family:-apple-system,"SF Pro Display","Inter","Inter Variable",system-ui,"DejaVu Sans",sans-serif;
+            -webkit-font-smoothing:antialiased;letter-spacing:-.2px}
+  #seiten{display:flex;height:100%;transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+  .seite{flex:0 0 100vw;height:100%;position:relative;overflow:hidden}
+  .seite iframe{border:0;width:100%;height:100%;display:block;background:#000}
+  .fang{position:absolute;inset:0}
+  #punkte{position:fixed;bottom:3px;left:50%;transform:translateX(-50%);display:flex;gap:7px;z-index:4}
+  #punkte i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.3);transition:background .3s}
+  #punkte i.an{background:rgba(255,255,255,.9)}
+  #wrap{display:grid;grid-template-columns:260px 1fr;gap:10px;height:100%;padding:10px}
+  .w{background:var(--widget);border-radius:22px;padding:14px 16px;min-width:0;position:relative;overflow:hidden}
+  .zahl{font-variant-numeric:tabular-nums}
+  .titel{font-size:13px;font-weight:600;color:var(--leise)}
+  /* links */
+  #links{display:grid;grid-template-rows:186px 1fr;gap:10px;min-height:0}
+  #tag{font-size:13px;font-weight:700;color:var(--rot);text-transform:uppercase;letter-spacing:.3px}
+  #uhr{font-size:56px;font-weight:300;line-height:1;letter-spacing:-2px;margin-top:2px}
+  .kurz{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;margin-top:6px}
+  .kurz i{width:8px;height:8px;border-radius:50%;background:var(--sehrleise);flex:none}
+  .kurz.ok i{background:var(--gruen)} .kurz.warn i{background:var(--orange)} .kurz.fehler i{background:var(--rot)}
+  .kurz.fehler{color:var(--rot)} .kurz span{color:var(--leise);font-weight:500}
+  #kurzbox{border-top:1px solid rgba(84,84,88,.45);margin-top:8px;padding-top:2px}
+  /* Seite Dienste */
+  #dienstewrap{display:grid;grid-template-columns:300px 1fr;gap:10px;height:100%;padding:10px}
+  #bkgross{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;color:#fff;background:var(--sehrleise);margin:8px 0 8px}
+  #bkgross.ok{background:var(--gruen)} #bkgross.warn{background:var(--orange)} #bkgross.fehler{background:var(--rot)}
+  #monitore{display:grid;grid-template-columns:repeat(3,1fr);gap:0 18px;align-content:start;margin-top:6px}
+  .mon{display:grid;grid-template-columns:10px 1fr auto;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid rgba(84,84,88,.35);font-size:13px}
+  .mon i{width:8px;height:8px;border-radius:50%;background:var(--sehrleise)}
+  .mon.s1 i{background:var(--gruen)} .mon.s0 i{background:var(--rot);box-shadow:0 0 6px var(--rot)} .mon.s2 i{background:var(--orange)} .mon.s3 i{background:var(--blau)}
+  .mon.s0 .n{color:var(--rot)}
+  .mon .n{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .mon .p{color:var(--leise);font-variant-numeric:tabular-nums;font-size:12px}
+  #datum{font-size:15px;font-weight:600;color:var(--leise);margin-top:6px}
+  #strom{display:flex;flex-direction:column;min-height:0}
+  #strom .kopf{display:flex;justify-content:space-between;align-items:center}
+  #strom .titel b{color:var(--orange);font-weight:700}
+  #watt{font-size:40px;font-weight:600;line-height:1.05;letter-spacing:-1px;margin-top:2px}
+  #watt small{font-size:18px;color:var(--leise);font-weight:600;margin-left:2px}
+  #spark{flex:1;width:100%;min-height:0;margin:4px 0}
+  #stromfuss{display:flex;justify-content:space-between;font-size:12px;color:var(--leise);font-weight:500}
+  #stromfuss b{color:var(--text);font-weight:600}
+  /* kacheln */
+  #kacheln{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr;gap:10px;min-height:0}
+  .geraet{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto 1fr;column-gap:14px}
+  .geraet .kopf{grid-column:1/3;display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+  .name{font-size:16px;font-weight:700;letter-spacing:-.3px}
+  .status{font-size:12px;font-weight:600;color:var(--sehrleise);display:flex;align-items:center;gap:5px}
+  .status i{width:7px;height:7px;border-radius:50%;background:var(--sehrleise)}
+  .up .status{color:var(--gruen)} .up .status i{background:var(--gruen)}
+  .down .status{color:var(--rot)} .down .status i{background:var(--rot)}
+  .status.up{color:var(--gruen)} .status.up i{background:var(--gruen)} .status.down{color:var(--rot)} .status.down i{background:var(--rot)}
+  svg.ringe{width:118px;height:118px;align-self:center}
+  .werte{display:flex;flex-direction:column;justify-content:center;gap:4px;font-size:13px}
+  .wert{display:flex;justify-content:space-between;align-items:baseline}
+  .wert span{color:var(--leise);font-weight:500}
+  .wert b{font-weight:600}
+  .wert.c1 b{color:var(--ring1)} .wert.c2 b{color:var(--ring2)} .wert.c3 b{color:var(--ring3)}
+  .extra{margin-top:4px;font-size:12px;color:var(--leise);display:flex;justify-content:space-between}
+  .extra b{color:var(--text);font-weight:600}
+  .aus svg.ringe,.aus .werte{opacity:.3}
+  /* pi-hole */
+  #pihole{display:flex;flex-direction:column;justify-content:space-between}
+  #pihole .gross{font-size:42px;font-weight:600;letter-spacing:-1.2px;line-height:1}
+  #pihole .gross small{font-size:20px;color:var(--leise);font-weight:600;margin-left:1px}
+  #pihole .unter{font-size:13px;color:var(--leise);font-weight:500;margin-top:2px}
+  .leiste{height:8px;border-radius:4px;background:rgba(120,120,128,.24);overflow:hidden}
+  .leiste i{display:block;height:100%;width:0;border-radius:4px;background:var(--rot);transition:width .8s}
+  #pihole .fuss{display:flex;justify-content:space-between;font-size:12px;color:var(--leise)}
+  #pihole .fuss b{color:var(--text);font-weight:600}
+  #nacht{position:fixed;inset:0;background:#000;display:none;z-index:9}
+  /* Antippen + Detailansicht */
+  .tippbar{cursor:none;transition:transform .15s ease}
+  .tippbar:active{transform:scale(.96)}
+  #detail{position:fixed;inset:0;background:var(--bg);padding:10px;z-index:5;display:flex;flex-direction:column;gap:10px;
+          transform:translateX(100%);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+  #detail.offen{transform:none}
+  #dkopf{display:flex;align-items:center;justify-content:space-between;height:34px;padding:0 6px}
+  #zurueck{color:var(--blau);font-size:17px;font-weight:500;display:flex;align-items:center;gap:4px;padding:6px 10px 6px 0}
+  #zurueck span{font-size:26px;line-height:17px;margin-top:-3px}
+  #dtitel{font-size:20px;font-weight:700;letter-spacing:-.4px;position:absolute;left:50%;transform:translateX(-50%)}
+  #dinhalt{flex:1;display:grid;grid-template-columns:260px 1fr 300px;gap:10px;min-height:0}
+  .liste{display:flex;flex-direction:column;gap:0;overflow:hidden}
+  .zeile{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:6px 0;border-bottom:1px solid rgba(84,84,88,.35);font-size:13px}
+  .zeile:last-child{border-bottom:0}
+  .zeile span{color:var(--leise);white-space:nowrap}
+  .zeile b{font-weight:600;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .chartbox{display:flex;flex-direction:column;min-height:0}
+  .chartbox canvas{flex:1;width:100%;min-height:0;margin-top:6px}
+  .legende{display:flex;gap:14px;font-size:12px;color:var(--leise);font-weight:500}
+  .legende i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}
+  .ringgross{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+  .ringgross svg{width:170px;height:170px}
+  .ringgross .werte{width:100%}
+  .rang{display:grid;grid-template-columns:1fr auto;gap:2px 10px;font-size:13px;padding:5px 0;border-bottom:1px solid rgba(84,84,88,.35)}
+  .rang:last-child{border-bottom:0}
+  .rang .d{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .rang .c{color:var(--leise);font-variant-numeric:tabular-nums}
+  .rang .bar{grid-column:1/3;height:4px;border-radius:2px;background:rgba(120,120,128,.24);overflow:hidden}
+  .rang .bar i{display:block;height:100%;border-radius:2px}
+  #hinweis{position:fixed;bottom:6px;left:50%;transform:translateX(-50%);width:120px;height:4px;border-radius:2px;background:rgba(255,255,255,.25);z-index:6;display:none}
+</style></head><body>
+<div id="seiten">
+<div class="seite" id="s0">
+<div id="wrap">
+  <div id="links">
+    <div class="w">
+      <div id="tag">&nbsp;</div>
+      <div id="uhr" class="zahl">--:--</div>
+      <div id="datum">&nbsp;</div>
+      <div id="kurzbox">
+        <div class="kurz tippbar" id="kdienste"><i></i>Dienste <span id="kdtext">…</span></div>
+        <div class="kurz tippbar" id="kbackup"><i></i>Backup <span id="kbtext">…</span></div>
+      </div>
+    </div>
+    <div class="w" id="strom">
+      <div class="kopf"><span class="titel"><b>⚡︎</b> Rack</span><span class="titel" id="stromzeit">live</span></div>
+      <div id="watt" class="zahl">–<small>W</small></div>
+      <canvas id="spark"></canvas>
+      <div id="stromfuss"><span>Ø <b id="avg" class="zahl">–</b></span><span><b id="eur" class="zahl">–</b> / Monat</span></div>
+    </div>
+  </div>
+  <div id="kacheln"></div>
+</div>
+</div>
+<div class="seite" id="s1">
+  <div id="dienstewrap">
+    <div class="w" style="display:flex;flex-direction:column">
+      <span class="titel">Proxmox-Backup</span>
+      <div id="bkgross">–</div>
+      <div class="name" id="bktitel">&nbsp;</div>
+      <div style="color:var(--leise);font-size:13px;margin-top:2px" id="bkzeit">&nbsp;</div>
+      <div class="liste" id="bkliste" style="margin-top:auto"></div>
+    </div>
+    <div class="w" style="display:flex;flex-direction:column;min-height:0">
+      <div style="display:flex;justify-content:space-between;align-items:baseline"><span class="name">Dienste</span><span class="titel" id="monsumme"></span></div>
+      <div id="monitore"></div>
+    </div>
+  </div>
+</div>
+<div class="seite" id="s2"><iframe data-src="strom-dither.html"></iframe><div class="fang"></div></div>
+<div class="seite" id="s3"><iframe data-src="index.html"></iframe><div class="fang"></div></div>
+</div>
+<div id="punkte"><i class="an"></i><i></i><i></i><i></i></div>
+<div id="detail">
+  <div id="dkopf"><div id="zurueck"><span>‹</span>Übersicht</div><div id="dtitel"></div><div class="status" id="dstatus"></div></div>
+  <div id="dinhalt"></div>
+</div>
+<div id="nacht"></div>
+<script>
+  // ---- Einstellungen ----
+  const SYSTEME  = ["pve01", "pi-nas", "DC01", "FS01", "TOOLS01"];  // Reihenfolge der Kacheln
+  const PREIS    = 0.35;          // € pro kWh
+  const FENSTER  = 300;           // Sekunden im Strom-Graph der Übersicht
+  const PUFFER   = 1800;          // Sekunden Strom-Verlauf in der Detailansicht
+  const ZURUECK_NACH = 90;        // Sekunden ohne Berührung, dann zurück zur Übersicht
+  const NACHT_AB = 22, NACHT_BIS = 10;
+  // -----------------------
+  const $ = id => document.getElementById(id);
+  const de = (v, n = 0) => Number(v).toLocaleString("de-DE", {minimumFractionDigits: n, maximumFractionDigits: n});
+  const nacht = () => { const h = new Date().getHours(); return h >= NACHT_AB || h < NACHT_BIS; };
+
+  // Activity-Ringe: CPU außen, RAM Mitte, Disk innen
+  const RINGE = [{r: 50, f: "var(--ring1)"}, {r: 36, f: "var(--ring2)"}, {r: 22, f: "var(--ring3)"}];
+  const ringSvg = () => `<svg class="ringe" viewBox="0 0 118 118">${RINGE.map(x => {
+      const u = 2 * Math.PI * x.r;
+      return `<circle cx="59" cy="59" r="${x.r}" fill="none" stroke="${x.f}" stroke-opacity=".22" stroke-width="11"/>
+              <circle class="ring" cx="59" cy="59" r="${x.r}" fill="none" stroke="${x.f}" stroke-width="11" stroke-linecap="round"
+                stroke-dasharray="0 ${u}" transform="rotate(-90 59 59)" style="transition:stroke-dasharray .9s ease"/>`;
+    }).join("")}</svg>`;
+  function setzeRing(el, i, wert) {
+    const u = 2 * Math.PI * RINGE[i].r, p = Math.max(0, Math.min(100, wert || 0)) / 100;
+    el.querySelectorAll(".ring")[i].setAttribute("stroke-dasharray", `${Math.max(.001, p * u)} ${u}`);
+  }
+
+  const box = $("kacheln");
+  SYSTEME.forEach(n => {
+    const k = document.createElement("div");
+    k.className = "w geraet aus"; k.id = "sys-" + n;
+    k.innerHTML = `<div class="kopf"><span class="name">${n}</span><span class="status"><i></i><span class="st">…</span></span></div>
+      ${ringSvg()}
+      <div class="werte">
+        <div class="wert c1"><span>CPU</span><b class="zahl">–</b></div>
+        <div class="wert c2"><span>RAM</span><b class="zahl">–</b></div>
+        <div class="wert c3"><span>Disk</span><b class="zahl">–</b></div>
+        <div class="extra"><span class="temp"></span><span class="upt"></span></div>
+      </div>`;
+    box.appendChild(k);
+  });
+  const ph = document.createElement("div");
+  ph.className = "w"; ph.id = "pihole";
+  ph.innerHTML = `<div class="kopf" style="display:flex;justify-content:space-between;align-items:center">
+      <span class="name">Pi-hole</span><span class="status" id="phst"><i></i><span>heute</span></span></div>
+    <div><div class="gross zahl" id="phpct">–<small>%</small></div><div class="unter">der Anfragen geblockt</div></div>
+    <div class="leiste"><i id="phbar"></i></div>
+    <div class="fuss"><span><b id="phblk" class="zahl">–</b> geblockt</span><span><b id="phtot" class="zahl">–</b> gesamt</span></div>`;
+  box.appendChild(ph);
+
+  function uptime(s) {
+    if (!s) return "";
+    const d = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600), m = Math.floor(s % 3600 / 60);
+    return d ? `${d} T ${h} Std.` : h ? `${h} Std. ${m} Min.` : `${m} Min.`;
+  }
+
+  function uhr() {
+    const d = new Date();
+    $("tag").textContent = d.toLocaleDateString("de-DE", {weekday: "long"});
+    $("uhr").textContent = d.toLocaleTimeString("de-DE", {hour: "2-digit", minute: "2-digit"});
+    $("datum").textContent = d.toLocaleDateString("de-DE", {day: "numeric", month: "long", year: "numeric"});
+    $("nacht").style.display = nacht() ? "block" : "none";
+  }
+
+  async function systeme() {
+    if (nacht()) return;
+    try {
+      const liste = await (await fetch("/api/beszel", {cache: "no-store"})).json();
+      letzteSysteme = liste;
+      SYSTEME.forEach(n => {
+        const s = liste.find(x => x.name === n), k = $("sys-" + n);
+        if (!s) return;
+        const up = s.status === "up";
+        k.classList.toggle("up", up); k.classList.toggle("down", s.status === "down"); k.classList.toggle("aus", !up);
+        k.querySelector(".st").textContent = up ? "Online" : s.status === "paused" ? "Pausiert" : "Offline";
+        const b = k.querySelectorAll(".wert b");
+        [s.cpu, s.ram, s.disk].forEach((v, i) => { setzeRing(k, i, up ? v : 0); b[i].textContent = up && v != null ? de(v) + " %" : "–"; });
+        k.querySelector(".temp").innerHTML = up && s.temp ? `<b class="zahl">${de(s.temp)}°</b>` : "";
+        k.querySelector(".upt").textContent = up ? uptime(s.uptime) : "";
+      });
+    } catch (e) {}
+  }
+
+  async function pihole() {
+    if (nacht()) return;
+    try {
+      const p = await (await fetch("/api/pihole", {cache: "no-store"})).json();
+      if (p.fehler) throw 0;
+      $("phpct").innerHTML = de(p.percent, 1) + "<small>%</small>";
+      $("phblk").textContent = de(p.blocked); $("phtot").textContent = de(p.total);
+      $("phbar").style.width = Math.min(100, p.percent) + "%";
+      ph.classList.add("up"); ph.classList.remove("down");
+    } catch (e) { ph.classList.add("down"); ph.classList.remove("up"); }
+  }
+
+  const daten = [], cv = $("spark"), ctx = cv.getContext("2d");
+  const stromPuffer = daten;
+  let letzterStrom = null, letzteSysteme = [];
+  async function strom() {
+    if (nacht()) return;
+    try {
+      const d = await (await fetch("/shelly/rpc/Switch.GetStatus?id=0", {cache: "no-store"})).json();
+      const t = Date.now(); daten.push({t, w: d.apower});
+      while (daten[0].t < t - PUFFER * 1000) daten.shift();
+      letzterStrom = d;
+      const ws = daten.filter(x => x.t > t - FENSTER * 1000).map(x => x.w), avg = ws.reduce((a, b) => a + b, 0) / ws.length;
+      $("watt").innerHTML = Math.round(d.apower) + "<small>W</small>";
+      $("avg").textContent = de(avg, 1) + " W";
+      $("eur").textContent = de(avg * 24 * 30 / 1000 * PREIS, 2) + " €";
+      $("stromzeit").textContent = "live";
+      zeichne(); if (aktiv && aktiv.typ === "strom") detailStrom();
+    } catch (e) { $("stromzeit").textContent = "keine Daten"; }
+  }
+  function zeichne() {
+    const dpr = devicePixelRatio || 1, W = cv.clientWidth, H = cv.clientHeight;
+    if (cv.width !== W * dpr || cv.height !== H * dpr) { cv.width = W * dpr; cv.height = H * dpr; }
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+    const now = Date.now(), daten = stromPuffer.filter(d => d.t > now - FENSTER * 1000);
+    if (daten.length < 2) return;
+    const ws = daten.map(x => x.w); let lo = Math.min(...ws), hi = Math.max(...ws);
+    const pad = Math.max(2, (hi - lo) * .15); lo -= pad; hi += pad;
+    const x = t => W - 5 - (now - t) / (FENSTER * 1000) * (W - 5), y = w => H - 3 - (w - lo) / (hi - lo) * (H - 6);
+    const g = ctx.createLinearGradient(0, 0, 0, H);
+    g.addColorStop(0, "rgba(255,159,10,.35)"); g.addColorStop(1, "rgba(255,159,10,0)");
+    ctx.beginPath(); daten.forEach((d, i) => i ? ctx.lineTo(x(d.t), y(d.w)) : ctx.moveTo(x(d.t), y(d.w)));
+    ctx.lineTo(x(daten[daten.length - 1].t), H); ctx.lineTo(x(daten[0].t), H); ctx.closePath(); ctx.fillStyle = g; ctx.fill();
+    ctx.beginPath(); daten.forEach((d, i) => i ? ctx.lineTo(x(d.t), y(d.w)) : ctx.moveTo(x(d.t), y(d.w)));
+    ctx.strokeStyle = "#ff9f0a"; ctx.lineWidth = 2; ctx.lineJoin = "round"; ctx.stroke();
+    const l = daten[daten.length - 1];
+    ctx.beginPath(); ctx.arc(x(l.t), y(l.w), 4, 0, 7); ctx.fillStyle = "#ff9f0a"; ctx.fill();
+    ctx.lineWidth = 2; ctx.strokeStyle = "#1c1c1e"; ctx.stroke();
+  }
+
+  // ================= Detailansichten =================
+  let aktiv = null, timer = null, verlauf = [];
+  const D = $("detail"), DI = $("dinhalt");
+  function oeffne(typ, name) {
+    aktiv = {typ, name}; D.classList.add("offen"); weckeAuf();
+    $("dtitel").textContent = typ === "strom" ? "Rack · Strom" : typ === "pihole" ? "Pi-hole" : name;
+    if (typ === "system") { verlauf = []; detailSystem(); ladeVerlauf(); }
+    if (typ === "pihole") detailPihole();
+    if (typ === "strom") detailStrom();
+  }
+  function schliesse() { D.classList.remove("offen"); aktiv = null; clearTimeout(timer); }
+  function weckeAuf() { clearTimeout(timer); timer = setTimeout(schliesse, ZURUECK_NACH * 1000); }
+  $("zurueck").addEventListener("click", schliesse);
+  // Wischen nach rechts = zurück
+  let sx = null, sy = null;
+  D.addEventListener("touchstart", e => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; weckeAuf(); }, {passive: true});
+  D.addEventListener("touchend", e => {
+    if (sx === null) return;
+    const dx = e.changedTouches[0].clientX - sx, dy = Math.abs(e.changedTouches[0].clientY - sy);
+    if (dx > 70 && dy < 80) schliesse(); sx = null;
+  }, {passive: true});
+  D.addEventListener("click", weckeAuf);
+
+  SYSTEME.forEach(n => { const k = $("sys-" + n); k.classList.add("tippbar"); k.addEventListener("click", () => oeffne("system", n)); });
+  ph.classList.add("tippbar"); ph.addEventListener("click", () => oeffne("pihole"));
+  $("strom").classList.add("tippbar"); $("strom").addEventListener("click", () => oeffne("strom"));
+
+  const zeile = (l, w) => w === undefined || w === null || w === "" ? "" : `<div class="zeile"><span>${l}</span><b class="zahl">${w}</b></div>`;
+  const esc = t => String(t).replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+
+  function detailSystem() {
+    const s = letzteSysteme.find(x => x.name === aktiv.name);
+    if (!s) { DI.innerHTML = ""; return; }
+    const i = s.info || {}, up = s.status === "up";
+    $("dstatus").className = "status " + (up ? "up" : s.status === "down" ? "down" : "");
+    $("dstatus").innerHTML = `<i></i>${up ? "Online" : s.status === "paused" ? "Pausiert" : "Offline"}`;
+    const la = Array.isArray(i.la) ? i.la.map(v => de(v, 2)).join(" · ") : null;
+    let laufwerke = "";
+    if (i.efs && typeof i.efs === "object") for (const [n, v] of Object.entries(i.efs)) {
+      if (!v || typeof v !== "object") continue;
+      const p = v.dp ?? (v.d && v.du != null ? v.du / v.d * 100 : null);
+      if (p != null) laufwerke += zeile(esc(n), de(p) + " %" + (v.d && v.du != null ? ` · ${de(v.du)} / ${de(v.d)} GB` : ""));
+    }
+    if (!DI.querySelector(".ringgross")) DI.innerHTML = `
+      <div class="w ringgross">${ringSvg()}<div class="werte">
+        <div class="wert c1"><span>CPU</span><b class="zahl"></b></div>
+        <div class="wert c2"><span>RAM</span><b class="zahl"></b></div>
+        <div class="wert c3"><span>Disk</span><b class="zahl"></b></div></div></div>
+      <div class="w chartbox"><div style="display:flex;justify-content:space-between"><span class="titel">Letzte 60 Minuten</span>
+        <span class="legende"><span><i style="background:var(--ring1)"></i>CPU</span><span><i style="background:var(--ring2)"></i>RAM</span></span></div>
+        <canvas id="vchart"></canvas></div>
+      <div class="w liste" id="dliste"></div>`;
+    const rg = DI.querySelector(".ringgross"), b = rg.querySelectorAll(".wert b");
+    [s.cpu, s.ram, s.disk].forEach((v, j) => { setzeRing(rg, j, up ? v : 0); b[j].textContent = up && v != null ? de(v, 1) + " %" : "–"; });
+    $("dliste").innerHTML =
+      zeile("Temperatur", up && s.temp ? de(s.temp, 1) + " °C" : null) +
+      zeile("Laufzeit", up ? uptime(s.uptime) : null) +
+      zeile("Last (1/5/15)", up ? la : null) +
+      zeile("Kerne / Threads", i.c ? `${i.c}${i.t ? " / " + i.t : ""}` : null) +
+      zeile("CPU", i.m ? esc(i.m) : null) +
+      zeile("Kernel", i.k ? esc(i.k) : null) + laufwerke +
+      zeile("Beszel-Agent", i.v ? esc(i.v) : null);
+    zeichneVerlauf();
+  }
+  async function ladeVerlauf() {
+    const s = letzteSysteme.find(x => x.name === aktiv.name); if (!s) return;
+    try { verlauf = await (await fetch("/api/beszel/verlauf/" + s.id, {cache: "no-store"})).json(); } catch (e) { verlauf = []; }
+    if (aktiv && aktiv.typ === "system") zeichneVerlauf();
+  }
+  function linienChart(c, reihen, yMax, einheit, fenster) {
+    const g = c.getContext("2d"), dpr = devicePixelRatio || 1, W = c.clientWidth, H = c.clientHeight;
+    c.width = W * dpr; c.height = H * dpr; g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, W, H);
+    const L = 34, B = 16, pw = W - L - 6, ph = H - B - 6;
+    let lo = 0, hi = yMax;
+    if (hi === null) { const alle = reihen.flatMap(r => r.p.map(p => p.v)); if (!alle.length) return;
+      lo = Math.min(...alle); hi = Math.max(...alle); const pad = Math.max(2, (hi - lo) * .2); lo = Math.max(0, Math.floor(lo - pad)); hi = Math.ceil(hi + pad); }
+    const y = v => 6 + ph - (v - lo) / (hi - lo) * ph, jetzt = Date.now(), x = t => L + pw - (jetzt - t) / fenster * pw;
+    g.font = "11px Inter, system-ui, sans-serif"; g.fillStyle = "rgba(235,235,245,.45)"; g.textAlign = "right"; g.textBaseline = "middle";
+    for (let k = 0; k <= 2; k++) { const v = lo + (hi - lo) * k / 2;
+      g.strokeStyle = "rgba(84,84,88,.45)"; g.lineWidth = 1; g.beginPath(); g.moveTo(L, Math.round(y(v)) + .5); g.lineTo(L + pw, Math.round(y(v)) + .5); g.stroke();
+      g.fillText(de(v) + einheit, L - 6, y(v)); }
+    g.textAlign = "center"; g.textBaseline = "top";
+    [1, .5, 0].forEach(f => g.fillText(f ? "−" + Math.round(fenster * f / 60000) + " Min." : "jetzt", Math.min(Math.max(L + pw - f * pw, L + 22), L + pw - 16), 6 + ph + 4));
+    reihen.forEach(r => {
+      const p = r.p.filter(q => q.t > jetzt - fenster); if (p.length < 2) return;
+      if (r.flaeche) { const gr = g.createLinearGradient(0, 6, 0, 6 + ph); gr.addColorStop(0, r.flaeche); gr.addColorStop(1, "rgba(0,0,0,0)");
+        g.beginPath(); p.forEach((q, j) => j ? g.lineTo(x(q.t), y(q.v)) : g.moveTo(x(q.t), y(q.v)));
+        g.lineTo(x(p[p.length - 1].t), 6 + ph); g.lineTo(x(p[0].t), 6 + ph); g.closePath(); g.fillStyle = gr; g.fill(); }
+      g.beginPath(); p.forEach((q, j) => j ? g.lineTo(x(q.t), y(q.v)) : g.moveTo(x(q.t), y(q.v)));
+      g.strokeStyle = r.farbe; g.lineWidth = 2; g.lineJoin = "round"; g.stroke();
+    });
+  }
+  function zeichneVerlauf() {
+    const c = $("vchart"); if (!c) return;
+    const fb = getComputedStyle(document.documentElement);
+    const pkt = key => verlauf.map(r => ({t: Date.parse(String(r.t).replace(" ", "T")), v: r.s[key]})).filter(q => typeof q.v === "number" && !isNaN(q.t));
+    linienChart(c, [{p: pkt("cpu"), farbe: fb.getPropertyValue("--ring1").trim()}, {p: pkt("mp"), farbe: fb.getPropertyValue("--ring2").trim()}], 100, "%", 3600 * 1000);
+  }
+
+  async function detailPihole() {
+    let p = {}, d = {};
+    try { [p, d] = await Promise.all([fetch("/api/pihole").then(r => r.json()), fetch("/api/pihole/details").then(r => r.json())]); } catch (e) {}
+    if (!aktiv || aktiv.typ !== "pihole") return;
+    const aktivBlock = d.blocking === "enabled";
+    $("dstatus").className = "status " + (d.blocking ? (aktivBlock ? "up" : "down") : "");
+    $("dstatus").innerHTML = `<i></i>${d.blocking ? (aktivBlock ? "Blockieren aktiv" : "Blockieren aus") : ""}`;
+    const maxT = Math.max(1, ...(d.top || []).map(x => x.count)), maxC = Math.max(1, ...(d.clients || []).map(x => x.count));
+    DI.innerHTML = `
+      <div class="w" style="display:flex;flex-direction:column;justify-content:space-between">
+        <span class="titel">Heute</span>
+        <div><div style="font-size:52px;font-weight:600;letter-spacing:-1.5px;line-height:1" class="zahl">${p.percent != null ? de(p.percent, 1) : "–"}<small style="font-size:24px;color:var(--leise)">%</small></div>
+        <div style="color:var(--leise);font-size:13px;margin-top:4px">der Anfragen geblockt</div></div>
+        <div class="liste">${zeile("Geblockt", p.blocked != null ? de(p.blocked) : null)}${zeile("Anfragen gesamt", p.total != null ? de(p.total) : null)}</div>
+      </div>
+      <div class="w liste"><span class="titel" style="margin-bottom:4px">Am häufigsten geblockt</span>
+        ${(d.top || []).map(x => `<div class="rang"><span class="d">${esc(x.domain)}</span><span class="c">${de(x.count)}</span>
+          <div class="bar"><i style="width:${x.count / maxT * 100}%;background:var(--rot)"></i></div></div>`).join("") || '<span class="titel">keine Daten</span>'}
+      </div>
+      <div class="w liste"><span class="titel" style="margin-bottom:4px">Aktivste Geräte</span>
+        ${(d.clients || []).map(x => `<div class="rang"><span class="d">${esc(x.name || x.ip)}</span><span class="c">${de(x.count)}</span>
+          <div class="bar"><i style="width:${x.count / maxC * 100}%;background:var(--blau)"></i></div></div>`).join("") || '<span class="titel">keine Daten</span>'}
+      </div>`;
+  }
+
+  function detailStrom() {
+    const d = letzterStrom || {}, ws = daten.map(x => x.w);
+    const avg = ws.length ? ws.reduce((a, b) => a + b, 0) / ws.length : null;
+    $("dstatus").className = "status up"; $("dstatus").innerHTML = "<i></i>live";
+    if (!DI.querySelector("#schart")) DI.innerHTML = `
+      <div class="w" style="display:flex;flex-direction:column;justify-content:space-between">
+        <span class="titel"><b style="color:var(--orange)">⚡︎</b> Jetzt</span>
+        <div id="sgross" style="font-size:64px;font-weight:600;letter-spacing:-2px;line-height:1" class="zahl"></div>
+        <div class="liste" id="sminmax"></div></div>
+      <div class="w chartbox"><span class="titel">Letzte 30 Minuten</span><canvas id="schart"></canvas></div>
+      <div class="w liste" id="sliste"></div>`;
+    $("sgross").innerHTML = (d.apower != null ? Math.round(d.apower) : "–") + '<small style="font-size:26px;color:var(--leise)">W</small>';
+    $("sminmax").innerHTML = ws.length ? zeile("Min", de(Math.min(...ws), 1) + " W") + zeile("Ø", de(avg, 1) + " W") + zeile("Max", de(Math.max(...ws), 1) + " W") : "";
+    $("sliste").innerHTML =
+      zeile("Spannung", d.voltage != null ? de(d.voltage, 1) + " V" : null) +
+      zeile("Strom", d.current != null ? de(d.current, 3) + " A" : null) +
+      zeile("Frequenz", d.freq != null ? de(d.freq, 2) + " Hz" : null) +
+      zeile("Zählerstand", d.aenergy && d.aenergy.total != null ? de(d.aenergy.total / 1000, 2) + " kWh" : null) +
+      zeile("Kosten / Monat", avg != null ? "≈ " + de(avg * 24 * 30 / 1000 * PREIS, 2) + " €" : null) +
+      zeile("Kosten / Jahr", avg != null ? "≈ " + de(avg * 24 * 365 / 1000 * PREIS, 0) + " €" : null);
+    linienChart($("schart"), [{p: daten.map(q => ({t: q.t, v: q.w})), farbe: "#ff9f0a", flaeche: "rgba(255,159,10,.35)"}], null, " W", PUFFER * 1000);
+  }
+
+  // Detail regelmäßig auffrischen
+  setInterval(() => { if (aktiv && aktiv.typ === "system") detailSystem(); }, 15000);
+  setInterval(() => { if (aktiv && aktiv.typ === "system") ladeVerlauf(); }, 60000);
+  setInterval(() => { if (aktiv && aktiv.typ === "pihole") detailPihole(); }, 30000);
+
+  // ================= Seiten (Wischen links/rechts) =================
+  const SEITEN = 4, ZURUECK_ZUR_UEBERSICHT = 300;   // Sekunden ohne Berührung, dann wieder Seite 1
+  let seite = 0, seitenTimer = null;
+  function gehe(i) {
+    seite = Math.max(0, Math.min(SEITEN - 1, i));
+    $("seiten").style.transform = `translateX(${-seite * 100}vw)`;
+    document.querySelectorAll("#punkte i").forEach((p, j) => p.classList.toggle("an", j === seite));
+    document.querySelectorAll(".seite iframe").forEach(f => {
+      const sichtbar = f.closest(".seite").id === "s" + seite;
+      if (sichtbar && !f.getAttribute("src")) f.src = f.dataset.src;
+      if (!sichtbar && f.getAttribute("src")) f.removeAttribute("src");   // spart Rechenleistung
+    });
+    clearTimeout(seitenTimer);
+    if (seite) seitenTimer = setTimeout(() => gehe(0), ZURUECK_ZUR_UEBERSICHT * 1000);
+  }
+  let wx = null, wy = null;
+  $("seiten").addEventListener("touchstart", e => { if (aktiv) return; wx = e.touches[0].clientX; wy = e.touches[0].clientY; }, {passive: true});
+  $("seiten").addEventListener("touchend", e => {
+    if (wx === null || aktiv) return;
+    const dx = e.changedTouches[0].clientX - wx, dy = Math.abs(e.changedTouches[0].clientY - wy); wx = null;
+    if (Math.abs(dx) > 70 && dy < 80) gehe(seite + (dx < 0 ? 1 : -1)); else if (seite) gehe(seite);
+  }, {passive: true});
+  $("kdienste").addEventListener("click", () => gehe(1));
+  $("kbackup").addEventListener("click", () => gehe(1));
+
+  // ================= Uptime Kuma =================
+  async function dienste() {
+    if (nacht()) return;
+    const k = $("kdienste");
+    try {
+      const liste = await (await fetch("/api/kuma", {cache: "no-store"})).json();
+      if (!Array.isArray(liste)) throw 0;
+      const unten = liste.filter(m => m.status === 0), anz = liste.length, ok = liste.filter(m => m.status === 1).length;
+      k.className = "kurz tippbar " + (unten.length ? "fehler" : ok === anz ? "ok" : "warn");
+      $("kdtext").textContent = unten.length ? `${unten.length} gestört: ${unten.map(m => m.name).join(", ")}` : `${ok}/${anz} online`;
+      $("monsumme").textContent = `${ok} von ${anz} online`;
+      const sortiert = [...liste].sort((a, b) => (a.status === 0 ? -1 : 0) - (b.status === 0 ? -1 : 0) || a.name.localeCompare(b.name));
+      $("monitore").innerHTML = sortiert.map(m => `<div class="mon s${m.status ?? "x"}"><i></i><span class="n">${esc(m.name)}</span>
+        <span class="p">${m.status === 1 && m.ping != null ? m.ping + " ms" : m.status === 0 ? "offline" : ""}${m.uptime != null ? " · " + de(m.uptime * 100, 1) + " %" : ""}</span></div>`).join("");
+    } catch (e) { k.className = "kurz tippbar"; $("kdtext").textContent = "keine Daten"; }
+  }
+
+  // ================= Proxmox-Backup =================
+  function wann(ts) {
+    const d = new Date(ts * 1000), heute = new Date(), gestern = new Date(Date.now() - 86400000);
+    const zeit = d.toLocaleTimeString("de-DE", {hour: "2-digit", minute: "2-digit"});
+    if (d.toDateString() === heute.toDateString()) return "heute " + zeit;
+    if (d.toDateString() === gestern.toDateString()) return "gestern " + zeit;
+    return d.toLocaleDateString("de-DE", {day: "numeric", month: "short"}) + " " + zeit;
+  }
+  async function backups() {
+    if (nacht()) return;
+    const k = $("kbackup");
+    try {
+      const liste = await (await fetch("/api/backup", {cache: "no-store"})).json();
+      if (!Array.isArray(liste) || !liste.length) throw 0;
+      const b = liste[0], laeuft = !b.ende, ok = b.status === "OK", alt = (Date.now() / 1000 - (b.ende || b.start)) > 36 * 3600;
+      const zustand = laeuft ? "warn" : !ok ? "fehler" : alt ? "warn" : "ok";
+      k.className = "kurz tippbar " + zustand;
+      $("kbtext").textContent = laeuft ? "läuft gerade" : (ok ? "" : "Fehler · ") + wann(b.ende || b.start);
+      $("bkgross").textContent = laeuft ? "…" : ok ? (alt ? "!" : "✓") : "✕"; $("bkgross").className = zustand;
+      $("bktitel").textContent = laeuft ? "Backup läuft" : ok ? (alt ? "Letztes Backup ist alt" : "Backup erfolgreich") : "Backup fehlgeschlagen";
+      $("bkzeit").textContent = laeuft ? "gestartet " + wann(b.start) : wann(b.ende) + (b.ende ? ` · Dauer ${Math.max(1, Math.round((b.ende - b.start) / 60))} Min.` : "");
+      $("bkliste").innerHTML = liste.slice(1).map(x => zeile(wann(x.start), x.status === "OK" ? "OK" : x.status ? esc(x.status) : "läuft")).join("");
+    } catch (e) { k.className = "kurz tippbar"; $("kbtext").textContent = "keine Daten"; }
+  }
+
+  uhr(); systeme(); pihole(); strom(); dienste(); backups();
+  setInterval(uhr, 1000); setInterval(strom, 2000); setInterval(systeme, 15000); setInterval(pihole, 30000); setInterval(dienste, 30000); setInterval(backups, 300000);
+  setInterval(() => { if (!aktiv && !seite) location.reload(); }, 3600 * 1000);
+</script>
+</body></html>

@@ -204,3 +204,5 @@ In der Textdatei sieht man, ob das Paket bis zum Treiber der Netzwerkkarte kommt
 Weitere Fälle: [Fehlerbehebung](../fehlerbehebung.md#vlan-kapitel-19)
 
 Wie es weitergeht: Das Clientnetz soll später ein eigenes VLAN hinter einer Firewall (OPNsense) bekommen, siehe [Roadmap](../roadmap.md). Dieses Kapitel ist die Grundlage dafür.
+
+Weiter: [Kapitel 20 · Rack-Display](20-rack-display.md)
