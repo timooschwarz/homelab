@@ -211,6 +211,15 @@ sudo chmod +x /usr/local/bin/display-zeitplan
 sudo env -i /usr/local/bin/display-zeitplan   # testet mit leerer Umgebung wie Cron
 ```
 
+**Prüfen, ob Cron das Skript wirklich startet** (nach dem nächsten Zehner, z. B. 10:10):
+
+```bash
+ls -l /etc/cron.d/display-zeitplan          # muss root:root und -rw-r--r-- sein
+sudo journalctl -u cron --since "-15min" --no-pager | grep display-zeitplan
+```
+
+Dort muss eine Zeile `(root) CMD (/usr/local/bin/display-zeitplan)` stehen. Bei mir fehlte die Cron-Datei am ersten Abend, das Display blieb morgens aus. Von Hand lief das Skript, nur der Zeitplan nicht.
+
 Das Skript prüft alle 10 Minuten den Sollzustand. Wer das Display nachts kurz braucht, schaltet es mit der Zeile aus Schritt 1 an, spätestens nach 10 Minuten ist es wieder aus. Zusätzlich schaltet das Dashboard selbst zwischen 22 und 10 Uhr auf Schwarz (`NACHT_AB` / `NACHT_BIS` in `dashboard.html`).
 
 ## Prüfen
@@ -229,6 +238,7 @@ Das Skript prüft alle 10 Minuten den Sollzustand. Wer das Display nachts kurz b
 | Bild füllt das Display nicht | `--force-device-scale-factor` gesetzt | Weglassen, unter cage verkleinert es das ganze Fenster |
 | Mauszeiger mitten im Bild | Zeiger steht nach dem Start in der Mitte | `cursor:none` auf der Seite und `wlrctl pointer move` (zweimal) |
 | „Übersetzen?“-Fenster | Chromium ignoriert die Flags teilweise | Richtlinie `TranslateEnabled: false` |
+| Display bleibt morgens aus, Skript von Hand klappt | Cron-Datei fehlt oder hat falsche Rechte | `ls -l /etc/cron.d/display-zeitplan`, im Cron-Log nach `CMD (…display-zeitplan)` suchen |
 | Nachtmodus per Cron schaltet nicht, von Hand schon | `uhubctl` liegt in `/usr/sbin`, Cron kennt den Pfad nicht | PATH-Zeile ins Skript, testen mit `sudo env -i …` |
 | Display nach `ddcutil setvcp d6 4` tot | Hartes Ausschalten, danach reagiert es nicht mehr auf DDC | Ab- und wieder anstecken. Nicht für Zeitpläne verwenden |
 | Nach `wlr-randr --off` hell „No Signal“ | Display geht ohne Signal nicht in den Standby | Strom trennen statt Signal abschalten |
