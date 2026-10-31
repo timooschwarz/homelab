@@ -199,6 +199,7 @@ In der Textdatei sieht man, ob das Paket bis zum Treiber der Netzwerkkarte kommt
 | Nach PC-Neustart: VM „Medium getrennt“, vEthernet (Extern) „Netzwerkkabel wurde entfernt“ | Hyper-V-Switch hat sich nach Treiber-Änderung von der Karte gelöst | Switch `Extern` entfernen und neu anlegen, VM wieder anhängen |
 | PC ohne Netz nach Umstellen von *Paketpriorität und VLAN* | Intel-Treiber hängt mit externem Hyper-V-Switch | Einstellung zurück, PC neu starten |
 | DC01 verteilt IPs im Heimnetz | VLAN 10 versehentlich untagged bzw. PVID 10 auf einem Heimnetz-Port | Nur Mini-PC und Arbeits-PC **tagged**, PVID überall 1 |
+| Arbeits-PC am Switch nur **100Full** | *Energieeffizientes Ethernet* der Intel-Karte | in den erweiterten Adaptereinstellungen **Aus** |
 | Switch-Einstellungen nach Stromausfall weg | Kein *Save Config* | Nach jeder Änderung Save Config |
 
 Weitere Fälle: [Fehlerbehebung](../fehlerbehebung.md#vlan-kapitel-19)

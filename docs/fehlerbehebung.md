@@ -305,6 +305,10 @@ Fehler, die beim Aufbau aufgetreten sind, jeweils mit Ursache und Lösung.
 - **Ursache:** Der Intel-Treiber kam mit dem externen Hyper-V-Switch nach dem Umstellen nicht mehr klar.
 - **Lösung:** Einstellung zurück auf *aktiviert*, PC neu starten. Bei der I226-V muss man daran nichts ändern.
 
+### Arbeits-PC hängt am Switch nur mit 100 Mbit (I226-V)
+**Ursache:** Die Intel I226-V handelt mit *Energieeffizientes Ethernet* an manchen Switches nur 100 Mbit aus. Im Switch steht bei dem Port **100Full** und es tauchen ein paar RxBadPkt auf, der Kabeltest meldet trotzdem *Normal*.
+**Lösung:** `ncpa.cpl` → Ethernet → **Eigenschaften → Konfigurieren → Erweitert**: *Energieeffizientes Ethernet* **Aus** (falls vorhanden auch *Verbindungsgeschwindigkeit bei Leerlauf reduzieren*), *Geschwindigkeit und Duplex* auf **Automatische Aushandlung**. Danach zeigt der Port **1000Full**. Erst wenn das nicht hilft, Kabel tauschen.
+
 ## Rack-Display (Kapitel 20)
 
 ### Watt-Anzeige bleibt bei „– W“
