@@ -247,4 +247,6 @@ Das Skript prüft alle 10 Minuten den Sollzustand. Wer das Display nachts kurz b
 
 Weitere Fälle: [Fehlerbehebung](../fehlerbehebung.md#rack-display-kapitel-20)
 
+Weiter: [Kapitel 21 · Immich](21-immich.md)
+
 Wie es weitergeht: [Roadmap](../roadmap.md)

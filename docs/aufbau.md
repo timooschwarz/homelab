@@ -40,7 +40,9 @@
 | pve01 | 192.168.2.20 | Proxmox VE 9.2 auf HP EliteDesk 805 G6 Mini | Hypervisor, Gateway `vmbr1`, Tailscale Subnet Router | immer an |
 | beszel | 192.168.2.21 (+ 10.0.0.21) | LXC 100 auf pve01 | Monitoring-Hub, Push per ntfy | immer an |
 | netbox | 192.168.2.22 | LXC 101 auf pve01 | NetBox 4.7 | immer an |
-| pi-nas | 192.168.2.234 | Raspberry Pi OS + OpenMediaVault 8 | RAID 5, NFS-Ziel für Backups, Pi-hole, zweites Uptime Kuma, Tailscale | immer an |
+| immich | 192.168.2.23 | VM 102 auf pve01, Ubuntu 26.04.1 | Immich (Fotos per NFS vom pi-nas), [Kapitel 21](anleitung/21-immich.md) | immer an |
+| shelly-rack | 192.168.2.237 | Shelly Plug M Gen3 | Strommessung Rack, [Kapitel 20](anleitung/20-rack-display.md) | immer an |
+| pi-nas | 192.168.2.234 | Raspberry Pi OS + OpenMediaVault 8 | RAID 5, NFS-Ziel für Backups und Immich, Pi-hole, zweites Uptime Kuma, Tailscale, Rack-Display | immer an |
 | Switch | 192.168.2.10 | TL-SG108E | Managed Switch im Rack ([Hardware](hardware.md)) | immer an |
 
 ![Startreihenfolge](diagramme/startreihenfolge.png)

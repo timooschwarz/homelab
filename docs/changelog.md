@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-31
+- Neues [Kapitel 21 · Immich](anleitung/21-immich.md): VM 102 `immich` (Ubuntu 26.04.1, Docker Compose) im Heimnetz auf pve01, Fotos per NFS auf dem RAID des Pi-NAS, Datenbank lokal, Name `immich.lab.test` über NPM, Sicherung vom iPhone
+- [Kapitel 20](anleitung/20-rack-display.md): Prüfschritt für den Cron-Zeitplan des Displays
+
 ## 2026-10-30
 - Neues [Kapitel 20 · Rack-Display](anleitung/20-rack-display.md): Touch-Display am Pi-NAS als Kiosk (cage + Chromium), Dashboard im Widget-Stil mit Live-Strom vom Shelly Plug, Beszel-Ringen für alle Server, Pi-hole, Uptime-Kuma-Statusseite und letztem Proxmox-Backup (Nur-Lese-Token `PVEAuditor`), Detailansichten per Antippen, Seiten per Wischen
 - Display nachts per `uhubctl` stromlos (Pi 5 schaltet USB-Strom, der HP nicht), Zeitplan per Cron

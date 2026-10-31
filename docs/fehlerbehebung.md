@@ -327,6 +327,16 @@ Fehler, die beim Aufbau aufgetreten sind, jeweils mit Ursache und Lösung.
 **Ursache:** cage zeigt den Zeiger, solange er nicht bewegt wird. Ein leeres Cursor-Theme hilft nicht.
 **Lösung:** `cursor:none` auf der Seite und `wlrctl pointer move 5000 5000` nach dem Start, auf dem Pi zweimal (nach 15 und 45 Sekunden).
 
+## Immich (Kapitel 21)
+
+### Immich startet nach einem Neustart nicht
+**Ursache:** Die VM war schneller oben als das Pi-NAS, `/mnt/immich` war leer. Immich prüft Markierungsdateien im Upload-Ordner und verweigert dann den Start, statt ins Leere zu schreiben.
+**Lösung:** `sudo mount -a && cd ~/immich && docker compose up -d`. Dauerhaft: in Proxmox bei der VM eine Startverzögerung setzen.
+
+### iPhone-Sicherung kommt kaum voran
+**Ursache:** Mit *iPhone-Speicher optimieren* liegen die Originale in iCloud. Die App muss jedes Foto einzeln holen, und iOS bremst Apps im Hintergrund.
+**Lösung:** App im Vordergrund offen lassen, Ladekabel, WLAN, automatische Sperre kurz auf *Nie*. *Originale laden und behalten* nur, wenn das iPhone genug Platz für alle Fotos hat.
+
 ## Linux und Docker
 
 ### NetBox nach Neustart offline
