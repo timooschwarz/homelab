@@ -148,6 +148,13 @@ Nach ein bis zwei Minuten stehen `immich_server`, `immich_machine_learning`, `im
 
 Währenddessen erzeugt der Server Vorschaubilder, wandelt Videos um und erkennt Gesichter. Fortschritt: **Administration → Jobs**.
 
+> [!WARNING]
+> **Der erste Import heizt den Mini-PC auf.** Bei mir stieg die CPU von pve01 in Beszel auf über 90 °C, die Last auf über 4. Zwei Bremsen helfen:
+> - **Immich:** **Administration → Settings → Job Settings**: *Generate Thumbnails* `1`, *Extract metadata* `2`, *Smart Search* `1`, *Face detection* `1` → **Save**. Wirkt erst, wenn die laufenden Aufgaben fertig sind.
+> - **Proxmox:** **102 (immich) → Hardware → Processors → Edit**, *Advanced* an, **CPU limit `2`**. Wirkt sofort und ohne Neustart. Bei mir fiel die Temperatur direkt von 90 auf 81 °C.
+>
+> Nach dem ersten Import kann das Limit wieder auf *unlimited*, für ein paar neue Fotos am Tag reichen 2 Kerne aber auch.
+
 ## Schritt 9 · Überwachung
 
 - **Uptime Kuma** (TOOLS01): HTTP-Monitor auf `http://192.168.2.23:2283/api/server/ping`
@@ -182,6 +189,7 @@ Währenddessen erzeugt der Server Vorschaubilder, wandelt Videos um und erkennt 
 | Immich startet nach Neustart nicht, Meldung zu fehlenden `.immich`-Dateien | NFS war beim Start noch nicht eingehängt | `sudo mount -a && docker compose up -d`, VM nach dem Pi starten |
 | Große Videos brechen über `immich.lab.test` ab | NPM begrenzt die Upload-Größe | Advanced-Zeilen aus Schritt 7 |
 | App findet den Server nicht | `.lab.test` am Handy nicht auflösbar oder `http://`/Port fehlt | `http://192.168.2.23:2283`, unterwegs Tailscale an |
+| CPU von pve01 über 90 °C während des Imports | Thumbnails, Videos und Gesichtserkennung parallel | Job-Gleichzeitigkeit runter, CPU limit `2` in Proxmox |
 | Sicherung am iPhone sehr langsam | Originale liegen in iCloud, App im Hintergrund | App offen lassen, über Nacht laufen lassen |
 
 Weitere Fälle: [Fehlerbehebung](../fehlerbehebung.md#immich-kapitel-21)
