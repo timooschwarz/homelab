@@ -194,4 +194,4 @@ Währenddessen erzeugt der Server Vorschaubilder, wandelt Videos um und erkennt 
 
 Weitere Fälle: [Fehlerbehebung](../fehlerbehebung.md#immich-kapitel-21)
 
-Wie es weitergeht: [Roadmap](../roadmap.md)
+Weiter: [Kapitel 22 · Vaultwarden](22-vaultwarden.md)

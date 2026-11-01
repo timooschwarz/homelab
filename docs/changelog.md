@@ -1,6 +1,9 @@
 # Changelog
 
 ## 2026-11-01
+- Neues [Kapitel 22 · Vaultwarden](anleitung/22-vaultwarden.md): Alpine-LXC `vaultwarden` (192.168.2.24) per Community-Script im Heimnetz auf pve01, echtes HTTPS über `tailscale serve` unter `*.ts.net`, Admin-Token, Registrierung gesperrt, 2FA, Bitwarden-Erweiterung und iPhone-App
+- Neue Fälle in der [Fehlerbehebung](fehlerbehebung.md#vaultwarden-kapitel-22): kaputter Container trotz `removed` (Protection), Befehl landet auf pve01 statt im Container
+- [Aufbau](aufbau.md) und [Entscheidungen](entscheidungen.md) ergänzt
 - Neuer Fall in der [Fehlerbehebung](fehlerbehebung.md#vlan-kapitel-19): Speedtest am Arbeits-PC zeigt nur die halbe Leitung (Messwerkzeug, Software-RSC am Hyper-V-Switch)
 
 ## 2026-10-31

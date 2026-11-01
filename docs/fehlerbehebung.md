@@ -348,7 +348,16 @@ Fehler, die beim Aufbau aufgetreten sind, jeweils mit Ursache und Lösung.
 **Ursache:** Mit *iPhone-Speicher optimieren* liegen die Originale in iCloud. Die App muss jedes Foto einzeln holen, und iOS bremst Apps im Hintergrund.
 **Lösung:** App im Vordergrund offen lassen, Ladekabel, WLAN, automatische Sperre kurz auf *Nie*. *Originale laden und behalten* nur, wenn das iPhone genug Platz für alle Fotos hat.
 
-## Linux und Docker
+## Vaultwarden (Kapitel 22)
+
+### Kaputter Container bleibt nach `apk install failed` liegen
+**Ursache:** Beim ersten Versuch konnte der neue Alpine-Container keine Pakete laden. Das Skript wollte ihn danach löschen (`Container … removed`), aber mit *Container Protection* lehnt Proxmox das ab (`can't remove CT – protection mode enabled`). Der kaputte Container hat dieselbe IP wie der neue.
+**Lösung:** Container stoppen, **Options → Protection** abschalten, **More → Remove**. Danach das Skript neu starten, der zweite Lauf ging bei mir durch.
+
+### Befehl läuft auf pve01 statt im Container
+**Ursache:** `pct enter` und den nächsten Befehl zusammen eingefügt. Die zweite Zeile wird von der Host-Shell gelesen, bevor die Container-Shell bereit ist.
+**Lösung:** Jede Zeile einzeln eingeben und auf den Prompt `~ #` warten. Ein `tailscale up --hostname=…` auf pve01 hätte den Host umbenannt. Hier hat Tailscale abgebrochen, weil pve01 Subnet-Routen freigibt.
+
 
 ### NetBox nach Neustart offline
 - **Ursache:** Container ohne Neustart-Richtlinie.
