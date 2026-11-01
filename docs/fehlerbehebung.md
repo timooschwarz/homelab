@@ -309,6 +309,13 @@ Fehler, die beim Aufbau aufgetreten sind, jeweils mit Ursache und Lösung.
 **Ursache:** Die Intel I226-V handelt mit *Energieeffizientes Ethernet* an manchen Switches nur 100 Mbit aus. Im Switch steht bei dem Port **100Full** und es tauchen ein paar RxBadPkt auf, der Kabeltest meldet trotzdem *Normal*.
 **Lösung:** `ncpa.cpl` → Ethernet → **Eigenschaften → Konfigurieren → Erweitert**: *Energieeffizientes Ethernet* **Aus** (falls vorhanden auch *Verbindungsgeschwindigkeit bei Leerlauf reduzieren*), *Geschwindigkeit und Duplex* auf **Automatische Aushandlung**. Danach zeigt der Port **1000Full**. Erst wenn das nicht hilft, Kabel tauschen.
 
+### Speedtest am Arbeits-PC zeigt nur die halbe Leitung
+**Symptom:** Bei einer 600er-Leitung zeigt der Speedtest am PC nur ~300 Mbit/s Download, der Upload ist aber voll da.
+**Ursache:** Meist das Messwerkzeug. Der Google-Speedtest (M-Lab) misst nur über eine Verbindung und zeigt bei schnellen Leitungen zu wenig an. Zusätzlich kann *Software-RSC* am externen Hyper-V-Switch den Durchsatz bremsen.
+**Lösung:** Mit einem Test messen, der mehrere Verbindungen nutzt (speedtest.net, breitbandmessung.de). Hängt es dort auch, in PowerShell als Admin `Set-VMSwitch -Name "Extern" -EnableSoftwareRsc $false` ausführen. Die Verbindung bleibt dabei bestehen.
+> [!WARNING]
+> Zum Testen **nicht** den Haken *Gemeinsames Verwenden dieses Netzwerkadapters für das Verwaltungsbetriebssystem zulassen* rausnehmen. Solange der externe Switch an der Karte hängt, ist der PC sonst offline.
+
 ## Rack-Display (Kapitel 20)
 
 ### Watt-Anzeige bleibt bei „– W“

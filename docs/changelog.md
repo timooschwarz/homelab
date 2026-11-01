@@ -1,5 +1,8 @@
 # Changelog
 
+## 2026-11-01
+- Neuer Fall in der [Fehlerbehebung](fehlerbehebung.md#vlan-kapitel-19): Speedtest am Arbeits-PC zeigt nur die halbe Leitung (Messwerkzeug, Software-RSC am Hyper-V-Switch)
+
 ## 2026-10-31
 - Neues [Kapitel 21 · Immich](anleitung/21-immich.md): VM 102 `immich` (Ubuntu 26.04.1, Docker Compose) im Heimnetz auf pve01, Fotos per NFS auf dem RAID des Pi-NAS, Datenbank lokal, Name `immich.lab.test` über NPM, Sicherung vom iPhone
 - [Fehlerbehebung](fehlerbehebung.md#vlan-kapitel-19): Arbeits-PC nur mit 100 Mbit am Switch, Ursache Energieeffizientes Ethernet der I226-V
