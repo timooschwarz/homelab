@@ -1,7 +1,7 @@
 # Changelog
 
 ## 2026-11-04
-- Alle Grafiken auf Dark Mode umgestellt (gleiche Dateinamen). Der [Netzwerkplan](diagramme/netzwerk-2026-11-04.png) ist jetzt standardmäßig dunkel, die helle Fassung liegt unter [netzwerk-2026-11-04-light.png](diagramme/netzwerk-2026-11-04-light.png)
+- Alle Grafiken auf Dark Mode umgestellt (gleiche Dateinamen), Akzentfarbe Neon-Grün statt Orange. Der [Netzwerkplan](diagramme/netzwerk-2026-11-04.png) ist jetzt standardmäßig dunkel, die helle Fassung liegt unter [netzwerk-2026-11-04-light.png](diagramme/netzwerk-2026-11-04-light.png)
 - README neu gegliedert: Titelbild im Neo-Swiss-Stil, Schnelllinks, Stand als kurze Liste, jedes Kapitel nur noch einmal in den Teil-Tabellen, Themen-Index kompakt, Bilder, Fehlerliste, Versionen und Repo-Aufbau zum Aufklappen
 - Alle Grafiken in [`diagramme/`](diagramme/) im Neo-Swiss-Stil neu gezeichnet (Raster, Haarlinien, Rot als einzige Akzentfarbe), Inhalte unverändert, Dateinamen gleich. Die [Roadmap-Grafik](diagramme/roadmap.png) zeigt dabei den Stand 04.11. (Anleitungen für Stufe 7 und 15). Die Netzwerk-Grafiken vom 22.10., 25.10. und 27.10. bleiben als historische Stände im alten Stil, alte Fassungen aller übrigen Grafiken im Commit `2a9ccb7`
 - Neuer Netzwerkplan [Stand 04.11.](diagramme/netzwerk-2026-11-04.png) im Neo-Swiss-Stil (Raster, Haarlinien, Rot nur für VLAN 10) mit Immich, Vaultwarden, JetKVM, Shelly Plug und Rack-Display, jetzt oben im README und im [Aufbau](aufbau.md). Vektor-Quelle: [netzwerk-2026-11-04-light.svg](diagramme/netzwerk-2026-11-04-light.svg). Dazu eine Dark-Mode-Fassung im Plakat-Stil

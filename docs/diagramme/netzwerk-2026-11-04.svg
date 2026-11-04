@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="2400" height="1700" viewBox="0 0 2400 1700">
-<defs><marker id="ak" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#eeebe3"/></marker><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#ff5a1f"/></marker></defs>
+<defs><marker id="ak" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#eeebe3"/></marker><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#39ff14"/></marker></defs>
 <rect width="2400" height="1700" fill="#121211"/>
 <line x1="80.0" y1="0" x2="80.0" y2="1700" stroke="#1d1d1b" stroke-width="1"/>
 <line x1="266.66666666666663" y1="0" x2="266.66666666666663" y2="1700" stroke="#1d1d1b" stroke-width="1"/>
@@ -23,13 +23,13 @@
 <line x1="0" y1="1196" x2="2400" y2="1196" stroke="#1a1a18" stroke-width="1"/>
 <line x1="0" y1="1382" x2="2400" y2="1382" stroke="#1a1a18" stroke-width="1"/>
 <line x1="0" y1="1568" x2="2400" y2="1568" stroke="#1a1a18" stroke-width="1"/>
-<text x="2460" y="1850" font-family="'Inter Display', Inter, Helvetica, sans-serif" font-size="1250" font-weight="800" fill="#ff5a1f" opacity=".13" text-anchor="end" letter-spacing="-70">10</text>
+<text x="2460" y="1850" font-family="'Inter Display', Inter, Helvetica, sans-serif" font-size="1250" font-weight="800" fill="#39ff14" opacity=".07" text-anchor="end" letter-spacing="-70">10</text>
 <text x="-40" y="1060" font-family="'Inter Display', Inter, Helvetica, sans-serif" font-size="420" font-weight="800" fill="none" stroke="#eeebe3" stroke-opacity=".07" stroke-width="2" letter-spacing="-18">lab.test</text>
 <text transform="translate(44,1620) rotate(-90)" font-family="'DejaVu Sans Mono', monospace" font-size="13" fill="#8e8b84" letter-spacing="3">VLAN 10 · LAB · 10.0.0.0/24 · NAT 10.0.0.1</text>
 <text transform="translate(2364,80) rotate(90)" font-family="'DejaVu Sans Mono', monospace" font-size="13" fill="#8e8b84" letter-spacing="3">HEIMNETZ · 192.168.2.0/24 · SPEEDPORT 192.168.2.1</text>
 <text x="80" y="196" font-family="'Inter Display', Inter, Helvetica, sans-serif" font-size="150" font-weight="700" fill="#eeebe3" text-anchor="start" letter-spacing="-6" >Netzwerkplan</text>
 <text x="84" y="248" font-family="Inter, Helvetica, Arial, sans-serif" font-size="26" font-weight="500" fill="#eeebe3" text-anchor="start" letter-spacing="-0.3" >Homelab · Domäne lab.test</text>
-<rect x="1260" y="96" width="34" height="34" fill="#ff5a1f"/>
+<rect x="1260" y="96" width="34" height="34" fill="#39ff14"/>
 <line x1="1320" y1="100" x2="1320" y2="165" stroke="#eeebe3" stroke-width="1"/>
 <text x="1334" y="122" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#8e8b84" text-anchor="start" letter-spacing="1.2" >STAND</text>
 <text x="1334" y="152" font-family="Inter, Helvetica, Arial, sans-serif" font-size="20" font-weight="500" fill="#eeebe3" text-anchor="start" letter-spacing="0" >04.11.2026</text>
@@ -45,9 +45,9 @@
 <text x="1334" y="200" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#8e8b84" text-anchor="start" letter-spacing="1.2" >LEGENDE</text>
 <line x1="1334" y1="226" x2="1364" y2="226" stroke="#eeebe3" stroke-width="2" />
 <text x="1372" y="231" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#eeebe3" text-anchor="start" letter-spacing="0" >Heimnetz</text>
-<line x1="1455.6" y1="226" x2="1485.6" y2="226" stroke="#ff5a1f" stroke-width="3" />
+<line x1="1455.6" y1="226" x2="1485.6" y2="226" stroke="#39ff14" stroke-width="3" />
 <text x="1493.6" y="231" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#eeebe3" text-anchor="start" letter-spacing="0" >VLAN 10 / Trunk</text>
-<line x1="1627.6" y1="226" x2="1657.6" y2="226" stroke="#ff5a1f" stroke-width="2" stroke-dasharray="8 6"/>
+<line x1="1627.6" y1="226" x2="1657.6" y2="226" stroke="#39ff14" stroke-width="2" stroke-dasharray="8 6"/>
 <text x="1665.6" y="231" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#eeebe3" text-anchor="start" letter-spacing="0" >VLAN 10 via Hyper-V</text>
 <line x1="1828.3999999999999" y1="226" x2="1858.3999999999999" y2="226" stroke="#eeebe3" stroke-width="2" stroke-dasharray="2 5"/>
 <text x="1866.3999999999999" y="231" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#eeebe3" text-anchor="start" letter-spacing="0" >Tailscale</text>
@@ -58,7 +58,7 @@
 <rect x="2147.3999999999996" y="219" width="13" height="13" fill="none" stroke="#eeebe3" stroke-width="1.5" />
 <text x="2168.3999999999996" y="231" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#eeebe3" text-anchor="start" letter-spacing="0" >bei Bedarf</text>
 <line x1="80" y1="300" x2="2320" y2="300" stroke="#eeebe3" stroke-width="2"/>
-<text x="80" y="330" font-family="Inter, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#ff5a1f" text-anchor="start" letter-spacing="0" >01</text>
+<text x="80" y="330" font-family="Inter, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#39ff14" text-anchor="start" letter-spacing="0" >01</text>
 <text x="124" y="330" font-family="Inter, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#eeebe3" text-anchor="start" letter-spacing="0" >Zugang</text>
 <circle cx="190" cy="406" r="14" fill="none" stroke="#eeebe3" stroke-width="1.5"/>
 <circle cx="206" cy="398" r="18" fill="none" stroke="#eeebe3" stroke-width="1.5"/>
@@ -120,7 +120,7 @@
 <path d="M1600,410 L1800,410" fill="none" stroke="#eeebe3" stroke-width="2" stroke-linejoin="miter" stroke-dasharray="2 5" />
 <text x="1700" y="400" font-family="'DejaVu Sans Mono', monospace" font-size="12" font-weight="400" fill="#8e8b84" text-anchor="middle" letter-spacing="0" >WireGuard</text>
 <line x1="80" y1="560" x2="2320" y2="560" stroke="#eeebe3" stroke-width="2"/>
-<text x="80" y="590" font-family="Inter, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#ff5a1f" text-anchor="start" letter-spacing="0" >02</text>
+<text x="80" y="590" font-family="Inter, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#39ff14" text-anchor="start" letter-spacing="0" >02</text>
 <text x="124" y="590" font-family="Inter, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#eeebe3" text-anchor="start" letter-spacing="0" >Rack · 10 Zoll · DeskPi RackMate T1 Plus</text>
 <rect x="200" y="630" width="1340" height="350" fill="none" stroke="#eeebe3" stroke-width="1" />
 <line x1="186" y1="668" x2="200" y2="668" stroke="#eeebe3" stroke-width="1"/>
@@ -147,14 +147,14 @@
 <rect x="740.3" y="667" width="4.5" height="6" fill="#eeebe3" stroke="none" stroke-width="1.5" />
 <rect x="747.6" y="667" width="4.5" height="6" fill="#eeebe3" stroke="none" stroke-width="1.5" />
 <rect x="754.9" y="667" width="4.5" height="6" fill="#eeebe3" stroke="none" stroke-width="1.5" />
-<rect x="762.2" y="667" width="4.5" height="6" fill="#ff5a1f" stroke="none" stroke-width="1.5" />
+<rect x="762.2" y="667" width="4.5" height="6" fill="#39ff14" stroke="none" stroke-width="1.5" />
 <rect x="769.5" y="667" width="4.5" height="6" fill="#eeebe3" stroke="none" stroke-width="1.5" />
-<rect x="776.8" y="667" width="4.5" height="6" fill="#ff5a1f" stroke="none" stroke-width="1.5" />
+<rect x="776.8" y="667" width="4.5" height="6" fill="#39ff14" stroke="none" stroke-width="1.5" />
 <rect x="784.1" y="667" width="4.5" height="6" fill="#eeebe3" stroke="none" stroke-width="1.5" />
 <text x="712" y="664" font-family="Inter, Helvetica, Arial, sans-serif" font-size="19" font-weight="600" fill="#eeebe3" text-anchor="end" letter-spacing="0" >TL-SG108E</text>
 <text x="712" y="684" font-family="'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#8e8b84" text-anchor="end" letter-spacing="0" >192.168.2.10 · 802.1Q</text>
 <rect x="334" y="828" width="52" height="32" fill="none" stroke="#eeebe3" stroke-width="1.5" />
-<circle cx="378" cy="836" r="2.5" fill="#ff5a1f" stroke="none" stroke-width="1.5"/>
+<circle cx="378" cy="836" r="2.5" fill="#39ff14" stroke="none" stroke-width="1.5"/>
 <line x1="342" y1="838" x2="366" y2="838" stroke="#eeebe3" stroke-width="1.5"/>
 <line x1="342" y1="845" x2="366" y2="845" stroke="#eeebe3" stroke-width="1.5"/>
 <line x1="342" y1="852" x2="366" y2="852" stroke="#eeebe3" stroke-width="1.5"/>
@@ -181,7 +181,7 @@
 <rect x="1120" y="846" width="5" height="8" fill="#eeebe3" stroke="none" stroke-width="1.5" />
 <rect x="1129" y="840" width="5" height="14" fill="#eeebe3" stroke="none" stroke-width="1.5" />
 <rect x="1138" y="834" width="5" height="20" fill="#eeebe3" stroke="none" stroke-width="1.5" />
-<circle cx="1154" cy="843" r="7" fill="none" stroke="#ff5a1f" stroke-width="2.5"/>
+<circle cx="1154" cy="843" r="7" fill="none" stroke="#39ff14" stroke-width="2.5"/>
 <text x="1140" y="896" font-family="Inter, Helvetica, Arial, sans-serif" font-size="19" font-weight="600" fill="#eeebe3" text-anchor="middle" letter-spacing="0" >Rack-Display</text>
 <text x="1140" y="918" font-family="'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#8e8b84" text-anchor="middle" letter-spacing="0" >am pi-nas</text>
 <text x="1140" y="936" font-family="'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#8e8b84" text-anchor="middle" letter-spacing="0" >Touch 7,84"</text>
@@ -191,8 +191,8 @@
 <text x="1400" y="896" font-family="Inter, Helvetica, Arial, sans-serif" font-size="19" font-weight="600" fill="#eeebe3" text-anchor="middle" letter-spacing="0" >Shelly Plug</text>
 <text x="1400" y="918" font-family="'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#8e8b84" text-anchor="middle" letter-spacing="0" >192.168.2.237</text>
 <text x="1400" y="936" font-family="'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#8e8b84" text-anchor="middle" letter-spacing="0" >Strom Rack</text>
-<path d="M754,678 L754,736 L360,736 L360,824" fill="none" stroke="#ff5a1f" stroke-width="3" stroke-linejoin="miter"  marker-end="url(#ar)"/>
-<text x="372" y="728" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#ff5a1f" text-anchor="start" letter-spacing="0" >Port 5 · Trunk 1 + 10</text>
+<path d="M754,678 L754,736 L360,736 L360,824" fill="none" stroke="#39ff14" stroke-width="3" stroke-linejoin="miter"  marker-end="url(#ar)"/>
+<text x="372" y="728" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#39ff14" text-anchor="start" letter-spacing="0" >Port 5 · Trunk 1 + 10</text>
 <path d="M738,678 L738,766 L620,766 L620,824" fill="none" stroke="#eeebe3" stroke-width="1.5" stroke-linejoin="miter"  marker-end="url(#ak)"/>
 <path d="M770,678 L770,766 L880,766 L880,828" fill="none" stroke="#eeebe3" stroke-width="1.5" stroke-linejoin="miter"  marker-end="url(#ak)"/>
 <rect x="1870" y="654" width="42" height="28" fill="none" stroke="#eeebe3" stroke-width="1.5" />
@@ -202,22 +202,22 @@
 <text x="1900" y="726" font-family="Inter, Helvetica, Arial, sans-serif" font-size="19" font-weight="600" fill="#eeebe3" text-anchor="middle" letter-spacing="0" >Arbeits-PC</text>
 <text x="1900" y="748" font-family="'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#8e8b84" text-anchor="middle" letter-spacing="0" >192.168.2.218</text>
 <text x="1900" y="766" font-family="'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#8e8b84" text-anchor="middle" letter-spacing="0" >Hyper-V · Extern</text>
-<path d="M792,669 L1850,669" fill="none" stroke="#ff5a1f" stroke-width="3" stroke-linejoin="miter"  marker-end="url(#ar)"/>
-<text x="1320" y="660" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#ff5a1f" text-anchor="middle" letter-spacing="0" >Port 7 · Trunk 1 + 10</text>
+<path d="M792,669 L1850,669" fill="none" stroke="#39ff14" stroke-width="3" stroke-linejoin="miter"  marker-end="url(#ar)"/>
+<text x="1320" y="660" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#39ff14" text-anchor="middle" letter-spacing="0" >Port 7 · Trunk 1 + 10</text>
 <path d="M1560,502 L1560,600 L140,600 L140,850 L322,850" fill="none" stroke="#eeebe3" stroke-width="1.5" stroke-linejoin="miter" stroke-dasharray="2 5" marker-end="url(#ak)"/>
 <line x1="80" y1="1080" x2="860" y2="1080" stroke="#eeebe3" stroke-width="2"/>
-<text x="80" y="1110" font-family="Inter, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#ff5a1f" text-anchor="start" letter-spacing="0" >03</text>
+<text x="80" y="1110" font-family="Inter, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#39ff14" text-anchor="start" letter-spacing="0" >03</text>
 <text x="124" y="1110" font-family="Inter, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#eeebe3" text-anchor="start" letter-spacing="0" >Heimnetz · vmbr0 · 192.168.2.0/24</text>
 <line x1="960" y1="1080" x2="2320" y2="1080" stroke="#eeebe3" stroke-width="2"/>
-<text x="960" y="1110" font-family="Inter, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#ff5a1f" text-anchor="start" letter-spacing="0" >04</text>
+<text x="960" y="1110" font-family="Inter, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#39ff14" text-anchor="start" letter-spacing="0" >04</text>
 <text x="1004" y="1110" font-family="Inter, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#eeebe3" text-anchor="start" letter-spacing="0" >Lab-Netz · VLAN 10 · vmbr1 · 10.0.0.0/24</text>
 <path d="M340,942 L340,1076" fill="none" stroke="#eeebe3" stroke-width="1.5" stroke-linejoin="miter"  marker-end="url(#ak)"/>
-<path d="M380,942 L380,1040 L1100,1040 L1100,1076" fill="none" stroke="#ff5a1f" stroke-width="3" stroke-linejoin="miter"  marker-end="url(#ar)"/>
-<text x="1112" y="1032" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#ff5a1f" text-anchor="start" letter-spacing="0" >vmbr1 an nic0.10</text>
+<path d="M380,942 L380,1040 L1100,1040 L1100,1076" fill="none" stroke="#39ff14" stroke-width="3" stroke-linejoin="miter"  marker-end="url(#ar)"/>
+<text x="1112" y="1032" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#39ff14" text-anchor="start" letter-spacing="0" >vmbr1 an nic0.10</text>
 <path d="M640,942 L640,1010 L900,1010 L900,1304 L866,1304" fill="none" stroke="#8e8b84" stroke-width="1.5" stroke-linejoin="miter" stroke-dasharray="1 4" marker-end="url(#ak)"/>
 <text x="652" y="1004" font-family="'DejaVu Sans Mono', monospace" font-size="12" font-weight="400" fill="#8e8b84" text-anchor="start" letter-spacing="0" >NFS · Fotos + Backups</text>
-<path d="M1900,770 L1900,1056 L2350,1056 L2350,1290 L2326,1290" fill="none" stroke="#ff5a1f" stroke-width="2" stroke-linejoin="miter" stroke-dasharray="8 6" marker-end="url(#ar)"/>
-<text x="1912" y="1046" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#ff5a1f" text-anchor="start" letter-spacing="0" >VLAN 10 via Hyper-V</text>
+<path d="M1900,770 L1900,1056 L2350,1056 L2350,1290 L2326,1290" fill="none" stroke="#39ff14" stroke-width="2" stroke-linejoin="miter" stroke-dasharray="8 6" marker-end="url(#ar)"/>
+<text x="1912" y="1046" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#39ff14" text-anchor="start" letter-spacing="0" >VLAN 10 via Hyper-V</text>
 <line x1="80" y1="1248" x2="860" y2="1248" stroke="#3a3935" stroke-width="1"/>
 <rect x="98.0" y="1154" width="13" height="13" fill="#eeebe3" stroke="#eeebe3" stroke-width="1.5" />
 <text x="122.0" y="1167" font-family="Inter, Helvetica, Arial, sans-serif" font-size="22" font-weight="600" fill="#eeebe3" text-anchor="start" letter-spacing="-0.3" >beszel</text>
@@ -246,31 +246,31 @@
 <rect x="978.0" y="1154" width="13" height="13" fill="#eeebe3" stroke="#eeebe3" stroke-width="1.5" />
 <text x="1002.0" y="1167" font-family="Inter, Helvetica, Arial, sans-serif" font-size="22" font-weight="600" fill="#eeebe3" text-anchor="start" letter-spacing="-0.3" >DC01</text>
 <text x="1391.3333333333333" y="1167" font-family="'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#8e8b84" text-anchor="end" letter-spacing="0" >VM 110</text>
-<text x="1002.0" y="1194" font-family="'DejaVu Sans Mono', monospace" font-size="14" font-weight="500" fill="#ff5a1f" text-anchor="start" letter-spacing="0" >10.0.0.10</text>
+<text x="1002.0" y="1194" font-family="'DejaVu Sans Mono', monospace" font-size="14" font-weight="500" fill="#39ff14" text-anchor="start" letter-spacing="0" >10.0.0.10</text>
 <text x="1002.0" y="1218" font-family="Inter, Helvetica, Arial, sans-serif" font-size="14" font-weight="400" fill="#8e8b84" text-anchor="start" letter-spacing="0" >AD · DNS · DHCP · NTP</text>
 <line x1="1413.3333333333333" y1="1144" x2="1413.3333333333333" y2="1234" stroke="#3a3935" stroke-width="1"/>
 <rect x="1431.3333333333333" y="1154" width="13" height="13" fill="#eeebe3" stroke="#eeebe3" stroke-width="1.5" />
 <text x="1455.3333333333333" y="1167" font-family="Inter, Helvetica, Arial, sans-serif" font-size="22" font-weight="600" fill="#eeebe3" text-anchor="start" letter-spacing="-0.3" >FS01</text>
 <text x="1844.6666666666665" y="1167" font-family="'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#8e8b84" text-anchor="end" letter-spacing="0" >VM 140</text>
-<text x="1455.3333333333333" y="1194" font-family="'DejaVu Sans Mono', monospace" font-size="14" font-weight="500" fill="#ff5a1f" text-anchor="start" letter-spacing="0" >10.0.0.40</text>
+<text x="1455.3333333333333" y="1194" font-family="'DejaVu Sans Mono', monospace" font-size="14" font-weight="500" fill="#39ff14" text-anchor="start" letter-spacing="0" >10.0.0.40</text>
 <text x="1455.3333333333333" y="1218" font-family="Inter, Helvetica, Arial, sans-serif" font-size="14" font-weight="400" fill="#8e8b84" text-anchor="start" letter-spacing="0" >Dateiserver · S:</text>
 <line x1="1866.6666666666665" y1="1144" x2="1866.6666666666665" y2="1234" stroke="#3a3935" stroke-width="1"/>
 <rect x="1884.6666666666665" y="1154" width="13" height="13" fill="#eeebe3" stroke="#eeebe3" stroke-width="1.5" />
 <text x="1908.6666666666665" y="1167" font-family="Inter, Helvetica, Arial, sans-serif" font-size="22" font-weight="600" fill="#eeebe3" text-anchor="start" letter-spacing="-0.3" >TOOLS01</text>
 <text x="2298.0" y="1167" font-family="'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#8e8b84" text-anchor="end" letter-spacing="0" >VM 150</text>
-<text x="1908.6666666666665" y="1194" font-family="'DejaVu Sans Mono', monospace" font-size="14" font-weight="500" fill="#ff5a1f" text-anchor="start" letter-spacing="0" >10.0.0.50</text>
+<text x="1908.6666666666665" y="1194" font-family="'DejaVu Sans Mono', monospace" font-size="14" font-weight="500" fill="#39ff14" text-anchor="start" letter-spacing="0" >10.0.0.50</text>
 <text x="1908.6666666666665" y="1218" font-family="Inter, Helvetica, Arial, sans-serif" font-size="14" font-weight="400" fill="#8e8b84" text-anchor="start" letter-spacing="0" >Docker · NPM · Kuma</text>
 <line x1="960" y1="1366" x2="2320" y2="1366" stroke="#3a3935" stroke-width="1"/>
 <rect x="978.0" y="1272" width="13" height="13" fill="none" stroke="#eeebe3" stroke-width="1.5" />
 <text x="1002.0" y="1285" font-family="Inter, Helvetica, Arial, sans-serif" font-size="22" font-weight="600" fill="#eeebe3" text-anchor="start" letter-spacing="-0.3" >CM01</text>
 <text x="1391.3333333333333" y="1285" font-family="'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#8e8b84" text-anchor="end" letter-spacing="0" >VM 120</text>
-<text x="1002.0" y="1312" font-family="'DejaVu Sans Mono', monospace" font-size="14" font-weight="500" fill="#ff5a1f" text-anchor="start" letter-spacing="0" >10.0.0.20</text>
+<text x="1002.0" y="1312" font-family="'DejaVu Sans Mono', monospace" font-size="14" font-weight="500" fill="#39ff14" text-anchor="start" letter-spacing="0" >10.0.0.20</text>
 <text x="1002.0" y="1336" font-family="Inter, Helvetica, Arial, sans-serif" font-size="14" font-weight="400" fill="#8e8b84" text-anchor="start" letter-spacing="0" >MECM + SQL</text>
 <line x1="1413.3333333333333" y1="1262" x2="1413.3333333333333" y2="1352" stroke="#3a3935" stroke-width="1"/>
 <rect x="1431.3333333333333" y="1272" width="13" height="13" fill="none" stroke="#eeebe3" stroke-width="1.5" />
 <text x="1455.3333333333333" y="1285" font-family="Inter, Helvetica, Arial, sans-serif" font-size="22" font-weight="600" fill="#eeebe3" text-anchor="start" letter-spacing="-0.3" >LOG01</text>
 <text x="1844.6666666666665" y="1285" font-family="'DejaVu Sans Mono', monospace" font-size="13" font-weight="400" fill="#8e8b84" text-anchor="end" letter-spacing="0" >VM 170</text>
-<text x="1455.3333333333333" y="1312" font-family="'DejaVu Sans Mono', monospace" font-size="14" font-weight="500" fill="#ff5a1f" text-anchor="start" letter-spacing="0" >10.0.0.70</text>
+<text x="1455.3333333333333" y="1312" font-family="'DejaVu Sans Mono', monospace" font-size="14" font-weight="500" fill="#39ff14" text-anchor="start" letter-spacing="0" >10.0.0.70</text>
 <text x="1455.3333333333333" y="1336" font-family="Inter, Helvetica, Arial, sans-serif" font-size="14" font-weight="400" fill="#8e8b84" text-anchor="start" letter-spacing="0" >Wazuh SIEM</text>
 <line x1="1866.6666666666665" y1="1262" x2="1866.6666666666665" y2="1352" stroke="#3a3935" stroke-width="1"/>
 <rect x="1884.6666666666665" y="1272" width="13" height="13" fill="none" stroke="#eeebe3" stroke-width="1.5" />
@@ -281,7 +281,7 @@
 <text x="80" y="1400" font-family="Inter, Helvetica, Arial, sans-serif" font-size="14" font-weight="400" fill="#8e8b84" text-anchor="start" letter-spacing="0" >Läuft unabhängig vom Lab. Hauptkennwörter zusätzlich in KeePassXC.</text>
 <text x="960" y="1400" font-family="Inter, Helvetica, Arial, sans-serif" font-size="14" font-weight="400" fill="#8e8b84" text-anchor="start" letter-spacing="0" >OU Lab · ~120 Benutzer · GPOs: Laufwerk S:, RDP, LAPS · Namen *.lab.test über NPM · Backup 01:30 lokal, 03:30 pi-nas</text>
 <line x1="80" y1="1470" x2="2320" y2="1470" stroke="#eeebe3" stroke-width="2"/>
-<text x="80" y="1500" font-family="Inter, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#ff5a1f" text-anchor="start" letter-spacing="0" >05</text>
+<text x="80" y="1500" font-family="Inter, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#39ff14" text-anchor="start" letter-spacing="0" >05</text>
 <text x="124" y="1500" font-family="Inter, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#eeebe3" text-anchor="start" letter-spacing="0" >Als Nächstes</text>
 <text x="80.0" y="1562" font-family="Inter, Helvetica, Arial, sans-serif" font-size="24" font-weight="600" fill="#eeebe3" text-anchor="start" letter-spacing="-0.3" >WSUS / SUP</text>
 <text x="80.0" y="1592" font-family="'DejaVu Sans Mono', monospace" font-size="14" font-weight="400" fill="#8e8b84" text-anchor="start" letter-spacing="0" >Patching auf CM01</text>
