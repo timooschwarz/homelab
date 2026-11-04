@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-11-04
+- Alle Grafiken in [`diagramme/`](diagramme/) im Neo-Swiss-Stil neu gezeichnet (Raster, Haarlinien, Rot als einzige Akzentfarbe), Inhalte unverändert, Dateinamen gleich. Die [Roadmap-Grafik](diagramme/roadmap.png) zeigt dabei den Stand 04.11. (Anleitungen für Stufe 7 und 15). Die Netzwerk-Grafiken vom 22.10., 25.10. und 27.10. bleiben als historische Stände im alten Stil, alte Fassungen aller übrigen Grafiken im Commit `2a9ccb7`
 - Neuer Netzwerkplan [Stand 04.11.](diagramme/netzwerk-2026-11-04.png) im Neo-Swiss-Stil (Raster, Haarlinien, Rot nur für VLAN 10) mit Immich, Vaultwarden, JetKVM, Shelly Plug und Rack-Display, jetzt oben im README und im [Aufbau](aufbau.md). Vektor-Quelle: [netzwerk-2026-11-04.svg](diagramme/netzwerk-2026-11-04.svg). Dazu eine [Dark-Mode-Fassung](diagramme/netzwerk-2026-11-04-dark.png) im Plakat-Stil
 - [Roadmap](roadmap.md): Anleitungen für Stufe 7 (Patch-Management über MECM mit Update-Ringen und Patchday-Regel) und Stufe 15 (zweiter Domain Controller mit DHCP-Failover) vorbereitet, Kapitel folgen nach der Umsetzung
 
