@@ -18,7 +18,7 @@ Ich habe dieses Lab als Junior Admin aufgebaut, um Alltagsaufgaben aus der Firma
 
 ![Netzwerkplan des Labs](docs/diagramme/netzwerk-2026-11-04.png)
 
-<sub>Auch als [Dark Mode](docs/diagramme/netzwerk-2026-11-04-dark.png) · Vektor-Datei: [SVG](docs/diagramme/netzwerk-2026-11-04.svg)</sub>
+<sub>Auch als [helle Fassung](docs/diagramme/netzwerk-2026-11-04-light.png) · Vektor-Dateien: [SVG dunkel](docs/diagramme/netzwerk-2026-11-04.svg), [SVG hell](docs/diagramme/netzwerk-2026-11-04-light.svg)</sub>
 
 > [!NOTE]
 > **Stand 04.11.2026**
