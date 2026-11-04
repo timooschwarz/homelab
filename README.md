@@ -12,7 +12,7 @@
 ![VLAN](https://img.shields.io/badge/Netz-VLAN%2010%20(802.1Q)-1D9E75)
 ![Kapitel](https://img.shields.io/badge/Kapitel-22-555555)
 
-![Netzwerk des Labs](docs/diagramme/netzwerk-2026-10-27.png)
+![Netzwerk des Labs](docs/diagramme/netzwerk-2026-11-04.png)
 
 > [!NOTE]
 > **Stand 27.10.2026:** Alle Server (DC01, FS01, TOOLS01, CM01, LOG01) sind aus Hyper-V auf den Mini-PC `pve01` mit Proxmox umgezogen ([Kapitel 17](docs/anleitung/17-umzug-hyperv-proxmox.md)). Das Pi-NAS sichert jede Nacht alle VMs und Container. Hyper-V auf dem Arbeits-PC bleibt nur noch für Testclients, die seit dem 27.10. über VLAN 10 direkt im Lab-Netz hängen ([Kapitel 19](docs/anleitung/19-vlan-testclient.md)). Beszel, zwei Uptime Kumas und Proxmox melden Ausfälle und Backup-Ergebnisse per Push aufs Handy ([Kapitel 18](docs/anleitung/18-betrieb.md)). Seit 30.10. zeigt ein Touch-Display im Rack Strom, Server, Dienste und Backups auf einen Blick ([Kapitel 20](docs/anleitung/20-rack-display.md)). Seit 31.10. sichert Immich die Handyfotos aufs NAS ([Kapitel 21](docs/anleitung/21-immich.md)), seit 01.11. liegen die Kennwörter in einem eigenen Vaultwarden, erreichbar über Tailscale ([Kapitel 22](docs/anleitung/22-vaultwarden.md)). Was wann dazukam: [Changelog](docs/changelog.md)
