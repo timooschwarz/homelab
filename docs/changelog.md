@@ -1,5 +1,8 @@
 # Changelog
 
+## 2026-11-04
+- [Roadmap](roadmap.md): Anleitungen für Stufe 7 (Patch-Management über MECM mit Update-Ringen und Patchday-Regel) und Stufe 15 (zweiter Domain Controller mit DHCP-Failover) vorbereitet, Kapitel folgen nach der Umsetzung
+
 ## 2026-11-01
 - Neues [Kapitel 22 · Vaultwarden](anleitung/22-vaultwarden.md): Alpine-LXC `vaultwarden` (192.168.2.24) per Community-Script im Heimnetz auf pve01, echtes HTTPS über `tailscale serve` unter `*.ts.net`, Admin-Token, Registrierung gesperrt, 2FA, Bitwarden-Erweiterung und iPhone-App
 - Neue Fälle in der [Fehlerbehebung](fehlerbehebung.md#vaultwarden-kapitel-22): kaputter Container trotz `removed` (Protection), Befehl landet auf pve01 statt im Container
