@@ -1,7 +1,7 @@
 # Changelog
 
 ## 2026-11-04
-- Neuer Netzwerkplan [Stand 04.11.](diagramme/netzwerk-2026-11-04.png) im Excalidraw-Stil mit Immich, Vaultwarden, JetKVM, Shelly Plug und Rack-Display, jetzt oben im README und im [Aufbau](aufbau.md). Die Quelldatei [netzwerk-2026-11-04.excalidraw](diagramme/netzwerk-2026-11-04.excalidraw) lässt sich auf excalidraw.com öffnen und anpassen
+- Neuer Netzwerkplan [Stand 04.11.](diagramme/netzwerk-2026-11-04.png) im Neo-Swiss-Stil (Raster, Haarlinien, Rot nur für VLAN 10) mit Immich, Vaultwarden, JetKVM, Shelly Plug und Rack-Display, jetzt oben im README und im [Aufbau](aufbau.md). Vektor-Quelle: [netzwerk-2026-11-04.svg](diagramme/netzwerk-2026-11-04.svg)
 - [Roadmap](roadmap.md): Anleitungen für Stufe 7 (Patch-Management über MECM mit Update-Ringen und Patchday-Regel) und Stufe 15 (zweiter Domain Controller mit DHCP-Failover) vorbereitet, Kapitel folgen nach der Umsetzung
 
 ## 2026-11-01
