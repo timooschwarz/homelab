@@ -118,6 +118,7 @@ Damit das Lab rund um die Uhr läuft, ohne dass der große PC an sein muss.
 | 21 | [Immich](docs/anleitung/21-immich.md) | Eigene Foto-Cloud, Fotos per NFS auf dem Pi-NAS | 1,5 Std. |
 | 22 | [Vaultwarden](docs/anleitung/22-vaultwarden.md) | Eigener Passwortmanager, HTTPS über `tailscale serve`, 2FA | 45 Min. |
 | 23 | [Proxmox-MCP](docs/anleitung/23-proxmox-mcp.md) | KI-Assistent mit eigenem Token und eingeschränkter Rolle auf pve01 | 45 Min. |
+| 24 | [Zertifikate über Tailscale](docs/anleitung/24-zertifikate-tailscale.md) | pve01 und NetBox mit echtem HTTPS unter `*.ts.net`, MCP ohne Dev-Mode | 30 Min. |
 | – | [Hardware und Rack](docs/hardware.md) | Rack-Belegung, Patchpanel, Verkabelung, Managed Switch | – |
 
 <details>
@@ -157,16 +158,16 @@ Jedes Kapitel hat oben Tags. Ein Klick darauf führt hierher.
 | <a id="thema-ad"></a>![Active Directory](https://img.shields.io/badge/-Active%20Directory-378ADD?style=flat-square) | [2](docs/anleitung/02-domain-controller.md) · [3](docs/anleitung/03-dns-dhcp.md) · [4](docs/anleitung/04-ad-struktur.md) · [5](docs/anleitung/05-benutzer-per-skript.md) · [6](docs/anleitung/06-client.md) · [11](docs/anleitung/11-mecm.md) · [17](docs/anleitung/17-umzug-hyperv-proxmox.md) |
 | <a id="thema-dns"></a>![DNS](https://img.shields.io/badge/-DNS-1D9E75?style=flat-square) | [2](docs/anleitung/02-domain-controller.md) · [3](docs/anleitung/03-dns-dhcp.md) · [10](docs/anleitung/10-linux-dienste.md) · [18](docs/anleitung/18-betrieb.md) |
 | <a id="thema-dhcp"></a>![DHCP](https://img.shields.io/badge/-DHCP-1D9E75?style=flat-square) | [3](docs/anleitung/03-dns-dhcp.md) |
-| <a id="thema-netz"></a>![Netzwerk](https://img.shields.io/badge/-Netzwerk-1D9E75?style=flat-square) | [1](docs/anleitung/01-netzwerk.md) · [10](docs/anleitung/10-linux-dienste.md) · [14](docs/anleitung/14-homelable.md) · [15](docs/anleitung/15-proxmox-host.md) · [16](docs/anleitung/16-pi-nas.md) · [17](docs/anleitung/17-umzug-hyperv-proxmox.md) · [18](docs/anleitung/18-betrieb.md) · [19](docs/anleitung/19-vlan-testclient.md) · [Hardware](docs/hardware.md) |
+| <a id="thema-netz"></a>![Netzwerk](https://img.shields.io/badge/-Netzwerk-1D9E75?style=flat-square) | [1](docs/anleitung/01-netzwerk.md) · [10](docs/anleitung/10-linux-dienste.md) · [14](docs/anleitung/14-homelable.md) · [15](docs/anleitung/15-proxmox-host.md) · [16](docs/anleitung/16-pi-nas.md) · [17](docs/anleitung/17-umzug-hyperv-proxmox.md) · [18](docs/anleitung/18-betrieb.md) · [19](docs/anleitung/19-vlan-testclient.md) · [24](docs/anleitung/24-zertifikate-tailscale.md) · [Hardware](docs/hardware.md) |
 | <a id="thema-gpo"></a>![Gruppenrichtlinien](https://img.shields.io/badge/-Gruppenrichtlinien-7F77DD?style=flat-square) | [8](docs/anleitung/08-gruppenrichtlinien.md) · [9](docs/anleitung/09-testen.md) · [11](docs/anleitung/11-mecm.md) · [14](docs/anleitung/14-homelable.md) |
 | <a id="thema-file"></a>![Dateiserver](https://img.shields.io/badge/-Dateiserver-0F766E?style=flat-square) | [7](docs/anleitung/07-dateiserver.md) · [8](docs/anleitung/08-gruppenrichtlinien.md) · [9](docs/anleitung/09-testen.md) · [16](docs/anleitung/16-pi-nas.md) |
-| <a id="thema-sec"></a>![Sicherheit](https://img.shields.io/badge/-Sicherheit-EF9F27?style=flat-square) | [4](docs/anleitung/04-ad-struktur.md) · [7](docs/anleitung/07-dateiserver.md) · [8](docs/anleitung/08-gruppenrichtlinien.md) · [13](docs/anleitung/13-wazuh.md) · [15](docs/anleitung/15-proxmox-host.md) · [23](docs/anleitung/23-proxmox-mcp.md) |
+| <a id="thema-sec"></a>![Sicherheit](https://img.shields.io/badge/-Sicherheit-EF9F27?style=flat-square) | [4](docs/anleitung/04-ad-struktur.md) · [7](docs/anleitung/07-dateiserver.md) · [8](docs/anleitung/08-gruppenrichtlinien.md) · [13](docs/anleitung/13-wazuh.md) · [15](docs/anleitung/15-proxmox-host.md) · [23](docs/anleitung/23-proxmox-mcp.md) · [24](docs/anleitung/24-zertifikate-tailscale.md) |
 | <a id="thema-client"></a>![Windows 11](https://img.shields.io/badge/-Windows%2011-0078D4?style=flat-square) | [6](docs/anleitung/06-client.md) · [12](docs/anleitung/12-softwareverteilung.md) · [19](docs/anleitung/19-vlan-testclient.md) |
 | <a id="thema-ps"></a>![PowerShell](https://img.shields.io/badge/-PowerShell-5391FE?style=flat-square) | [1](docs/anleitung/01-netzwerk.md) · [5](docs/anleitung/05-benutzer-per-skript.md) |
 | <a id="thema-hyperv"></a>![Hyper-V](https://img.shields.io/badge/-Hyper--V-5F5E5A?style=flat-square) | [0](docs/anleitung/00-voraussetzungen.md) · [1](docs/anleitung/01-netzwerk.md) · [14](docs/anleitung/14-homelable.md) · [17](docs/anleitung/17-umzug-hyperv-proxmox.md) · [19](docs/anleitung/19-vlan-testclient.md) |
 | <a id="thema-test"></a>![Testen](https://img.shields.io/badge/-Testen-D4537E?style=flat-square) | [9](docs/anleitung/09-testen.md) · [12](docs/anleitung/12-softwareverteilung.md) · [13](docs/anleitung/13-wazuh.md) |
 | <a id="thema-linux"></a>![Linux & Docker](https://img.shields.io/badge/-Linux%20%26%20Docker-E95420?style=flat-square) | [10](docs/anleitung/10-linux-dienste.md) · [13](docs/anleitung/13-wazuh.md) · [14](docs/anleitung/14-homelable.md) · [15](docs/anleitung/15-proxmox-host.md) · [16](docs/anleitung/16-pi-nas.md) · [17](docs/anleitung/17-umzug-hyperv-proxmox.md) · [18](docs/anleitung/18-betrieb.md) · [20](docs/anleitung/20-rack-display.md) · [21](docs/anleitung/21-immich.md) · [22](docs/anleitung/22-vaultwarden.md) |
-| <a id="thema-proxmox"></a>![Proxmox](https://img.shields.io/badge/-Proxmox-E57000?style=flat-square) | [14](docs/anleitung/14-homelable.md) · [15](docs/anleitung/15-proxmox-host.md) · [16](docs/anleitung/16-pi-nas.md) · [17](docs/anleitung/17-umzug-hyperv-proxmox.md) · [18](docs/anleitung/18-betrieb.md) · [20](docs/anleitung/20-rack-display.md) · [21](docs/anleitung/21-immich.md) · [22](docs/anleitung/22-vaultwarden.md) · [23](docs/anleitung/23-proxmox-mcp.md) |
+| <a id="thema-proxmox"></a>![Proxmox](https://img.shields.io/badge/-Proxmox-E57000?style=flat-square) | [14](docs/anleitung/14-homelable.md) · [15](docs/anleitung/15-proxmox-host.md) · [16](docs/anleitung/16-pi-nas.md) · [17](docs/anleitung/17-umzug-hyperv-proxmox.md) · [18](docs/anleitung/18-betrieb.md) · [20](docs/anleitung/20-rack-display.md) · [21](docs/anleitung/21-immich.md) · [22](docs/anleitung/22-vaultwarden.md) · [23](docs/anleitung/23-proxmox-mcp.md) · [24](docs/anleitung/24-zertifikate-tailscale.md) |
 | <a id="thema-mecm"></a>![MECM](https://img.shields.io/badge/-MECM-107C10?style=flat-square) | [11](docs/anleitung/11-mecm.md) · [12](docs/anleitung/12-softwareverteilung.md) |
 
 ---
@@ -258,7 +259,7 @@ Stand Oktober 2026.
 
 ```
 docs/
-  anleitung/          Schritt-für-Schritt-Anleitung, Kapitel 0–23
+  anleitung/          Schritt-für-Schritt-Anleitung, Kapitel 0–24
   bilder/             Screenshots und Fotos aus dem Lab
   diagramme/          Übersichtsgrafiken
   aufbau.md           Referenz des fertigen Labs

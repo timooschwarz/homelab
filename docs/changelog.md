@@ -1,6 +1,10 @@
 # Changelog
 
 ## 2026-11-07
+- Neues [Kapitel 24 · Zertifikate über Tailscale](anleitung/24-zertifikate-tailscale.md): pve01 und NetBox per `tailscale serve` mit echtem Let's-Encrypt-Zertifikat unter `*.ts.net`, Proxmox-MCP danach mit Zertifikatsprüfung und ohne Dev-Mode
+- NetBox hinter `tailscale serve`: Debian-Standardseite abgeschaltet, doppelter `X-Forwarded-Host` in Apache entfernt, `CSRF_TRUSTED_ORIGINS` gesetzt
+- Drei neue Fälle in der [Fehlerbehebung](fehlerbehebung.md#zertifikate-kapitel-24), darunter `tailscaled` auf pve01, der keine neuen Verbindungen annimmt
+- NetBox ergänzt: immich, vaultwarden, JetKVM und Shelly Plug mit IP-Adressen
 - Neues [Kapitel 23 · Proxmox-MCP](anleitung/23-proxmox-mcp.md): Claude Desktop spricht über ProxmoxMCP-Plus (`uvx`, Python 3.12) mit pve01. Eigener Benutzer `claude@pve`, API-Token ohne Privilege Separation, erst `PVEAuditor`, dann eigene Rolle `ClaudeOps` (Starten/Stoppen, Snapshots, Backups, kein Anlegen oder Löschen)
 - Drei neue Fälle in der [Fehlerbehebung](fehlerbehebung.md#proxmox-mcp-kapitel-23): Python-Download beim ersten Start, TLS nur im Dev-Mode, Pfad für die Job-Datenbank
 - [Fehlerbehebung](fehlerbehebung.md): NetBox-LXC startet nach einem Neustart von pve01 nicht mit, *Start at boot* fehlte

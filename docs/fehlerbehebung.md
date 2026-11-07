@@ -373,6 +373,21 @@ Fehler, die beim Aufbau aufgetreten sind, jeweils mit Ursache und Lösung.
 **Ursache:** Die Job-Datenbank landet ohne Pfad im Startordner von Claude Desktop, dort fehlen Schreibrechte.
 **Lösung:** Ordner `%USERPROFILE%\proxmox-mcp` anlegen und `PROXMOX_JOBS_SQLITE_PATH` auf eine Datei darin setzen.
 
+## Zertifikate (Kapitel 24)
+
+### `ts.net`-Adresse von pve01 lädt ewig
+**Symptom:** `tailscale ping pve01` antwortet, aber `tailscale ping --icmp pve01`, `Test-NetConnection … -Port 443` und sogar Port 8006 über die Tailscale-IP laufen ins Leere. Vaultwarden (Container auf pve01) genauso, das Pi-NAS antwortet. Von pve01 zum PC geht `--icmp`.
+**Ausgeschlossen:** Zertifikat (`tailscale cert` klappt), Proxmox-Firewall (aus), `ShieldsUp` (false), Zugriffsregeln (Standard, alles erlaubt), iptables (`ts-input` erlaubt `tailscale0`). `tcpdump -ni tailscale0 icmp` auf pve01 zeigte 0 Pakete.
+**Lösung:** `systemctl restart tailscaled` auf pve01. Danach sofort Antwort. Der normale `tailscale ping` umgeht die Paketfilter, deshalb täuscht er eine funktionierende Verbindung vor. Aussagekräftig ist `tailscale ping --icmp`.
+
+### NetBox über Tailscale: Debian-Seite oder *Bad Request (400)*
+**Ursache:** Erst gewinnt der VirtualHost `000-default` auf Port 80. Danach hängt Apache an den `X-Forwarded-Host` von Tailscale seinen eigenen Wert an, NetBox liest `name, name` als ungültigen Host. Im NetBox-Log steht dazu nichts.
+**Lösung:** `a2dissite 000-default` und `RequestHeader unset X-Forwarded-Host early` in beiden VirtualHosts der `netbox.conf`, siehe [Kapitel 24](anleitung/24-zertifikate-tailscale.md#schritt-4--netbox-über-tailscale-serve-container). Eingrenzen lässt sich das mit `curl` im Container, einmal mit und einmal ohne den Header.
+
+### Heimnetz läuft am PC durch den Tunnel
+**Ursache:** *Use Tailscale subnets* am Arbeits-PC an, die Route `192.168.2.0/24` von pve01 wird übernommen, obwohl der PC selbst im Heimnetz steht. `tailscale status` zeigt beim Subnet Router riesige `rx`-Werte.
+**Lösung:** Im Tailscale-Menü **Preferences → Use Tailscale subnets** aus.
+
 ### NetBox nach Neustart offline
 - **Ursache:** Container ohne Neustart-Richtlinie.
 - **Lösung:** `restart: unless-stopped` in der `docker-compose.override.yml`.

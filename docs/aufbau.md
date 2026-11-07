@@ -39,7 +39,7 @@
 |---|---|---|---|---|
 | pve01 | 192.168.2.20 | Proxmox VE 9.2 auf HP EliteDesk 805 G6 Mini | Hypervisor, Gateway `vmbr1`, Tailscale Subnet Router | immer an |
 | beszel | 192.168.2.21 (+ 10.0.0.21) | LXC 100 auf pve01 | Monitoring-Hub, Push per ntfy | immer an |
-| netbox | 192.168.2.22 | LXC 101 auf pve01 | NetBox 4.7 | immer an |
+| netbox | 192.168.2.22 | LXC 101 auf pve01 | NetBox 4.7, per `tailscale serve` unter `netbox.<tailnet>.ts.net`, [Kapitel 24](anleitung/24-zertifikate-tailscale.md) | immer an |
 | immich | 192.168.2.23 | VM 102 auf pve01, Ubuntu 26.04.1 | Immich (Fotos per NFS vom pi-nas), [Kapitel 21](anleitung/21-immich.md) | immer an |
 | vaultwarden | 192.168.2.24 | LXC 104 auf pve01, Alpine 3.24 | Vaultwarden, per `tailscale serve` unter `vaultwarden.<tailnet>.ts.net`, [Kapitel 22](anleitung/22-vaultwarden.md) | immer an |
 | shelly-rack | 192.168.2.237 | Shelly Plug M Gen3 | Strommessung Rack, [Kapitel 20](anleitung/20-rack-display.md) | immer an |

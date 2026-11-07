@@ -120,6 +120,7 @@ Im Explorer unter `%USERPROFILE%` einen Ordner `proxmox-mcp` anlegen.
 - Jede Zeile im `env`-Block endet mit Komma, nur die letzte nicht.
 - Im Pfad doppelte Backslashes.
 - `PROXMOX_VERIFY_SSL` steht auf `false`, weil pve01 ein selbstsigniertes Zertifikat hat. Das allein reicht dem Server nicht, er verlangt zusätzlich `PROXMOX_DEV_MODE`. Für eine Verbindung, die nur im eigenen Heimnetz läuft, ist das vertretbar.
+- **Besser:** pve01 über Tailscale mit echtem Zertifikat erreichbar machen, dann `PROXMOX_HOST` auf `pve01.<tailnet>.ts.net`, Port `443`, `PROXMOX_VERIFY_SSL` auf `true` und **ohne** Dev-Mode. Siehe [Kapitel 24](24-zertifikate-tailscale.md).
 
 Speichern, Claude über das Symbol im Infobereich **komplett beenden** (nicht nur das Fenster schließen) und neu starten.
 
@@ -173,5 +174,7 @@ Der MCP-Server spricht nur mit der Proxmox-API. In die VMs kommt er nicht: keine
 | Server läuft, aber ein Befehl wird abgelehnt | Rolle hat das Recht nicht | gewollt, Rolle nur gezielt erweitern |
 
 Weitere Fälle: [Fehlerbehebung](../fehlerbehebung.md#proxmox-mcp-kapitel-23)
+
+Weiter: [Kapitel 24 · Zertifikate über Tailscale](24-zertifikate-tailscale.md)
 
 Wie es weitergeht: [Roadmap](../roadmap.md)
