@@ -376,6 +376,7 @@ Fehler, die beim Aufbau aufgetreten sind, jeweils mit Ursache und Lösung.
 ### NetBox nach Neustart offline
 - **Ursache:** Container ohne Neustart-Richtlinie.
 - **Lösung:** `restart: unless-stopped` in der `docker-compose.override.yml`.
+- **Seit dem Umzug (LXC 101 auf pve01):** Ist der ganze Container nach einem Neustart von pve01 aus, fehlt **netbox → Options → Start at boot**. Das Community-Script setzt den Haken nicht von selbst.
 
 ### Ubuntu: LVM nutzt nur die halbe Platte
 - **Ursache:** Der Installer legt das logische Volume nur mit einem Teil der Volume Group an.
