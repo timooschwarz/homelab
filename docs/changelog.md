@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-11-07
+- Neues [Kapitel 23 · Proxmox-MCP](anleitung/23-proxmox-mcp.md): Claude Desktop spricht über ProxmoxMCP-Plus (`uvx`, Python 3.12) mit pve01. Eigener Benutzer `claude@pve`, API-Token ohne Privilege Separation, erst `PVEAuditor`, dann eigene Rolle `ClaudeOps` (Starten/Stoppen, Snapshots, Backups, kein Anlegen oder Löschen)
+- Drei neue Fälle in der [Fehlerbehebung](fehlerbehebung.md#proxmox-mcp-kapitel-23): Python-Download beim ersten Start, TLS nur im Dev-Mode, Pfad für die Job-Datenbank
+
 ## 2026-11-04
 - Alle Grafiken auf Dark Mode umgestellt (gleiche Dateinamen), Akzentfarbe Neon-Grün statt Orange. Der [Netzwerkplan](diagramme/netzwerk-2026-11-04.png) ist jetzt standardmäßig dunkel, die helle Fassung liegt unter [netzwerk-2026-11-04-light.png](diagramme/netzwerk-2026-11-04-light.png)
 - README neu gegliedert: Titelbild im Neo-Swiss-Stil, Schnelllinks, Stand als kurze Liste, jedes Kapitel nur noch einmal in den Teil-Tabellen, Themen-Index kompakt, Bilder, Fehlerliste, Versionen und Repo-Aufbau zum Aufklappen

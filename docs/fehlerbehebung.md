@@ -359,6 +359,20 @@ Fehler, die beim Aufbau aufgetreten sind, jeweils mit Ursache und Lösung.
 **Lösung:** Jede Zeile einzeln eingeben und auf den Prompt `~ #` warten. Ein `tailscale up --hostname=…` auf pve01 hätte den Host umbenannt. Hier hat Tailscale abgebrochen, weil pve01 Subnet-Routen freigibt.
 
 
+## Proxmox-MCP (Kapitel 23)
+
+### `uvx` bricht beim ersten Start mit *Missing expected target directory* ab
+**Ursache:** Ohne Vorgabe lädt `uvx` die neueste Python-Version. Claude Desktop startet den Server gleich mehrmals, die parallelen Downloads legen einen halben Python-Ordner an.
+**Lösung:** Den kaputten Ordner unter `%APPDATA%\uv\python` löschen, `uv python install 3.12`, in der Konfiguration `"args": ["--python", "3.12", "proxmox-mcp-plus"]`.
+
+### *Insecure TLS configuration blocked* trotz `PROXMOX_VERIFY_SSL=false`
+**Ursache:** ProxmoxMCP-Plus erlaubt das Abschalten der Zertifikatsprüfung nur im Dev-Mode.
+**Lösung:** Zusätzlich `"PROXMOX_DEV_MODE": "true"`. Sauberer wäre ein Zertifikat, dem der Arbeits-PC vertraut.
+
+### *unable to open database file*
+**Ursache:** Die Job-Datenbank landet ohne Pfad im Startordner von Claude Desktop, dort fehlen Schreibrechte.
+**Lösung:** Ordner `%USERPROFILE%\proxmox-mcp` anlegen und `PROXMOX_JOBS_SQLITE_PATH` auf eine Datei darin setzen.
+
 ### NetBox nach Neustart offline
 - **Ursache:** Container ohne Neustart-Richtlinie.
 - **Lösung:** `restart: unless-stopped` in der `docker-compose.override.yml`.

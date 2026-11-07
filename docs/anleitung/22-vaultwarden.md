@@ -168,4 +168,6 @@ Im Container `update` → **1 YES** → **Update**. Tailscale kommt mit `apk upg
 
 Weitere Fälle: [Fehlerbehebung](../fehlerbehebung.md#vaultwarden-kapitel-22)
 
+Weiter: [Kapitel 23 · Proxmox-MCP](23-proxmox-mcp.md)
+
 Wie es weitergeht: [Roadmap](../roadmap.md)
