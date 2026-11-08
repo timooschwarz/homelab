@@ -21,11 +21,12 @@ Ich habe dieses Lab als Junior Admin aufgebaut, um Alltagsaufgaben aus der Firma
 <sub>Auch als [helle Fassung](docs/diagramme/netzwerk-2026-11-04-light.png) · Vektor-Dateien: [SVG dunkel](docs/diagramme/netzwerk-2026-11-04.svg), [SVG hell](docs/diagramme/netzwerk-2026-11-04-light.svg)</sub>
 
 > [!NOTE]
-> **Stand 04.11.2026**
+> **Stand 07.11.2026**
 > - Alle Server laufen auf dem Mini-PC `pve01` mit Proxmox, Hyper-V auf dem Arbeits-PC trägt nur noch Testclients ([Kapitel 17](docs/anleitung/17-umzug-hyperv-proxmox.md))
 > - Das Lab-Netz läuft als VLAN 10 über einen Managed Switch, das Heimnetz bleibt unberührt ([Kapitel 19](docs/anleitung/19-vlan-testclient.md))
 > - Jede Nacht sichert Proxmox alle VMs aufs Pi-NAS, Ausfälle und Backup-Berichte kommen per Push aufs Handy ([Kapitel 16](docs/anleitung/16-pi-nas.md), [18](docs/anleitung/18-betrieb.md))
-> - Neu im Heimnetz: Immich für Handyfotos ([Kapitel 21](docs/anleitung/21-immich.md)) und Vaultwarden als Passwortmanager, nur über Tailscale erreichbar ([Kapitel 22](docs/anleitung/22-vaultwarden.md))
+> - Im Heimnetz: Immich für Handyfotos ([Kapitel 21](docs/anleitung/21-immich.md)) und Vaultwarden als Passwortmanager ([Kapitel 22](docs/anleitung/22-vaultwarden.md))
+> - Neu: Ein KI-Assistent verwaltet pve01 über einen MCP-Server mit eigener, eingeschränkter Rolle ([Kapitel 23](docs/anleitung/23-proxmox-mcp.md)), Proxmox und NetBox haben echte Zertifikate über Tailscale ([Kapitel 24](docs/anleitung/24-zertifikate-tailscale.md))
 
 ### Was am Ende läuft
 
@@ -35,7 +36,7 @@ Ich habe dieses Lab als Junior Admin aufgebaut, um Alltagsaufgaben aus der Firma
 | **Dateiserver** | `\\fs01\Abteilungen`: jeder sieht nur seinen Ordner, Laufwerk **S:** kommt automatisch je nach Abteilung |
 | **Sicherheit** | RDP nur für bestimmte Abteilungen, Windows LAPS, getrennte Admin-Konten, Wazuh meldet Fehlanmeldungen |
 | **Softwareverteilung** | MECM mit Client-Push, Anwendungen im Softwarecenter und als Pflicht-Installation |
-| **Betrieb** | Beszel, Uptime Kuma, Nginx Proxy Manager, NetBox, Startseite mit allen Diensten |
+| **Betrieb** | Beszel, Uptime Kuma, Nginx Proxy Manager, NetBox mit Rack, Kabeln und VLANs, Startseite mit allen Diensten, Proxmox-Zugriff für einen KI-Assistenten mit eigener Rolle |
 | **Eigene Hardware** | Mini-PC mit Proxmox im 10-Zoll-Rack, Pi-NAS mit RAID 5, Pi-hole, Touch-Display im Rack |
 | **Netzwerk** | Lab als VLAN 10, Testclients auf dem Arbeits-PC über dasselbe Kabel, Fernzugriff über Tailscale ohne offenen Port |
 
@@ -237,7 +238,7 @@ Details: [Roadmap](docs/roadmap.md) · Warum etwas so gebaut ist: [Entscheidunge
 <summary><b>Getestet mit</b></summary>
 <br>
 
-Stand Oktober 2026.
+Stand November 2026.
 
 | Komponente | Version |
 |---|---|
@@ -250,6 +251,8 @@ Stand Oktober 2026.
 | Mini-PC (Kapitel 15) | HP EliteDesk 805 G6 Mini, Ryzen 5 PRO 4650GE, 32 GB |
 | NAS (Kapitel 16) | Raspberry Pi 5 (4 GB), Radxa Penta SATA HAT, Raspberry Pi OS Lite (Trixie), OpenMediaVault 8 |
 | Switch (Kapitel 19) | TP-Link TL-SG108E V2, 802.1Q-VLAN |
+| KI-Zugriff (Kapitel 23) | Claude Desktop · ProxmoxMCP-Plus über `uvx` mit Python 3.12 |
+| Zertifikate (Kapitel 24) | Tailscale 1.104 (`tailscale serve`) · NetBox 4.7.3 im LXC per Community-Script |
 
 </details>
 
