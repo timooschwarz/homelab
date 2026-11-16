@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-11-15
+- [Kapitel 20](anleitung/20-rack-display.md): Das Dashboard hat jetzt fünf Seiten. Neu an zweiter Stelle ist eine eigene Bildseite ([`theme.html`](../scripts/rack-display/theme.html)) mit fester Bildfolge aus dem Ordner `theme`, getrennt von der Slideshow
+- [`dashboard.html`](../scripts/rack-display/dashboard.html): Seiten neu nummeriert, fünfter Punkt, Kurzlinks „Dienste“ und „Backup“ über `SEITE_DIENSTE`
+- Neuer Fall in der [Fehlerbehebung](fehlerbehebung.md#rack-display-kapitel-20): Display zeigt nach einer Änderung die alte Fassung aus dem Chromium-Zwischenspeicher
+
 ## 2026-11-07
 - Neues [Kapitel 24 · Zertifikate über Tailscale](anleitung/24-zertifikate-tailscale.md): pve01 und NetBox per `tailscale serve` mit echtem Let's-Encrypt-Zertifikat unter `*.ts.net`, Proxmox-MCP danach mit Zertifikatsprüfung und ohne Dev-Mode
 - NetBox hinter `tailscale serve`: Debian-Standardseite abgeschaltet, doppelter `X-Forwarded-Host` in Apache entfernt, `CSRF_TRUSTED_ORIGINS` gesetzt

@@ -64,7 +64,8 @@ sudo mkdir -p /home/kiosk/screen
 ```bash
 sudo install -m 755 kiosk-server.py /usr/local/bin/kiosk-server.py
 sudo install -m 755 kiosk-update.sh /usr/local/bin/kiosk-update
-sudo cp dashboard.html strom.html strom-dither.html /home/kiosk/screen/
+sudo cp dashboard.html theme.html strom.html strom-dither.html /home/kiosk/screen/
+sudo mkdir -p /home/kiosk/screen/theme
 echo "http://127.0.0.1:8099/dashboard.html" | sudo tee /home/kiosk/seite
 sudo chown -R kiosk:kiosk /home/kiosk
 ```
@@ -159,7 +160,7 @@ Jede Abfrage liefert JSON. Steht dort `{"fehler": …}`, passt der jeweilige Zug
 |---|---|
 | Kachel antippen | Detailansicht: Server mit Verlauf der letzten 60 Minuten aus Beszel, Pi-hole mit Top-Domains und Top-Clients, Strom mit 30-Minuten-Graph, Spannung und Kosten |
 | „‹ Übersicht“ oder nach rechts wischen | zurück |
-| Links/rechts wischen | Seiten: Übersicht · Dienste (Uptime Kuma und Backup) · Strom im Dither-Look · Slideshow |
+| Links/rechts wischen | Seiten: Übersicht · Theme (eigene Bildfolge) · Dienste (Uptime Kuma und Backup) · Strom im Dither-Look · Slideshow |
 | „Dienste“ / „Backup“ in der Uhr-Kachel | springt direkt zur Seite Dienste |
 
 Ohne Berührung geht es nach 90 Sekunden aus einer Detailansicht und nach 5 Minuten auf die Übersicht zurück.
@@ -171,6 +172,29 @@ Ohne Berührung geht es nach 90 Sekunden aus einer Detailansicht und nach 5 Minu
 **Anpassen** (oben in `dashboard.html`): `SYSTEME` legt fest, welche Beszel-Systeme als Kachel erscheinen, `PREIS` den Strompreis pro kWh für die Kostenschätzung.
 
 **Slideshow:** Bilder oder GIFs nach `/home/kiosk/screen/` kopieren (Namen egal), dann `sudo kiosk-update` (optional Sekunden pro Bild als Parameter, Standard 10). Das Skript nummeriert die Dateien und baut `index.html` neu.
+
+### Eigene Bildseite an zweiter Stelle (`theme.html`)
+
+Die Slideshow auf der letzten Seite ist für beliebige Bilder gedacht. Für eine feste Bildfolge, die zum Lab gehört, gibt es seit dem 15.11.2026 eine eigene Seite direkt hinter der Übersicht. Bei mir zeigt sie je Maschine eine Folie im Format des Displays (1280×400) mit Name und Rolle.
+
+| Was | Wo |
+|---|---|
+| Seite | `/home/kiosk/screen/theme.html` |
+| Bilder | `/home/kiosk/screen/theme/`, am besten genau 1280×400 |
+| Reihenfolge und Dauer | Liste `BILDER` und `SEKUNDEN` oben in `theme.html` |
+
+1. Bilder in den Ordner `theme` kopieren und die Dateinamen in der Liste `BILDER` eintragen. Die Namen in der Vorlage sind meine, eine fehlende Datei wird übersprungen.
+2. Rechte setzen und den Kiosk neu starten:
+
+```bash
+sudo chown -R kiosk:kiosk /home/kiosk/screen
+sudo systemctl restart getty@tty1
+```
+
+`kiosk-update` fasst den Ordner `theme` nicht an, weil es nur die Bilder direkt in `/home/kiosk/screen/` nummeriert. Beide Bildfolgen bleiben so getrennt. Die Seite beginnt bei jedem Hinwischen mit dem ersten Bild und ist nachts wie das Dashboard schwarz.
+
+> [!NOTE]
+> Wer eine weitere Seite einbaut, passt in `dashboard.html` drei Stellen an: einen neuen Block `<div class="seite" id="sN">` an der gewünschten Position (die folgenden Seiten neu durchnummerieren), einen zusätzlichen Punkt in `<div id="punkte">` und die Konstante `SEITEN`. Die Kurzlinks „Dienste“ und „Backup“ zeigen über `SEITE_DIENSTE` auf die Dienste-Seite.
 
 ## Teil 5 · Nachts komplett aus (SSH auf pi-nas)
 
@@ -228,6 +252,7 @@ Das Skript prüft alle 10 Minuten den Sollzustand. Wer das Display nachts kurz b
 - [ ] Watt-Anzeige bewegt sich, alle Server-Kacheln zeigen „Online“
 - [ ] Antippen einer Kachel öffnet die Details, Wischen nach rechts führt zurück
 - [ ] Seite Dienste zeigt das letzte Backup von heute Nacht
+- [ ] Unten sind fünf Punkte zu sehen, einmal nach links wischen zeigt die eigene Bildfolge
 - [ ] Nach 22 Uhr ist das Display dunkel und ohne Hintergrundlicht, ab 10 Uhr wieder an
 
 ## Häufige Fehler
@@ -243,6 +268,7 @@ Das Skript prüft alle 10 Minuten den Sollzustand. Wer das Display nachts kurz b
 | Display nach `ddcutil setvcp d6 4` tot | Hartes Ausschalten, danach reagiert es nicht mehr auf DDC | Ab- und wieder anstecken. Nicht für Zeitpläne verwenden |
 | Nach `wlr-randr --off` hell „No Signal“ | Display geht ohne Signal nicht in den Standby | Strom trennen statt Signal abschalten |
 | `uhubctl`: *No compatible devices* | USB-Ports des Rechners lassen sich nicht schalten (z. B. am HP-Mini-PC) | Display an einen Pi 5 hängen |
+| Nach einer Änderung an `dashboard.html` zeigt das Display die alte Fassung | Chromium lädt die Seite nach dem Neustart vermutlich aus seinem Zwischenspeicher | `sudo rm -rf /home/kiosk/.cache/chromium`, dann `sudo systemctl restart getty@tty1` |
 | Beszel-Kacheln „offline“, Login klappt | Kiosk-Benutzer ist beim System nicht unter **users** eingetragen | In PocketBase bei jedem System ergänzen |
 
 Weitere Fälle: [Fehlerbehebung](../fehlerbehebung.md#rack-display-kapitel-20)

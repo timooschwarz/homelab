@@ -322,6 +322,10 @@ Fehler, die beim Aufbau aufgetreten sind, jeweils mit Ursache und Lösung.
 **Ursache:** Die Seite war als `file://` geöffnet. Chromium blockt dann Abfragen an den Shelly im Netz (CORS).
 **Lösung:** Seite über den lokalen kiosk-server laden (`http://127.0.0.1:8099/…`), der holt die Daten selbst ab.
 
+### Display zeigt nach einer Änderung an `dashboard.html` noch die alte Fassung
+**Ursache:** Die neue Datei liegt richtig in `/home/kiosk/screen/`, Chromium nimmt nach dem Neustart des Kiosks aber vermutlich die Fassung aus seinem Zwischenspeicher. Bei mir war die neue Seite erst nach dem Löschen da. Erkennbar zum Beispiel an der Zahl der Punkte unten, wenn eine Seite dazugekommen ist.
+**Lösung:** Erst prüfen, ob der Server die neue Datei ausliefert, zum Beispiel mit `curl -s http://127.0.0.1:8099/dashboard.html | grep -c theme.html`. Dann den Zwischenspeicher löschen und den Kiosk neu starten: `sudo rm -rf /home/kiosk/.cache/chromium`, danach `sudo systemctl restart getty@tty1`.
+
 ### Display nach `ddcutil setvcp d6 4` nicht mehr ansprechbar
 **Ursache:** Der Befehl schaltet das Display hart aus (DPMS-Off). Danach antwortet es nicht mehr per DDC, `ddcutil` meldet *Display not found*.
 **Lösung:** Display kurz vom Strom trennen. Für den Nachtbetrieb stattdessen den USB-Strom per `uhubctl` schalten.
