@@ -83,7 +83,7 @@ lab.test
 | GPO-Computer-LokaleAdmins | Lab/Computer | MECM-Push-Konto als lokaler Administrator |
 | GPO-Computer-LAPS | Lab/Computer, Lab/Server | Windows LAPS, Kennwortsicherung im AD |
 | GPO-Computer-Ping | Lab/Computer, Lab/Server, Domain Controllers | ICMPv4 Echo eingehend erlauben (für Uptime Kuma) |
-| GPO-Computer-Design | Lab/Computer | Hintergrundbild aus NETLOGON, per Files-Preference lokal kopiert |
+| GPO-Computer-Design | Lab/Computer, Lab/Server, Domain Controllers | Hintergrund und Kontobild je Computer aus NETLOGON (Files-Preference mit `%ComputerName%`), Dark Mode, Sperrbildschirm, siehe [Kapitel 25](anleitung/25-lab-design-gpo.md) |
 | GPO-DC-Zeitserver | Domain Controllers | NTP-Quelle `de.pool.ntp.org` |
 | Default Domain Policy | Domäne | Kennwort- und Sperrrichtlinie |
 

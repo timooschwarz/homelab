@@ -1,6 +1,9 @@
 # Changelog
 
 ## 2026-11-15
+- Neues [Kapitel 25 · Lab-Design per GPO](anleitung/25-lab-design-gpo.md): eigener Hintergrund und eigenes Kontobild je Computer über eine Files-Preference mit `%ComputerName%`, Dark Mode, Sperrbildschirm unter Windows 11 Pro, alles in `GPO-Computer-Design`. Die GPO hängt jetzt auch an `Lab/Server` und `Domain Controllers`
+- Neues Skript [`scripts/lab-design/Deploy-LabTheme.ps1`](../scripts/lab-design/Deploy-LabTheme.ps1): prüft die Bilder, kopiert sie nach NETLOGON und schaltet das Standard-Kontobild ein
+- Vier neue Fälle in der [Fehlerbehebung](fehlerbehebung.md#lab-design-kapitel-25), einer davon noch offen (Kontobild beim Admin-Konto auf den Servern)
 - [Kapitel 20](anleitung/20-rack-display.md): Das Dashboard hat jetzt fünf Seiten. Neu an zweiter Stelle ist eine eigene Bildseite ([`theme.html`](../scripts/rack-display/theme.html)) mit fester Bildfolge aus dem Ordner `theme`, getrennt von der Slideshow
 - [`dashboard.html`](../scripts/rack-display/dashboard.html): Seiten neu nummeriert, fünfter Punkt, Kurzlinks „Dienste“ und „Backup“ über `SEITE_DIENSTE`
 - Neuer Fall in der [Fehlerbehebung](fehlerbehebung.md#rack-display-kapitel-20): Display zeigt nach einer Änderung die alte Fassung aus dem Chromium-Zwischenspeicher

@@ -408,3 +408,22 @@ Fehler, die beim Aufbau aufgetreten sind, jeweils mit Ursache und Lösung.
 ### Warpgate: RDP `TCP connect timed out`
 - **Ursache:** RDP war auf dem Zielserver nicht aktiviert.
 - **Lösung:** RDP im Server-Manager aktivieren (Firewallregel wird mit freigegeben).
+
+## Lab-Design (Kapitel 25)
+
+### Eigenes Hintergrundbild kommt nicht an, obwohl es in NETLOGON liegt
+**Ursache:** Die Quelle im Files-Eintrag der GPO wurde über den Dialog ausgewählt. Dabei landet ein lokaler Pfad von DC01 im Feld, zum Beispiel `C:\Users\…\Desktop\…`, und den gibt es auf den Clients nicht.
+**Lösung:** Den UNC-Pfad eintippen: `\\lab.test\NETLOGON\Hintergrund\%ComputerName%\wallpaper.jpg`. Danach `gpupdate /force` und neu anmelden.
+
+### Dark Mode per GPO greift nicht
+**Ursache:** Die beiden Registry-Einträge lagen unter *Computer Configuration*. Dort steht `HKEY_CURRENT_USER` für `HKU\.DEFAULT`, nicht für den angemeldeten Benutzer.
+**Lösung:** Die Einträge unter **User Configuration → Preferences → Windows Settings → Registry** neu anlegen. Durch das Loopback aus [Kapitel 25](anleitung/25-lab-design-gpo.md) gelten sie für jeden, der sich an den Rechnern anmeldet.
+
+### `Deploy-LabTheme.ps1`: *Cannot bind argument to parameter 'Path' because it is an empty string*
+**Ursache:** Windows PowerShell 5.1 kennt `$PSScriptRoot` in den Vorgabewerten von `param()` nicht, wenn das Skript mit `powershell -File` gestartet wird. Der Quellordner blieb leer.
+**Lösung:** `-Source "<Pfad>\Hintergrund"` mitgeben. Das Skript ermittelt den Ordner inzwischen erst im Rumpf.
+
+### Kontobild erscheint beim Admin-Konto auf den Servern nicht (offen)
+**Symptom:** Auf DC01 liegt das Bild der Maschine in `C:\ProgramData\Microsoft\User Account Pictures`, unter **Settings → Accounts** bleibt das Konto aber grau. Auf CM01 genauso. Auf dem Client mit Windows 11 funktioniert es.
+**Ausgeschlossen:** fehlende Dateien, Neustart, Ab- und Anmelden, Richtlinie *Apply the default account picture to all users* aus- und wieder eingeschaltet.
+**Stand:** noch nicht gelöst.
