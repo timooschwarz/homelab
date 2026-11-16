@@ -128,4 +128,6 @@ Im Tailscale-Menü am Arbeits-PC **Preferences → Use Tailscale subnets** absch
 
 Weitere Fälle: [Fehlerbehebung](../fehlerbehebung.md#zertifikate-kapitel-24)
 
+Weiter: [Kapitel 25 · Lab-Design per GPO](25-lab-design-gpo.md)
+
 Wie es weitergeht: [Roadmap](../roadmap.md)

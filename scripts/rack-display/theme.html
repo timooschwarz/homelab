@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="de"><head><meta charset="utf-8"><title>Lab-Theme</title><style>
+  html,body{margin:0;height:100%;background:#000;overflow:hidden;cursor:none}
+  .folie{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.2s ease}
+  .folie.an{opacity:1}
+</style></head><body>
+<img class="folie" id="a" alt=""><img class="folie" id="b" alt="">
+<script>
+  // ---- Einstellungen ----
+  const ORDNER   = "theme/";      // liegt in /home/kiosk/screen/theme, kiosk-update fasst den Ordner nicht an
+  const SEKUNDEN = 10;            // Dauer pro Folie
+  const NACHT_AB = 22, NACHT_BIS = 10;
+  const BILDER = [                // Reihenfolge der Folien; neue Datei in den Ordner legen und hier eintragen
+    "theme-01-pve01.png",
+    "theme-02-DC01.png",
+    "theme-03-FS01.png",
+    "theme-04-CM01.png",
+    "theme-05-TOOLS01.png",
+    "theme-06-LOG01.png",
+    "theme-07-netbox.png",
+    "theme-08-beszel.png",
+    "theme-09-vaultwarden.png",
+    "theme-10-immich.png",
+    "theme-11-pi-nas.png",
+    "theme-12-CLIENT01.png",
+    "theme-13-CLIENT02.png",
+    "theme-14-DE-PC-TIMO.png"
+  ];
+  // -----------------------
+  const ebene = [document.getElementById("a"), document.getElementById("b")];
+  const nacht = () => { const h = new Date().getHours(); return h >= NACHT_AB || h < NACHT_BIS; };
+  let i = 0, k = 0, fehler = 0;
+
+  function zeige() {
+    if (nacht()) { ebene.forEach(e => { e.classList.remove("an"); e.removeAttribute("src"); }); return; }
+    const neu = ebene[k], alt = ebene[1 - k];
+    neu.onload = () => { fehler = 0; neu.classList.add("an"); alt.classList.remove("an"); k = 1 - k; };
+    // Fehlt eine Datei, direkt die nächste nehmen (höchstens einmal durch die ganze Liste)
+    neu.onerror = () => { if (++fehler < BILDER.length) zeige(); };
+    neu.src = ORDNER + BILDER[i];
+    i = (i + 1) % BILDER.length;
+  }
+  zeige();
+  setInterval(zeige, SEKUNDEN * 1000);
+</script>
+</body></html>
